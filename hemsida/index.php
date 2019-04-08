@@ -7,54 +7,54 @@ $basketTotalProductTypes = 0 ;
 $basket = [];
 $i=0;
 $singleMovieObject = new Event;
-$newItem = true;
+$userObject = new User;
+
+if(isset($_POST['register'])) {
+        $username = $_POST['username']; //sanitize
+        $firstName = $_POST['firstName']; //sanitize
+        $lastName = $_POST['lastName']; //sanitize
+        $email = $_POST['email']; //sanitize
+        $password = $_POST['password']; //sanitize
+
+        $userObject->username = $username;
+        $userObject->firstName = $firstName;
+        $userObject->lastName = $lastName;
+        $userObject->email = $email;
+        $userObject->password = $password;
+
+        $userObject->create_customer();
+        $userObject->client_login();
+        $_SESSION['user_type'] = "Customer";
+        $toGet = $userObject->get_customer_login_by_username();
+        $result = $toGet->fetch();
+        $_SESSION['userID'] = $result['customerNumber'];
+}
+
+if(isset($_POST['client_login'])) {
+        $username = $_POST['username']; //sanitize
+        $password = $_POST['password']; //sanitize
+
+        $userObject->username = $username;
+        $userObject->password = $password;
+
+        $success = $userObject->client_login();
+        if($success) {
+        $_SESSION['user_type'] = "Customer";
+        $toGet = $userObject->get_customer_login_by_username();
+        $result = $toGet->fetch();
+        $_SESSION['userID'] = $result['customerNumber'];
+        } else {
+
+        }
+}
+
+if(isset($_POST['client_logout'])) {
+        $_SESSION['user_type'] = "Guest";
+        $_SESSION['userID'] = "None";
+}
 
 if(isset($_COOKIE['basketTotalProductTypes'])) {
     $basketTotalProductTypes = $_COOKIE['basketTotalProductTypes'];
-
-    if(isset($_POST['buyTicket'])) {
-        for($i=0;isset($_COOKIE["eventID" . $i]);$i++) {
-            if($_COOKIE["eventID" . $i] == $_POST['eventID']) {
-                $newNumberOfItemsID = "noOfTickets" . $i;
-                $newNumberOfItems = (int) $_POST['numberOfTickets'] + (int) $_COOKIE[$newNumberOfItemsID];
-                
-                setcookie($newNumberOfItemsID, $newNumberOfItems, time()+3500);
-                unset($_POST['buyTicket']);
-                $newItem = false;
-            }
-        }
-    }
-        
-        if($newItem) {
-            $eventID = "eventID" . $i;
-            $numberOfItemsID = "noOfTickets" . $i;
-            $event = $_POST['eventID'];
-            $numberOfItems = (int) $_POST['numberOfTickets'];
-             
-            setcookie($eventID, $event, time()+3500);
-            setcookie($numberOfItemsID, $numberOfItems, time()+3500);
-
-            $basketTotalProductTypes = $basketTotalProductTypes + 1;
-        
-            setcookie("basketTotalProductTypes", $basketTotalProductTypes, time()+3500);
-            unset($_POST['buyTicket']);
-        } 
-    }
-} else {
-    if(isset($_POST['buyTicket'])) {
-        $eventID = "eventID1";
-        $numberOfItemsID = "noOfTickets1";
-        $event = $_POST['eventID'];
-        $numberOfItems = (int) $_POST['numberOfTickets'];
-            
-        setcookie($eventID, $event, time()+3500);
-        setcookie($numberOfItemsID, $numberOfItems, time()+3500);
-
-        $basketTotalProductTypes = 1;
-    
-        setcookie("basketTotalProductTypes", $basketTotalProductTypes, time()+3500);
-        unset($_POST['buyTicket']);
-    }
 }
 
 include_once "head.php";

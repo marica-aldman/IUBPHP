@@ -10,11 +10,19 @@
                     </th>
                     <th>Salong
                     </th>
+                    <th>Antal
+                    </th>
+                    <th>Se biljett
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <!-- temp row-->
                 <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>

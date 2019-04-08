@@ -3,13 +3,20 @@
         
     } else {
         $_SESSION['userType'] = "Guest";
+        $_SESSION['userID'] = "None";
         echo 'onload="alertCookies()"';
     }
+
+    if(isset($_POST['cartReload'])) {
+        echo 'onload=open_cart_window()';
+      unset($_POST['cartReload']);  
+    } 
 ?>>
 <div>
 <?php 
 
 $page = "";
+$showMovie = "none";
 $mainpage = "client";
 $headerImg = "#";
 
@@ -64,7 +71,14 @@ if(isset($_POST['page'])) {
                 $page = "searchMovies";
                 break;
             case "movie":
+                $showMovie = $_POST['showMovie'];
                 $page = "movie";
+                break;
+            case "checkout":
+                $page = "checkout";
+                break;
+            case "confirmation":
+                $page = "confirmation";
                 break;
             case "myTickets":
                 $page = "myTickets";
@@ -77,6 +91,10 @@ if(isset($_POST['page'])) {
                 break;
             case "logIn":
                 $page = "logIn";
+                break;
+            case "register":
+                $fromPage = $_POST['fromPage'];
+                $page = "register";
                 break;
             default:
                 $page = "client";
@@ -113,7 +131,7 @@ if(isset($_POST['page'])) {
             <i class="fas fa-shopping-cart" id="shopping_cart_icon"></i>
         </div>
 
-        <div class="noOfTickets <?php if($basketTotalProductTypes==0){ echo "hidden";} ?>" id="noOfTicketsIcon">
+        <div class="noOfTicketsCircle <?php if($basketTotalProductTypes==0){ echo "hidden";} ?>" id="noOfTicketsIcon">
             &nbsp;<?php echo $basketTotalProductTypes; ?>
         </div>
 
@@ -132,33 +150,33 @@ if(isset($_POST['page'])) {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="shoppingBasketTable">
 <?php 
-                    if(isset($_COOKIE['basketTotalProductTypes'])) {
+                    if($basketTotalProductTypes>0) {
                         $i=0;
-                        for($i=0; isset($_COOKIE["eventID" . $i]); $i++) {
+                        for($i=1; isset($_COOKIE["eventID" . $i]); $i++) {
                             $singleMovieObject->eventID = $_COOKIE["eventID" . $i];
                             $result = $singleMovieObject->get_event();
                             $row = $result->fetch();
                         
 ?>
-                    <!-- temp row -->
                     <tr>
                         <td><?php echo $row['eventName']; ?>
                         </td>
                         <td>
-                            <button id="remove<?php echo $i; ?>" onclick="return removeTicket(<?php echo $value['noOfTickets']; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)"><</button>
-                            <input id="hidden_noOfTickets<?php echo $i; ?>" type="hidden" name="numberOfTickets<?php echo $row['eventID']; ?>" value="<?php echo $value['noOfTickets']; ?>">
-                            <div class="basketText" id="noOfTickets<?php echo $i; ?>"><?php echo $value['noOfTickets']; ?></div>
-                            <button id="add<?php echo $i; ?>" onclick="return addTicket(<?php echo $value['noOfTickets']; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)">></button>
+                            <button id="remove<?php echo $i; ?>" onclick="return removeTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)"><</button>
+                            <input id="hidden_noOfTickets<?php echo $i; ?>" type="hidden" name="numberOfTickets<?php echo $row['eventID']; ?>" value="<?php echo $_COOKIE["noOfTickets" . $i]; ?>">
+                            <div class="basketText noOfTickets" id="noOfTickets<?php echo $i; ?>"><?php echo $_COOKIE["noOfTickets" . $i]; ?></div>
+                            <button id="add<?php echo $i; ?>" onclick="return addTicket(<?php echo $_COOKIE["noOfTickets" . $i]; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)">></button>
                         </td>
-                        <td ><div class="basketText" id="price<?php echo $i; ?>"><?php $price = $row['price'] * $value['noOfTickets']; echo $price; ?></div>
+                        <td ><div class="basketText" id="price<?php echo $i; ?>"><?php $price = (int) $row['price'] * (int) $_COOKIE["noOfTickets" . $i]; echo $price; ?></div>
                         </td>
                         <td>
                             <form method="post" action="index.php">
-                                <input type="hidden" name="page" value="<?php echo $page; ?>">
-                                <input type="hidden" name="ticketNumber" value="<?php echo $row['eventID']; ?>">
-                                <button name="deleteTicket">X</button>
+                                <input type="hidden" name="page" value="movie">
+                                <input type="hidden" name="showMovie" id="movieDelete" value="<?php echo $row['eventID']; ?>" class="movieIdForCheckout">
+                                <input type="hidden" name="cartReload" id="cartReload" value="yes">
+                                <button id="deleteButton<?php echo $i; ?>" onclick="return deleteTicket(<?php echo $i; ?>)">X</button>
                             </form>
                         </td>
                     </tr>
@@ -168,7 +186,14 @@ if(isset($_POST['page'])) {
                         }
                     }
 ?>
-
+                    <tr>
+                        <td colspan=3>
+                            <form method="post" action="index.php">
+                                <input type="hidden" name="page" value="checkout">
+                                <button onclick="return toCheckout()">Till Kassan</button>
+                            </form>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -178,11 +203,21 @@ if(isset($_POST['page'])) {
         </div>
         <div class="user_login hidden" id="user_login">
             <form method="post" action="index.php">
+                <input type="hidden" name="page" value="<?php echo $page; ?>">
+                <input type="hidden" name="client_login" value="yes">
                 <label for="username">Användarnamn</label>
                 <input type="text" name="customer_username" id="user_login_username">
                 <label for="password">Lösenord</label>
                 <input type="text" name="customer_password" id="user_login_password">
                 <input type="submit" name="customer_login" value="Logga in" class="user_login_button">
+            </form>
+            <p>
+                Om du inte har konto så kan du registrera dig här.
+            </p>
+            <form method="post" action="index.php">
+                <input type="hidden" name="page" value="register">
+                <input type="hidden" name="fromPage" value="checkout">
+                <button>Registrera dig</button>
             </form>
         </div>
         
@@ -194,7 +229,7 @@ if(isset($_POST['page'])) {
         <ul>
             <form method="post" action="index.php">
 <?php   if($mainpage=="admin"){  
-            if(!isset($_SESSION['adminLoggedIn'])) { ?>
+            if(!isset($_SESSION['user_type']) || $_SESSION['user_type'] != "Admin") { ?>
             <form method="post" action="index.php">
                 <li>
                     <button class="navbutton" name="page" value="addEvent">Lägg till Event</button>
@@ -232,7 +267,7 @@ if(isset($_POST['page'])) {
                     <button class="navbutton" name="page" value="searchMovies">Filmer</button>
                 </li>
             </form>
-<?php       if(isset($_SESSION['loggedIn'])) { ?>
+<?php       if(isset($_SESSION['user_type']) && $_SESSION['user_type'] = "Customer") { ?>
             <form method="post" action="index.php">
                 <li>
                     <button class="navbutton" name="page" value="myTickets">Mina Biljetter</button>
@@ -241,7 +276,8 @@ if(isset($_POST['page'])) {
                     <button class="navbutton" name="page" value="myProfile">Min profil</button>
                 </li>
                 <li id="logout">
-                    <button class="navbutton" name="page" value="logout">Logga Ut</button>
+                    <input type="hidden" name="page" value="<?php echo $page; ?>">
+                    <button class="navbutton" name="client_logout">Logga Ut</button>
                 </li>
             </form>
 <?php       }

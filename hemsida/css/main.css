@@ -44,7 +44,7 @@ header button {
     z-index: 2;
 }
 
-.noOfTickets {
+.noOfTicketsCircle {
     position: absolute;
     top: 90px;
     right: 143px;

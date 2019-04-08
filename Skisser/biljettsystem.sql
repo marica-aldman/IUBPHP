@@ -11,12 +11,12 @@ DROP TABLE IF EXISTS admins;
 
 CREATE TABLE customers (
   customerNumber int(11) NOT NULL,
-  contactLastName varchar(50) NOT NULL,
-  contactFirstName varchar(50) NOT NULL,
+  lastName varchar(50) NOT NULL,
+  firstName varchar(50) NOT NULL,
   PRIMARY KEY (customerNumber)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into customers (customerNumber,contactLastName,contactFirstName)
+insert  into customers (customerNumber,lastName,firstName)
 values
 (1, "Aldman", "Marica"),
 (2, "Cole", "James");

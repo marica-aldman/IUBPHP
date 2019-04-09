@@ -1,7 +1,11 @@
+
+
 <section>
         <table>
             <thead>
                 <tr>
+                    <th>Ordernummer
+                    </th>
                     <th>Film
                     </th>
                     <th>Datum
@@ -17,21 +21,97 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- temp row-->
+<?php
+    if(isset($_SESSION['userID'])) {
+
+        //get the order
+
+        $orderObject = new order;
+        $orderObject->username = $_SESSION['userID'];
+        $result = $orderObject->get_all_orders_by_customer();
+
+        while($order = $result->fetch()) {
+
+            $ticketObject = new ticket;
+            $ticketObject->username = $order['username'];
+            $ticketObject->eventDateID = $order['eventDateID'];
+            $result2 = $ticketObject->get_ticket_by_eventDateID_and_customer();
+            $numberOfTickets = 0;
+            $ticketIDs = [];
+
+            while($ticketCount = $result2->fetch()){
+                $numberOfTickets++;
+                array_push($ticketIDs, $ticketCount['ticketID']);
+            }
+
+            //get the specific screening
+
+            $movieDateObject = new unsoldTicket;
+            $movieDateObject->eventDateID = $order['eventDateID'];
+            $result2 = $movieDateObject->get_tickets_by_eventDateID();
+            $movie = $result2->fetch();
+            $dateTime = $movie['dateAndTime'];
+            $dateTimeSplit = str_split($dateTime, 10);
+            $date = $dateTimeSplit[0];
+            $time = $dateTimeSplit[1];
+
+            //get the event
+
+            $singleMovieObject->eventID = $order['eventID'];
+            $result3 = $singleMovieObject->get_event();
+            $event = $result3->fetch();
+
+            //get the venue
+
+            $venueObject = new venue;
+            $venueObject->venueID = $order['venueID'];
+            $result4 = $venueObject->get_venue();
+            $venue = $result4->fetch();
+ 
+            // finish sorting out the mess of event Date, event, venue etc
+
+?>
                 <tr>
                     <td>
+                        <?php echo $order['orderID']; ?>
                     </td>
                     <td>
+                        <?php echo $event['eventName']; ?>
                     </td>
                     <td>
+                        <?php echo $date; ?>
                     </td>
                     <td>
+                        <?php echo $time; ?>
                     </td>
                     <td>
+                        <?php echo $venue['theater']; ?>
                     </td>
                     <td>
+                        <?php echo $numberOfTickets; ?>
+                    </td>
+                    <td>
+                        <form method="post" action="index.php">
+                            <input type="hidden" name="page" value="myTicket">
+                            <input type="hidden" name="eventDate" value="<?php echo $movie['eventDateID']; ?>">
+                            <input type="hidden" name="event" value="<?php echo $event['eventID']; ?>">
+                            <input type="hidden" name="venue" value="<?php echo $venue['venueID']; ?>">
+<?php
+                            for($i=0;$i<$numberOfTickets;$i++){
+?>
+                            <input type="hidden" name="ticketID<?php echo $i; ?>" value="<?php echo $ticketIDs[$i]; ?>">
+<?php
+                            }
+?>
+                            <button name="showTicket">Visa Biljetter</button>
+                        </form>
                     </td>
                 </tr>
+
+<?php
+        } //show tickets
+    } //if logged in
+?>
             </tbody>
         </table>
     </section>

@@ -20,9 +20,26 @@ $showMovie = "none";
 $mainpage = "client";
 $headerImg = "#";
 
+
+//check for a logg out
+
+if (isset($_POST['toPage'])) {
+    $page = $_POST['toPage'];
+    if(isset($_POST['showMovieNav'])){
+        $showMovie = $_POST['showMovieNav'];
+    } else {
+    $showMovie = "none";
+    }
+    $mainpage = "client";
+}
+//make sure someone regestering returns to the page they started on
+
+if (isset($_POST['fromPage'])) {
+    $fromPage = $_POST['fromPage'];
+}
 if(isset($_POST['page'])) {
     // check if it is one of the admin pages
-    if($_POST['page'] == "admin" || $_POST['page'] == "addEvent" || $_POST['page'] == "addVenue" || $_POST['page'] == "addTickets" || $_POST['page'] == "seeTicket" || $_POST['page'] == "adminMyProfile" || $_POST['page'] == "adminLoggedOut" || $_POST['page'] == "adminLogIn"){
+    if($_POST['page'] == "admin" || $_POST['page'] == "addEvent" || $_POST['page'] == "addVenue" || $_POST['page'] == "addTickets" || $_POST['page'] == "validateTicket" || $_POST['page'] == "adminMyProfile" || $_POST['page'] == "adminLoggedOut" || $_POST['page'] == "adminLogIn"){ echo $_SESSION['userType'];
         // check wich admin page
         switch($_POST['page']) {
             case "addEvent":
@@ -33,9 +50,6 @@ if(isset($_POST['page'])) {
                 break;
             case "addTickets":
                 $page = "addTickets";
-                break;
-            case "seeTicket":
-                $page = "seeTicket";
                 break;
             case "validateTicket":
                 $page = "validateTicket";
@@ -83,17 +97,16 @@ if(isset($_POST['page'])) {
             case "myTickets":
                 $page = "myTickets";
                 break;
-            case "myProfile":
-                $page = "MyProfile";
+            case "myTicket":
+                $page = "myTicket";
                 break;
-            case "loggedOut":
-                $page = "loggedOut";
+            case "customerProfile":
+                $page = "customerProfile";
                 break;
             case "logIn":
                 $page = "logIn";
                 break;
             case "register":
-                $fromPage = $_POST['fromPage'];
                 $page = "register";
                 break;
             default:
@@ -123,7 +136,9 @@ if(isset($_POST['page'])) {
                 <img src="<?php echo $headerImg; ?>">
             </button>
         </form>
-<?php if($mainpage=="client") {?>
+<?php
+    if($mainpage=="client") {
+?>
         <div id="behind" class="behind-overlay-windows hidden" onclick="close_overlay_windows()">
         </div>
 
@@ -202,34 +217,42 @@ if(isset($_POST['page'])) {
             <i class="fas fa-user" id="user_icon"></i>
         </div>
         <div class="user_login hidden" id="user_login">
-            <form method="post" action="index.php">
-                <input type="hidden" name="page" value="<?php echo $page; ?>">
-                <input type="hidden" name="client_login" value="yes">
-                <label for="username">Användarnamn</label>
-                <input type="text" name="customer_username" id="user_login_username">
-                <label for="password">Lösenord</label>
-                <input type="text" name="customer_password" id="user_login_password">
-                <input type="submit" name="customer_login" value="Logga in" class="user_login_button">
+            <form method="post" action="index.php" id="mainLogin">
+                <div class="input-field">
+                    <input type="hidden" name="page" value="<?php echo $page; ?>">
+                    <input type="hidden" name="client_login" value="yes">
+                <span></span>
+                </div>
+                <div class="input-field">
+                    <label for="username">Användarnamn</label>
+                    <input type="text" name="username" id="user_login_username" onfocusout="validateNavUsername();validateNavForm()">
+                <span></span>
+                </div>
+                <div class="input-field">
+                    <label for="password">Lösenord</label>
+                    <input type="text" name="password" id="user_login_password" onfocusout="validateNavPassword();validateNavForm()">
+                    <span></span>
+                </div>
+                <input type="submit" name="customer_login" value="Logga in" class="user_login_button" id="submitButton" disabled>
             </form>
             <p>
                 Om du inte har konto så kan du registrera dig här.
             </p>
             <form method="post" action="index.php">
                 <input type="hidden" name="page" value="register">
-                <input type="hidden" name="fromPage" value="checkout">
-                <button>Registrera dig</button>
+                <input type="hidden" name="fromPage" value="<?php echo $page; ?>">
+                <button class="user_login_button">Registrera dig</button>
             </form>
         </div>
         
-<?php } ?>
+<?php } echo $_SESSION['userType']; ?>
     </header>
 <?php ?>
 
     <nav>
         <ul>
-            <form method="post" action="index.php">
-<?php   if($mainpage=="admin"){  
-            if(!isset($_SESSION['user_type']) || $_SESSION['user_type'] != "Admin") { ?>
+<?php   if($mainpage=="admin"){   echo $_SESSION['userType'];
+            if(isset($_SESSION['userType']) && $_SESSION['userType'] == "Admin") { ?>
             <form method="post" action="index.php">
                 <li>
                     <button class="navbutton" name="page" value="addEvent">Lägg till Event</button>
@@ -241,7 +264,7 @@ if(isset($_POST['page'])) {
                     <button class="navbutton" name="page" value="addTickets">Lägg till Biljetter</button>
                 </li>
                 <li>
-                    <button class="navbutton" name="page" value="seeTicket">Se Biljett</button>
+                    <button class="navbutton" name="page" value="validateTicket">Verifiera Biljett</button>
                 </li>
                 <li>
                     <button class="navbutton" name="page" value="adminMyProfile">Min Profil</button>
@@ -253,34 +276,51 @@ if(isset($_POST['page'])) {
 <?php       } else { ?>
             <form method="post" action="index.php">
                 <li id="logout">
-                    <button class="navbutton" name="page" value="adminLogIn">Logga In</button>
+                    <button class="navbutton" name="page" value="adminLogIn"><?php echo $_SESSION['userType']; ?> Logga In</button>
                 </li>
             </form>
 <?php       }
-        }  else { ?>
+        }  else {
+           if(isset($_SESSION['userType']) && $_SESSION['userType'] = "Customer") {
+?>        
+            <form method="post" action="index.php">
+                <li>
+                    <button class="navbutton" name="page" value="home"><?php echo $_SESSION['userType']; ?>Hem</button>
+                </li>
+                <li>
+                    <button class="navbutton" name="page" value="searchMovies">Filmer</button>
+                </li>
+                <li>
+                    <button class="navbutton" name="page" value="myTickets">Mina Biljetter</button>
+                </li>
+                <li>
+                    <button class="navbutton" name="page" value="customerProfile">Min profil</button>
+                </li>
+                <li id="logout">
+<?php 
+    if($page == "movie") {
+?>
+                    <input type="hidden" name="showMovieNav" value="<?php echo $_POST['showMovie'] ?>">
+<?php  
+    }
+?>
+                    <input type="hidden" name="toPage" value="<?php echo $page; ?>">
+                    <button class="navbutton" name="client_logout">Logga Ut</button>
+                </li>
+            </form>
+<?php
+           } else {
+?>
             <form method="post" action="index.php">
                 <li>
                     <button class="navbutton" name="page" value="home">Hem</button>
                 </li>
                 <li>
-                    <input type="hidden" name="test" value="test">
                     <button class="navbutton" name="page" value="searchMovies">Filmer</button>
                 </li>
-            </form>
-<?php       if(isset($_SESSION['user_type']) && $_SESSION['user_type'] = "Customer") { ?>
-            <form method="post" action="index.php">
-                <li>
-                    <button class="navbutton" name="page" value="myTickets">Mina Biljetter</button>
-                </li>
-                <li>
-                    <button class="navbutton" name="page" value="myProfile">Min profil</button>
-                </li>
-                <li id="logout">
-                    <input type="hidden" name="page" value="<?php echo $page; ?>">
-                    <button class="navbutton" name="client_logout">Logga Ut</button>
-                </li>
-            </form>
-<?php       }
+            </form> 
+<?php
+            }
         }
 ?>
         </ul>

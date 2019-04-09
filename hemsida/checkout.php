@@ -1,23 +1,37 @@
-<section <?php
-
-if(isset($_SESSION['userType']) && $_SESSION['userType'] == "Guest") {
-            echo "onload=showLogin()";
-}
-
-?>>
-
+<section>
+<?php
+        if ($_SESSION['userType'] == "Guest") {
+?>
 <div class="loginForm" id="loginForm">
     <p>
         För att köpa biljetter behöver du vara inloggad.
     </p>
+<?php
+        if($err_message !== "") {
+?>
+    <div>
+        <?php echo $err_message; ?>
+    </div>
+<?php
+        }
+?>
     <form method="post" action="index.php">
+        <div class="input-field">
         <input type="hidden" name="page" value="checkout">
         <input type="hidden" name="client_login" value="yes">
+            <span></span>
+        </div>
+        <div class="input-field">
         <label for="username">Användarnamn</label>
-        <input type="text" name="username">
+        <input type="text" name="username" id="username" onfocusout="validateLoginUsername();validateLoginForm()">
+            <span></span>
+        </div>
+        <div class="input-field">
         <label for="password">Lösenord</label>
-        <input type="text" name="password">
-        <button>Logga in</button>
+        <input type="text" name="password" id="password" onfocusout="validateLoginPassword();validateLoginForm()">
+            <span></span>
+        </div>
+        <button id="submit" disabled>Logga in</button>
     </form>
     <p>
         Om du inte har konto så kan du registrera dig här.
@@ -30,6 +44,9 @@ if(isset($_SESSION['userType']) && $_SESSION['userType'] == "Guest") {
 </div>
 
 
+<?php
+        }
+?>
 <div>
     <table>
         <thead>

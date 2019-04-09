@@ -3,6 +3,7 @@ USE biljettsystem;
 DROP TABLE IF EXISTS adresses;
 DROP TABLE IF EXISTS customer_login;
 DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS eventDate;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS venue;
@@ -10,43 +11,43 @@ DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS admins;
 
 CREATE TABLE customers (
-  customerNumber int(11) NOT NULL,
+  username varchar(255) NOT NULL,
   lastName varchar(50) NOT NULL,
   firstName varchar(50) NOT NULL,
-  PRIMARY KEY (customerNumber)
+  PRIMARY KEY (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into customers (customerNumber,lastName,firstName)
+insert  into customers (username,lastName,firstName)
 values
-(1, "Aldman", "Marica"),
-(2, "Cole", "James");
+("marica.aldman@gmail.com", "Aldman", "Marica"),
+("james@cole.com", "Cole", "James");
 
 CREATE TABLE customer_login (
-    customerNumber int(11) NOT NULL,
-    username varchar(50) NOT NULL,
+    username varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-  CONSTRAINT customerLoginConstraint FOREIGN KEY (customerNumber) REFERENCES customers (customerNumber)
+  PRIMARY KEY (username),
+  CONSTRAINT customerLoginConstraint FOREIGN KEY (username) REFERENCES customers (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into customer_login (customerNumber,username,password)
+insert  into customer_login (username, password)
 values
-(1, "marica.aldman@gmail.com", "test"),
-(2, "jamesdlcole@gmail.com", "test2");
+("marica.aldman@gmail.com", "test"),
+("james@cole.com", "test2");
 
 CREATE TABLE adresses (
     adressID int(11) NOT NULL,
-    customerNumber int(11) NOT NULL,
+    username varchar(255) NOT NULL,
     streetadress varchar(50) NOT NULL,
     postalnumber int(11) NOT NULL,
     postaltown  varchar(50) NOT NULL,
   PRIMARY KEY (adressID),
-  CONSTRAINT customerAdressConstraint FOREIGN KEY (customerNumber) REFERENCES customers (customerNumber)
+  CONSTRAINT customerAdressConstraint FOREIGN KEY (username) REFERENCES customers (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into adresses (adressID, customerNumber,streetadress,postalnumber,postaltown)
+insert  into adresses (adressID, username,streetadress,postalnumber,postaltown)
 values
-(1, 1, "Faringe-Ösby Ösbyberg 104", 74010, "Almunge"),
-(2, 2, "Faringe-Ösby Ösbyberg 104", 74010, "Almunge");
+(1, "marica.aldman@gmail.com", "Faringe-Ösby Ösbyberg 104", 74010, "Almunge"),
+(2, "james@cole.com", "Faringe-Ösby Ösbyberg 104", 74010, "Almunge");
 
 CREATE TABLE events (
     eventID int(11) NOT NULL,
@@ -95,31 +96,54 @@ values
 (3, 2, 2, "2019-04-11 22:00:00"),
 (4, 2, 2, "2019-04-12 22:00:00");
 
+CREATE TABLE orders (
+    orderID int(11) NOT NULL,
+    numberOfTickets int(11) NOT NULL,
+    eventDateID int(11) NOT NULL,
+    eventID int(11) NOT NULL,
+    venueID int(11) NOT NULL,
+    username varchar(255) NOT NULL,
+    used int(11) NOT NULL,
+  PRIMARY KEY (orderID),
+  CONSTRAINT orderEventDateConstraint FOREIGN KEY (eventDateID) REFERENCES eventDate (eventDateID),
+  CONSTRAINT orderCustomerConstraint FOREIGN KEY (username) REFERENCES customers (username),
+  CONSTRAINT orderVenueConstraint FOREIGN KEY (venueID) REFERENCES venue (venueID)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+insert  into orders (orderID, numberOfTickets, eventDateID, eventID, venueID, username, used)
+values
+(1, 1, 1, 1, 1, "marica.aldman@gmail.com", 0),
+(2, 2, 3, 2, 2, "marica.aldman@gmail.com", 0),
+(3, 2, 1, 1, 1, "james@cole.com", 0),
+(4, 2, 3, 2, 2, "james@cole.com", 0);
+
 CREATE TABLE tickets (
     ticketID int(11) NOT NULL,
     eventDateID int(11) NOT NULL,
-    customerNumber int(11) NOT NULL,
+    username varchar(255) NOT NULL,
+    orderID int(11) NOT NULL,
     used int(11) NOT NULL,
   PRIMARY KEY (ticketID),
   CONSTRAINT ticketEventDateConstraint FOREIGN KEY (eventDateID) REFERENCES eventDate (eventDateID),
-  CONSTRAINT eventDateCustomerConstraint FOREIGN KEY (customerNumber) REFERENCES customers (customerNumber)
+  CONSTRAINT ticketOrderConstraint FOREIGN KEY (orderID) REFERENCES orders (orderID),
+  CONSTRAINT eventDateCustomerConstraint FOREIGN KEY (username) REFERENCES customers (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into tickets (ticketID, eventDateID,customerNumber,used)
+insert into tickets (ticketID, eventDateID,username,orderID,used)
 values
-(1, 1, 1, 0),
-(2, 3, 1, 0),
-(3, 1, 2, 0),
-(4, 3, 2, 0);
+(1, 1, "marica.aldman@gmail.com", 1, 0),
+(2, 3, "marica.aldman@gmail.com", 2, 0),
+(3, 1, "james@cole.com", 3, 0),
+(4, 3, "james@cole.com", 4, 0);
+
 
 CREATE TABLE admins (
-    adminsID int(11) NOT NULL,
     username varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-  PRIMARY KEY (adminsID)
+  PRIMARY KEY (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into admins (adminsID, username,password)
+insert  into admins (username,password)
 values
-(1, "marica.aldman@gmail.com", "qwerty"),
-(2, "jamesdlcole@gmail.com", "qwerty");
+("marica.aldman@gmail.com", "qwerty"),
+("james@cole.com", "qwerty");

@@ -1,18 +1,21 @@
+<?php
+    $userObject = new user;
+    if(isset($_SESSION['userID'])) {
+        $userObject->username = $_SESSION['userID'];
+
+        $result = $userObject->get_customer();
+
+        while($row = $result->fetch()) {
+    
+?>
+
 <section>
-        <div>
-            <div>
-                Användarnamn
-            </div>
-            <div>
-                <!-- fill in -->
-            </div>
-        </div>
         <div>
             <div>
                 Förnamn
             </div>
             <div>
-                <!-- fill in -->
+                <?php echo $row['firstName']; ?>
             </div>
         </div>
         <div>
@@ -20,7 +23,7 @@
                 Efternamn
             </div>
             <div>
-                <!-- fill in -->
+                <?php echo $row['lastName']; ?>
             </div>
         </div>
         <div>
@@ -28,24 +31,34 @@
                 Email
             </div>
             <div>
-                <!-- fill in -->
+                <?php echo $row['username']; ?>
             </div>
         </div>
         <div>
             <div>
                 Adresser
             </div>
+<?php
+                // get all adresses and create a row each for them
+                $adressObject = new adress;
+                $adressObject->adressID = $_POST['change_adress'];
+
+                $adressResult = $adressObject->get_customer_adresses();
+
+                while($row = $adressResult->fetch()) {
+                    $i++;
+?>
             <div>
                 <div>
                     <div>
-                        Adress 1
+                        Adress <?php echo $i; ?>
                     </div>
                     <div>
                         <div>
                             Gatuadress
                         </div>
                         <div>
-                            <!-- fill in -->
+                            <?php echo $row2['streetadress']; ?>
                         </div>
                     </div>
                     <div>
@@ -53,7 +66,7 @@
                             Postnummer
                         </div>
                         <div>
-                            <!-- fill in -->
+                            <?php echo $row2['postalnumber']; ?>
                         </div>
                     </div>
                     <div>
@@ -61,69 +74,26 @@
                             Postort
                         </div>
                         <div>
-                            <!-- fill in -->
+                            <?php echo $row2['postaltown']; ?>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <button page="changeAdress" value="<?php //echo number ?>">Ändra Adress</button>
+                            <button page="changeAdress" value="<?php echo $row2['adressID']; ?>">Ändra Adress</button>
                         </div>
                         <div>
-                            <button page="removeAdress" value="<?php //echo number ?>">Tabort Adress</button>
+                            <button page="removeAdress" value="<?php echo $row2['adressID']; ?>">Tabort Adress</button>
                         </div>
                     </div>
                 </div>
             </div>
+<?php
+            }    // all adresses
+?>
         </div>
     </section>
 <?php 
-    if($page == "changeAdress") {
-?>
 
-    <section>
-        <form method="post" action="index.php">
-            <div>
-                Adress 1
-            </div>
-            <div>
-                <div>
-                    Gatuadress
-                </div>
-                <div>
-                    <!-- fill in -->
-                    <input type="text" name="streetadress">
-                </div>
-            </div>
-            <div>
-                <div>
-                    Postnummer
-                </div>
-                <div>
-                    <!-- fill in -->
-                    <input type="text" name="postnumber">
-                </div>
-            </div>
-            <div>
-                <div>
-                    Postort
-                </div>
-                <div>
-                    <!-- fill in -->
-                    <input type="text" name="postadress">
-                </div>
-            </div>
-            <div>
-                <div>
-                    <input type="hidden" name="adressID" value="<?php //echo adressid ?>">
-                    <button name="page" value="saveAdress">Spara</button> 
-                </div>
-                <div>
-                    <button name="page" value="myProfile">Ångra</button>
-                </div>
-            </div>
-        </form>
-    </section>
-
-<?php
-    }
+        } //selected data on customer
+    } // if customer is logged in
 ?>

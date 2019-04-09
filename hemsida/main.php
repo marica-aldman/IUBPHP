@@ -2,7 +2,6 @@
 <main>
 
 <?php 
-
     //Main page
     if($page == "home" || $page == "client") {
         //start
@@ -34,16 +33,26 @@
 
         include_once "my_tickets.php";
 
-    } elseif ($page == "myProfile" || $page == "changeAdress") {
+    } elseif ($page == "myTicket") {
+        //My tickets
+
+        include_once "my_ticket.php";
+
+    } elseif ($page == "customerProfile") {
         //My profile
 
         include_once "customer_profile.php";
+
+    } elseif ($page == "changeAdress") {
+        //change adress
+
+        include_once "change_adress.php";
 
     }  elseif ($page == "register") {
         //register user
 
         include_once "register.php";
 
-    }
+    } 
 ?>
 </main>

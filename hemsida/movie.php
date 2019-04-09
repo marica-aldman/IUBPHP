@@ -5,7 +5,7 @@
 $movieObject = new event;
 
 if(isset($_POST['showMovie'])) {
-    $movieObject->eventID = filter_input(INPUT_POST, 'showMovie', FILTER_SANITIZE_NUMBER_INT);
+    $movieObject->eventID = $_POST['showMovie'];
 
 $result = $movieObject->get_event();
 

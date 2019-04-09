@@ -3,28 +3,39 @@
     
 <!-- template card -->
 <?php
-        if(isset($_SESSION['adminLoggedIn'])) {
+        if(!isset($_SESSION['userType']) || $_SESSION['userType'] != "Admin") {
             //log in form if not logged in
 ?>
 
-    <section class="admin_login">
-        <div>
-            <form method="post" action="index.php">
-                <div>
-                    <label for="username">Användarnamn</label>
-                </div>
-                <div>
-                    <input type="text" name="username">
-                </div>
-                <div>
-                    <label for="password">Lösenord</label>
-                </div>
-                <div>
-                    <input type="text" name="password">
-                </div>
-            </form>
+<div class="loginForm">
+<?php
+            if($err_message !== "") {
+?>
+    <div>
+                <?php echo $err_message; ?>
+    </div>
+<?php
+            }   
+?>
+    <form method="post" action="index.php">
+        <div class="input-field">
+            <input type="hidden" name="page" value="adminLogIn">
+            <input type="hidden" name="admin_login" value="yes">
+            <span></span>
         </div>
-    </section>
+        <div class="input-field">
+            <label for="username">Användarnamn</label>
+            <input type="text" name="username" id="username" onfocusout="validateLoginUsername();validateLoginForm()">
+            <span></span>
+        </div>
+        <div class="input-field">
+            <label for="password">Lösenord</label>
+            <input type="text" name="password" id="password" onfocusout="validateLoginPassword();validateLoginForm()">
+            <span></span>
+        </div>
+        <button id="submit" disabled>Logga in</button>
+    </form>
+</div>
 <?php   
         } else {
             //if logged in check which page and get that
@@ -41,14 +52,10 @@
                 //add tickets
 
                 include_once "add_tickets.php";
-            } elseif ($page=="seeTicket") {
-                //see ticket
-
-                include_once "see_ticket.php";
             } elseif ($page=="validateTicket") {
                 //admin profile
 
-                include_once "validate_ticket.php";
+                include_once "ticket_validation.php";
             } elseif ($page=="adminMyProfile") {
                 //admin profile
 

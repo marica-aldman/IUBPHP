@@ -281,7 +281,7 @@ if(isset($_POST['page'])) {
             </form>
 <?php       }
         }  else {
-           if(isset($_SESSION['userType']) && $_SESSION['userType'] = "Customer") {
+           if(isset($_SESSION['userType']) && $_SESSION['userType'] == "Customer") {
 ?>        
             <form method="post" action="index.php">
                 <li>

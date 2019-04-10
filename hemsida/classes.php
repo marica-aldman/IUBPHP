@@ -535,6 +535,74 @@ class order {
         return $toGet;
 
     }
+
+    function get_order() {
+        
+        $sql = "SELECT * FROM tickets WHERE orderID = '" . $this->orderID . "'"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+
+        return $toGet;
+    }
+
+    function validate_order() {
+        
+        $sql = "SELECT * FROM tickets WHERE orderID = '" . $this->orderID . "'"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+        $i = 0;
+        $err = "";
+        while($tickets = $toGet->fetch()) {
+            $ticketObject = new ticket;
+            $ticketObject->ticketID = $tickets['ticketID'];
+            $result = $ticketObject->get_ticket();
+            $ticketData = $result->fetch();
+            if($ticketData['used'] == 1) {
+                $err = $err . $ticketData['ticketID'] . " already used. ";
+            } else if($err == "") {
+            $ticketObject->validate_ticket();
+            }
+            $i++;
+        }
+
+        if($i == 0) {
+            $err = "No matching tickets";
+        }
+
+        return $err;
+
+    }
+
+    function invalidate_order() {
+        
+        $sql = "SELECT * FROM tickets WHERE orderID = '" . $this->orderID . "'"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+        $i = 0;
+        $err = "";
+        while($tickets = $toGet->fetch()) {
+            $ticketObject = new ticket;
+            $ticketObject->ticketID = $tickets['ticketID'];
+            $result = $ticketObject->get_ticket();
+            $ticketData = $result->fetch();
+            if(($ticketData['used'] == 1)) {
+                $ticketObject->invalidate_ticket();
+            } else {
+                $err = $err . $ticketData['ticketID'] . " not used. ";
+            }
+            $i++;
+        }
+
+        if($i == 0) {
+            $err = "No matching tickets";
+        }
+
+        return $err;
+
+    }
 }
 
 class ticket {

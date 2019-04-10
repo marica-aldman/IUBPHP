@@ -31,5 +31,3 @@ fixa
     movie (se all info om filmen inklusive datum filmen går)
 
     köp biljett inkl datum och tid
-
-    KOLLA VARFÖR KAKORNA BLIR CUSTOMER UTAN TYDLIG ORSAK

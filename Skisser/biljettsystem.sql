@@ -1,5 +1,3 @@
-USE biljettsystem;
-
 DROP TABLE IF EXISTS adresses;
 DROP TABLE IF EXISTS customer_login;
 DROP TABLE IF EXISTS tickets;
@@ -31,8 +29,8 @@ CREATE TABLE customer_login (
 
 insert  into customer_login (username, password)
 values
-("marica.aldman@gmail.com", "test"),
-("james@cole.com", "test2");
+("marica.aldman@gmail.com", '$2y$10$d.Y7CIbWnod/GKlU3LWycO6dave72Y.bty6Y/MrHbfHUDqZl5mGGe'),
+("james@cole.com", '$2y$10$OwJ15X.U.2MCSEyXXruuNOgnIB9XvTfjzmamB5MPKmSCz2WMK0OCW');
 
 CREATE TABLE adresses (
     adressID int(11) NOT NULL,
@@ -52,8 +50,8 @@ values
 CREATE TABLE events (
     eventID int(11) NOT NULL,
     eventName varchar(255) NOT NULL,
-    premere DATETIME NOT NULL,
-    finished DATETIME,
+    premere DATE NOT NULL,
+    finished DATE,
     director varchar(255) NOT NULL,
     originalLanguage varchar(255) NOT NULL,
     info TEXT NOT NULL,
@@ -62,10 +60,10 @@ CREATE TABLE events (
   PRIMARY KEY (eventID)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into events (eventID, eventName,premere,director,originalLanguage,info,price)
+insert  into events (eventID, eventName, premere, director, originalLanguage, info, price)
 values
-(1, "Spider-Man", "2019-04-10 22:00:00", "Sam Raimi", "English", "When bitten by a genetically modified spider, a nerdy, shy, and awkward high school student gains spider-like abilities that he eventually must use to fight evil as a superhero after tragedy befalls his family.", 150),
-(2, "Hellboy", "2019-04-11 22:00:00", "Neil Marshall", "English", "Based on the graphic novels by Mike Mignola, Hellboy, caught between the worlds of the supernatural and human, battles an ancient sorceress bent on revenge.", 200);
+(1, "Spider-Man", "2019-04-10", "Sam Raimi", "English", "When bitten by a genetically modified spider, a nerdy, shy, and awkward high school student gains spider-like abilities that he eventually must use to fight evil as a superhero after tragedy befalls his family.", 150),
+(2, "Hellboy", "2019-04-11", "Neil Marshall", "English", "Based on the graphic novels by Mike Mignola, Hellboy, caught between the worlds of the supernatural and human, battles an ancient sorceress bent on revenge.", 200);
 
 CREATE TABLE venue (
     venueID int(11) NOT NULL,
@@ -91,31 +89,23 @@ CREATE TABLE eventDate (
 
 insert  into eventDate (eventDateID, eventID,venueID,dateAndTime)
 values
-(1, 1, 1, "2019-04-10 22:00:00"),
-(2, 1, 1, "2019-04-11 20:00:00"),
-(3, 2, 2, "2019-04-11 22:00:00"),
-(4, 2, 2, "2019-04-12 22:00:00");
+(1, 1, 1, "2019-05-10 22:00:00"),
+(2, 1, 1, "2019-05-11 20:00:00"),
+(3, 2, 2, "2019-05-11 22:00:00"),
+(4, 2, 2, "2019-05-12 22:00:00");
 
 CREATE TABLE orders (
     orderID int(11) NOT NULL,
-    numberOfTickets int(11) NOT NULL,
-    eventDateID int(11) NOT NULL,
-    eventID int(11) NOT NULL,
-    venueID int(11) NOT NULL,
     username varchar(255) NOT NULL,
-    used int(11) NOT NULL,
-  PRIMARY KEY (orderID),
-  CONSTRAINT orderEventDateConstraint FOREIGN KEY (eventDateID) REFERENCES eventDate (eventDateID),
-  CONSTRAINT orderCustomerConstraint FOREIGN KEY (username) REFERENCES customers (username),
-  CONSTRAINT orderVenueConstraint FOREIGN KEY (venueID) REFERENCES venue (venueID)
+  PRIMARY KEY (orderID)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert  into orders (orderID, numberOfTickets, eventDateID, eventID, venueID, username, used)
+insert  into orders (orderID, username)
 values
-(1, 1, 1, 1, 1, "marica.aldman@gmail.com", 0),
-(2, 2, 3, 2, 2, "marica.aldman@gmail.com", 0),
-(3, 2, 1, 1, 1, "james@cole.com", 0),
-(4, 2, 3, 2, 2, "james@cole.com", 0);
+(1, "marica.aldman@gmail.com"),
+(2, "marica.aldman@gmail.com"),
+(3, "james@cole.com"),
+(4, "james@cole.com");
 
 CREATE TABLE tickets (
     ticketID int(11) NOT NULL,
@@ -145,5 +135,5 @@ CREATE TABLE admins (
 
 insert  into admins (username,password)
 values
-("marica.aldman@gmail.com", "qwerty"),
-("james@cole.com", "qwerty");
+("marica.aldman@gmail.com", '$2y$10$CxbObTDuoGGbu9fidcvtGOKDfP6hABHBCKjCP31yWc1qvt3pJJJtS'),
+("james@cole.com", '$2y$10$RszVvzZRYJnPKzBrivJk4eVxKYvadvzRD4FkpHK/kuY5KfjIPupjm');

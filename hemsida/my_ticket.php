@@ -4,8 +4,8 @@
         //get the specific screening
 
         $movieDateObject = new unsoldTicket;
-        $movieDateObject->eventDateID = $_POST['eventDate'];
-        $result2 = $movieDateObject->get_tickets_by_eventDateID();
+        $movieDateObject->eventDateID = $_POST['eventDateID'];
+        $result2 = $movieDateObject->get_unsoldtickets_eventDateID();
         $movie = $result2->fetch();
         $dateTime = $movie['dateAndTime'];
         $dateTimeSplit = str_split($dateTime, 10);
@@ -30,7 +30,7 @@
             $ticketID = $_POST['ticketID' . $i];
 ?>
 
-<section>
+<section class="single_ticket">
         <table>
             <tbody>
                 <!-- temp row-->
@@ -66,6 +66,11 @@
                 </tr>
             </tbody>
         </table>
+    <form method="post" action="index.php">
+        <div>
+                <button name="page" class="generalButton" value="customerProfile">Tillbaka</button>
+        </div>
+    </form>
     </section>
 
 <?php

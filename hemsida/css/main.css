@@ -84,12 +84,11 @@ header button {
     top: 120px;
     right: 146px;
     z-index: 1;
-    width: 250px;
-    height: 200px;
+    width: 350px;
     padding-right: 20px;
     padding-left: 30px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     border: 5px solid var(--overlay-window-bg-color);
     border-bottom-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -104,12 +103,14 @@ header button {
 
 .shopping_cart_window table thead tr th {
     border-bottom: 1px solid #000000;
+    color: var(--overlay-window-text-color);
     padding: 2px;
     z-index: 2;
 }
 
 .shopping_cart_window table tbody tr td {
     border-bottom: 1px solid #000000;
+    color: var(--overlay-window-text-color);
     padding: 5px;
     z-index: 2;
 }
@@ -131,10 +132,6 @@ header button {
 
 .basketText {
     display:inline;
-}
-
-.hidden {
-    display: none;
 }
 
 .user_icon {
@@ -163,6 +160,9 @@ header button {
 }
 
 .user_login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: var(--overlay-window-bg-color);
     color: var(--overlay-window-text-color);
     position: absolute;
@@ -170,7 +170,6 @@ header button {
     right: 180px;
     z-index: 1;
     width: 230px;
-    height: 200px;
     padding-right: 20px;
     padding-left: 30px;
     padding-top: 10px;
@@ -185,14 +184,17 @@ header button {
 }
 
 .user_login form {
-    display: flex;
-    flex-direction: column;
     padding: 15px;
     padding-top: 5px;
+    padding-bottom: 0;
     z-index: 2;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.user_login form label {
+.user_login form div label {
     color: var(--overlay-window-text-color);
     margin-bottom: 15px;
     z-index: 2;
@@ -206,18 +208,67 @@ header button {
     background-color: var(--user-login-button-bg-color);
     border: 2px solid var(--user-login-button-border-color);
     border-radius: 10px;
-    color: var(--footer-text-color);
+    color: var(--user-login-button-text-color);
     font-size: 1.2;
     padding: 5px;
     margin-top: 15px;
+    margin-bottom: 0px;
     z-index: 2;
 }
 
 .user_login_button:hover {
     background-color: var(--user-login-button-highlight-color);
     border: 2px solid var(--user-login-button-highlight-border-color);
+    color: var(--user-login-button-text-highlight-color);
 }
 
+.user_login_button:disabled {
+    background-color: var(--user-login-button-disabled-color);
+    border: 2px solid var(--user-login-button-disabled-border-color);
+    color: var(--user-login-button-text-disabled-color);
+}
+
+.user_login .register_text {
+    margin-top: 4px;
+    margin-bottom: 2px;
+    padding: 0;
+    font-size: 11px;
+}
+
+.user_login .register_button {
+    background-color: var(--user-login-button-bg-color);
+    border: 2px solid var(--user-login-button-border-color);
+    border-radius: 10px;
+    color: var(--nav-text-color);
+    font-size: 12px;
+    padding: 5px;
+    margin-top: 2px;
+    z-index: 2;
+    width: 100px;
+}
+
+.user_login .register_button:hover {
+    background-color: var(--user-login-button-highlight-color);
+    border: 2px solid var(--user-login-button-highlight-border-color);
+}
+
+.deleteButton {
+    background: none;
+    color: var(--nav-text-color);
+    border: solid 1px var(--nav-text-color);
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.moreOrLess {
+    background: none;
+    color: var(--nav-text-color);
+    border: none;
+    border: solid 1px var(--nav-text-color);
+    border-radius: 5px;
+    padding: 2px;
+    margin: 0;
+}
 
 /* navigation */
 
@@ -280,6 +331,11 @@ main {
     justify-content: center;
 }
 
+.start_page {
+    display: flex;
+    justify-content: center;
+}
+
 section {
     width: 75%;
     display: flex;
@@ -309,6 +365,11 @@ aside {
 
 .search_movie li input {
     width: 100%;
+}
+
+.event_list table {
+    
+    color: var(--form-text);
 }
 
 .movie_list {
@@ -376,11 +437,12 @@ aside {
     border-radius: 10px;
 }
 
-.register form {
+.input-field {
     display: flex;
     flex-direction: column;
-    width: 60%;
-    padding-left: 20%;
+    align-items: center;
+    text-align: center;
+    width: 100%;
 }
 
 .register form button {
@@ -394,6 +456,439 @@ aside {
 }
 
 .valid {
+}
+
+.loginForm{
+    position: absolute;
+    top: 180px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--main-bg-color);
+    height: 100vh;
+    width: 100vw;
+}
+
+.loginForm div:first-child{
+    width: 100%;
+    text-align: center;
+}
+
+.loginForm .centerErrMessage{
+    width: 100%;
+    text-align: center;
+}
+
+.loginForm form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginForm form div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.customer_profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.customer_profile div div {
+    display: inline-block;
+    width: 48%;
+}
+
+.customer_profile .adress_list {
+    width: 75%;
+}
+
+.customer_profile .adress_list div {
+    width: 100%;
+}
+.customer_profile .adress_list div div {
+    display: inline-block;
+    width: 48%;
+}
+
+.customer_profile .adress_list div div button {
+    background-color: var(--button-bg-color);
+    border: 2px solid var(--button-border-color);
+    border-radius: 10px;
+    color: var(--footer-text-color);
+    font-size: 0.8em;
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+
+.customer_profile .adress_list div div button:hover {
+    background-color: var(--button-highlight-color);
+    border: 2px solid var(-button-highlight-border-color);
+}
+
+
+.customer_profile div button {
+    background-color: var(--button-bg-color);
+    border: 2px solid var(--button-border-color);
+    border-radius: 10px;
+    color: var(--footer-text-color);
+    font-size: 0.8em;
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+
+.customer_profile div button:hover {
+    background-color: var(--button-highlight-color);
+    border: 2px solid var(-button-highlight-border-color);
+}
+
+.generalButton {
+    background-color: var(--button-bg-color);
+    border: 2px solid var(--button-border-color);
+    border-radius: 10px;
+    color: var(--footer-text-color);
+    font-size: 0.8em;
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+
+.generalButton:hover {
+    background-color: var(--button-highlight-color);
+    border: 2px solid var(-button-highlight-border-color);
+}
+
+.changeForm{
+    display: flex;
+    flex-direction: column;
+}
+
+.changeForm form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.changeForm form div {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.changeForm form:last-child {
+    width: 100%;
+    display: block;
+}
+
+.changeForm form:last-child div {
+    width: 75%;
+    display: block;
+}
+
+.adminLoginForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.adminLoginForm div:first-child{
+    width: 100%;
+    text-align: center;
+}
+
+.adminLoginForm form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adminLoginForm form div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.loginButton {
+    background-color: var(--user-login-button-bg-color);
+    border: 2px solid var(--user-login-button-border-color);
+    border-radius: 10px;
+    color: var(--user-login-button-text-color);
+    font-size: 0.8em;
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+
+.loginButton:hover {
+    background-color: var(--user-login-button-highlight-color);
+    border: 2px solid var(--user-login-button-highlight-border-color);
+    color: var(--user-login-button-text-highlight-color);
+}
+
+.loginButton:disabled {
+    background-color: var(--user-login-button-disabled-color);
+    border: 2px solid var(--user-login-button-disabled-border-color);
+    color: var(--user-login-button-text-disabled-color);
+}
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.list aside {
+    width: 100%;
+}
+
+.add_button li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.add_button {
+    margin: 0;
+    padding: 0;
+}
+
+.movie_list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.validationForms {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.validationForms section {
+    width: 48%;
+}
+
+.validationForms section form {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.validationForms section form div {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add_and_change {
+    margin: 0;
+    margin-top: 20px;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add_and_change div:first-child {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.add_and_change form table {
+    color: var(--form-text);
+    width: 100%;
+}
+
+.add_and_change form table tbody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add_and_change form table tbody {
+    width: 100%;
+}
+
+.add_and_change form table tbody tr {
+    display: flex;
+    align-items: space-between;
+    width: 100%;
+}
+
+.add_and_change form table tbody tr td {
+    width: 50%;
+}
+
+.date {
+    background-color: var(--user-login-button-bg-color);
+    border: none;
+    color: var(--user-login-button-text-color);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.timeAndText {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.new_admin {
+    margin: 0;
+    margin-top: 20px;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new_admin:last-child form {
+    width: 100%;
+    align-items: left;
+}
+
+.new_admin_form {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkout, .confirmation, .ticket_list, .event_list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkout div, .confirmation div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkout div table, .confirmation div table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--form-text);
+    font-size: 1em;
+}
+
+.ticket_list table, .event_list table {
+    width: 70%;
+    border-collapse: collapse;
+    color: var(--form-text);
+    font-size: 1em;
+}
+
+.checkout div table tbody tr td, .confirmation div table tbody tr td {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.ticket_list table tbody tr td, .event_list table tbody tr td {
+    color: var(--form-text);
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.checkout div table tbody tr td:nth-child(5){
+    display: flex;
+    justify-content: center;
+}
+
+.checkout div table tbody tr td:last-child, .confirmation div table tbody tr td:last-child{
+    display: flex;
+    justify-content: center;
+}
+
+.ticket_list table tbody tr td:last-child .generalButton, .event_list table tbody tr td:last-child .generalButton {
+    margin: 2px;
+}
+
+.checkout div table tbody tr td:nth-child(5) div {
+    width: 30%;
+}
+
+.checkout div table thead tr, .confirmation div table thead tr {
+    border-bottom: 2px solid var(--form-borders);
+}
+
+.ticket_list table thead tr, .event_list table thead tr {
+    border-bottom: 2px solid var(--form-borders);
+}
+
+.checkout div table tbody tr, .confirmation div table tbody tr {
+    border-bottom: 2px solid var(--form-borders);
+}
+
+.ticket_list table tbody tr, .event_list table tbody tr {
+    border-bottom: 2px solid var(--form-borders);
+}
+
+.checkout div table tbody tr:last-child, .confirmation div table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.ticket_list table tbody tr:last-child {
+    border-bottom: none;
+}
+
+
+.confirmation div table tbody tr td:nth-child(6){
+    text-align: center;
+}
+
+.event_list table tbody tr td {
+    text-align: center;
+}
+
+.ticket_list table tbody tr td:nth-child(6){
+    text-align: center;
+}
+
+.ticket_list table tbody tr td:first-child{
+    text-align: center;
+}
+
+.single_ticket {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.single_ticket table {
+    color: var(--form-text);
+    width: 30%;
 }
 
 /* footer */
@@ -424,11 +919,15 @@ footer hr {
     border: 2px solid var(--button-border-color);
     border-radius: 10px;
     color: var(--footer-text-color);
-    font-size: 1.2;
+    font-size: 0.8em;
     padding: 5px;
 }
 
 .footer_column button:hover {
     background-color: var(--button-highlight-color);
     border: 2px solid var(--button-highlight-border-color);
+}
+
+.hidden {
+    display: none;
 }

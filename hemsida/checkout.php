@@ -1,45 +1,47 @@
-<section>
+<section class="checkout">
 <?php
         if ($_SESSION['userType'] == "Guest") {
 ?>
 <div class="loginForm" id="loginForm">
-    <p>
-        För att köpa biljetter behöver du vara inloggad.
-    </p>
-<?php
-        if($err_message !== "") {
-?>
     <div>
-        <?php echo $err_message; ?>
+        För att köpa biljetter behöver du vara inloggad.
+    </div>
+<?php
+        if($err_message_login !== "") {
+?>
+    <div class="centerErrMessage">
+        <?php echo $err_message_login; ?>
     </div>
 <?php
         }
 ?>
     <form method="post" action="index.php">
         <div class="input-field">
-        <input type="hidden" name="page" value="checkout">
-        <input type="hidden" name="client_login" value="yes">
+            <input type="hidden" name="page" value="checkout">
+            <input type="hidden" name="client_login" value="yes">
             <span></span>
         </div>
         <div class="input-field">
-        <label for="username">Användarnamn</label>
-        <input type="text" name="username" id="username" onfocusout="validateLoginUsername();validateLoginForm()">
+            <label for="username">Användarnamn</label>
+            <input type="text" name="username" id="username" onkeyup="validateLoginUsername();validateLoginForm()" onpaste="validateLoginUsername();validateLoginForm()" onclick="validateLoginUsername();validateLoginForm()">
             <span></span>
         </div>
         <div class="input-field">
-        <label for="password">Lösenord</label>
-        <input type="text" name="password" id="password" onfocusout="validateLoginPassword();validateLoginForm()">
+            <label for="password">Lösenord</label>
+            <input type="password" name="password" id="password" onkeyup="validateLoginPassword();validateLoginForm()" onpaste="validateLoginPassword();validateLoginForm()" onclick="validateLoginPassword();validateLoginForm()">
             <span></span>
         </div>
-        <button id="submit" disabled>Logga in</button>
+        <div>
+            <button class="loginButton" id="submit" disabled>Logga in</button>
+        </div>
     </form>
     <p>
         Om du inte har konto så kan du registrera dig här.
     </p>
     <form method="post" action="index.php">
         <input type="hidden" name="page" value="register">
-        <input type="hidden" name="fromPage" value="checkout">
-        <button>Registrera dig</button>
+        <input type="hidden" name="toPage" value="checkout">
+        <button class="generalButton">Registrera dig</button>
     </form>
 </div>
 
@@ -72,35 +74,48 @@
                     $totalPrice = 0;
                     if($basketTotalProductTypes>0) {
                         $i=0;
-                        for($i=1; isset($_COOKIE["eventID" . $i]); $i++) {
-                            $singleMovieObject->eventID = $_COOKIE["eventID" . $i];
-                            $result = $singleMovieObject->get_event();
+                        for($i=1; isset($_COOKIE["eventDateID" . $i]); $i++) {
+                            $showingObject->eventDateID = $_COOKIE["eventDateID" . $i];
+                            $result = $showingObject->get_unsoldtickets_eventDateID();
+
                             $row = $result->fetch();
+                                
+                            $singleMovieObject->eventID = $row['eventID'];
+                            $result2 = $singleMovieObject->get_event();
+                            $row2 = $result2->fetch();
+
+                            $venueObject->venueID = $row['venueID'];
+                            $result3 = $venueObject->get_venue();
+                            $row3 = $result3->fetch();
+
+                            $dateAndTime = $row['dateAndTime'];
+                            $dateTimeSplit = str_split($dateAndTime, 10);
+                            $date = $dateTimeSplit[0];
+                            $time = $dateTimeSplit[1];
                         
 ?>
                     <tr>
-                        <td><?php echo $row['eventName']; ?>
+                        <td><?php echo $row2['eventName']; ?>
                         </td>
-                        <td><?php echo "venue"; // change to venue ?>
+                        <td><?php echo $row3['theater']; ?>
                         </td>
-                        <td><?php echo "datum"; // change to date ?>
+                        <td><?php echo $date; ?>
                         </td>
-                        <td><?php echo "tid"; // change to time ?>
+                        <td><?php echo $time; ?>
                         </td>
                         <td>
-                            <button id="remove<?php echo $i; ?>" onclick="return removeTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)"><</button>
-                            <input id="hidden_noOfTickets<?php echo $i; ?>" type="hidden" name="numberOfTickets<?php echo $row['eventID']; ?>" value="<?php echo $_COOKIE["noOfTickets" . $i]; ?>">
-                            <div class="basketText noOfTickets" id="noOfTickets<?php echo $i; ?>"><?php echo $_COOKIE["noOfTickets" . $i]; ?></div>
-                            <button id="add<?php echo $i; ?>" onclick="return addTicket(<?php echo $_COOKIE["noOfTickets" . $i]; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)">></button>
+                            <button class="moreOrLess" id="removeCheckout<?php echo $i; ?>" onclick="removeTicketCheckout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);removeTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)"><</button>
+                            <input id="hidden_noOfTicketsCheckout<?php echo $i; ?>" type="hidden" name="numberOfTickets<?php echo $row['eventDateID']; ?>" value="<?php echo $_COOKIE["noOfTickets" . $i]; ?>">
+                            <div class="basketText noOfTickets" id="noOfTicketsCheckout<?php echo $i; ?>"><?php echo $_COOKIE["noOfTickets" . $i]; ?></div>
+                            <button class="moreOrLess" id="addCheckout<?php echo $i; ?>" onclick="addTicketCheckout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);addTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)">></button>
                         </td>
-                        <td ><div class="basketText" id="price<?php echo $i; ?>"><?php $price = (int) $row['price'] * (int) $_COOKIE["noOfTickets" . $i]; echo $price; ?></div>
+                        <td ><div class="basketText" id="priceCheckout<?php echo $i; ?>"><?php $price = (int) $row2['price'] * (int) $_COOKIE["noOfTickets" . $i]; echo $price; ?></div>
                         </td>
                         <td>
                             <form method="post" action="index.php">
-                                <input type="hidden" name="page" value="movie">
-                                <input type="hidden" name="showMovie" id="movieDelete" value="<?php echo $row['eventID']; ?>" class="movieIdForCheckout">
-                                <input type="hidden" name="cartReload" id="cartReload" value="yes">
-                                <button id="deleteButton<?php echo $i; ?>" onclick="return deleteTicket(<?php echo $i; ?>)">X</button>
+                                <input type="hidden" name="page" value="checkout">
+                                <input type="hidden" name="showMovie" id="checkoutMovieDelete<?php echo $i; ?>" class="movieIdForCheckout">
+                                <button class="deleteButton" id="checkoutDeleteButton<?php echo $i; ?>" onclick="return deleteTicket(<?php echo $i; ?>)">X</button>
                             </form>
                         </td>
                     </tr>
@@ -121,19 +136,16 @@
                     </tr>
         </tbody>
     </table>
+ <?php
+    // hämta user 
+        $userObject->username = FILTER_INPUT(INPUT_COOKIE, 'userID', FILTER_SANITIZE_EMAIL);
+        
+        $result2 = $userObject->get_customer();
+        $row2 = $result2->fetch();
+ ?>   
     <form method="post" action="index.php">
         <input type="hidden" name="page" value="confirmation">
-        <label for="firstName">Förnamn</label>
-        <input type="text" name="firstName">
-        <label for="lastName">Efternamn</label>
-        <input type="text" name="lastName">
-        <label for="adress">Gatuadress</label>
-        <input type="text" name="adress">
-        <label for="postalCode">Postnummer</label>
-        <input type="text" name="postalCode">
-        <label for="postalTown">Postort</label>
-        <input type="text" name="postalTown">
-        <button>Beställ</button>
+        <button name="order" value="yes" class="loginButton" <?php if($basketTotalProductTypes <= 0 || $basketTotalProductTypes == null) { echo "disabled"; } else { echo 'onclick="return toConfirm()"'; } ?>>Beställ</button>
     </form>
 </div>
 

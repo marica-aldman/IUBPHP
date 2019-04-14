@@ -1,11 +1,12 @@
 //inputfields by form
 
-//    //register & change customer data both customer and admin
+//    //register & change customer data both customer and admin, change customer password
 var firstName = document.getElementById("firstName");
 var lastName = document.getElementById("lastName");
 var email = document.getElementById("email");
 var password = document.getElementById("password"); //password on both register and checkout
 var passwordRepeat = document.getElementById("passwordRepeat");
+var oldPassword = document.getElementById("oldPassword");
 
 //  //navLogin
 var username1 = document.getElementById("user_login_username"); //username in nav login
@@ -15,37 +16,37 @@ var password1 = document.getElementById("user_login_password"); //password in na
 var username2 = document.getElementById("username"); // username in checkout
 // password
 
-//  //add adress & change adress both customer and admin
-var streetAdress;
-var postalCode;
-var postalTown;
-
 //  //change ticket admin
-var ticketID;
-var eventID;
-var eventDateID;
-var venueID;
-var date;
-var time;
-var username;
-var used;
+
+var eventID = document.getElementById("eventID");
+var eventDateID = document.getElementById("eventDateID");
+var venueID = document.getElementById("venueID");
+var date = document.getElementById("date");
+var time = document.getElementById("time");
+var username = document.getElementById("username");
+
+//  //add change tickets
+
+var eventID = document.getElementById("eventID");
+var venueID = document.getElementById("venueID");
+var date = document.getElementById("date");
+var time = document.getElementById("time");
 
 //  //add event & change
 
-var eventID;
-var eventName;
-var premere;
-var finished;
-var director;
-var originalLanguage;
-var info;
-var price;
-var picture;
+var eventName = document.getElementById("eventName");
+var premere = document.getElementById("premere");
+var finished = document.getElementById("finished");
+var director = document.getElementById("director");
+var originalLanguage = document.getElementById("originalLanguage");
+var info = document.getElementById("info");
+var price = document.getElementById("price");
+var picture = document.getElementById("pictureLink");
 
 //  //add venue & change
 // venueID
-var theater;
-var size;
+var theater = document.getElementById("theater");
+var size = document.getElementById("size");
 
 //  //add tickets to sell & change
 // venueID, eventID, eventDateID, date, time from previous declarations as they dont appear at the same time
@@ -53,6 +54,12 @@ var size;
 //  //change admin data
 //username2, password, passwordRepeat
 
+//  //validate ticket and order
+
+var orderID1 = document.getElementById("orderID1");
+var ticketID1 = document.getElementById("ticketID1");
+var orderID2 = document.getElementById("orderID2");
+var ticketID2 = document.getElementById("ticketID2");
 
 // button
 
@@ -64,6 +71,63 @@ var submitButton1 = document.getElementById("submitButton"); // nav login
 var red = "#da0000";
 
 //validation functions
+
+//validate tickets and orders
+
+function validateOrder() {
+    //check if empty
+    if (checkIfEmpty(orderID1, 2)) {
+        return;
+    }
+    //check that it only contains numbers
+    if (!containsCharacterSet(orderID1, 5)) {
+        return;
+    }
+}
+
+function invalidateOrder() {
+    //check if empty
+    if (checkIfEmpty(orderID2, 2)) {
+        return;
+    }
+    //check that it only contains numbers
+    if (!containsCharacterSet(orderID2, 5)) {
+        return;
+    }
+}
+
+function validateTicket() {
+    //check if empty
+    if (checkIfEmpty(ticketID1, 2)) {
+        return;
+    }
+    //check that it only contains numbers
+    if (!containsCharacterSet(ticketID1, 5)) {
+        return;
+    }
+}
+
+function invalidateTicket() {
+    //check if empty
+    if (checkIfEmpty(ticketID2, 2)) {
+        return;
+    }
+    //check that it only contains numbers
+    if (!containsCharacterSet(ticketID2, 5)) {
+        return;
+    }
+}
+
+// change customer data
+
+function checkValidationCustomerDetails() {
+
+    if (firstName.classList.contains("valid") && lastName.classList.contains("valid") && email.classList.contains("valid")) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+}
 
 //register
 
@@ -122,7 +186,8 @@ function validatePassword() {
     // 1 - letters
     // 2 - numbers and letters
     // 3 - large, small letters and a number
-
+    // 4 - contains email pattern
+    // 5 - numbers
     if (!containsCharacterSet(password, 3)) {
         return;
     }
@@ -203,6 +268,54 @@ function validateLoginPassword() {
     }
 }
 
+//change password
+
+function validateNewPasswordForm() {
+    if (oldPassword.classList.contains("valid") && password.classList.contains("valid")) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+}
+
+function validateOldPassword() {
+    //check if empty
+    if (checkIfEmpty(oldPassword, 1)) {
+        return;
+    }
+}
+
+function validateNewPassword() {
+    //check if empty
+    if (checkIfEmpty(password, 2)) {
+        return;
+    }
+    //check that it is long enough, first number is minLength, second is maxLength
+    if (!meetsLength(password, 8, 32)) {
+        return;
+    }
+    //check containts
+    if (!containsCharacterSet(password, 3)) {
+        return;
+    }
+}
+
+function validateRepeatPassword() {
+    if (password.className === "invalid") {
+        setInvalid(passwordRepeat, "Lösenordet måste vara giltigt.");
+        return;
+    }
+    //check that it is the same as Password
+    if (password.value !== passwordRepeat.value) {
+        setInvalid(passwordRepeat, "Inte samma lösenord.");
+        return;
+    } else {
+        setValid(passwordRepeat);
+        return;
+    }
+    return true;
+}
+
 // change ticket admin
 
 function validateTicketForm() {
@@ -274,41 +387,18 @@ function validateUsername() {
     }
 }
 
-//add & change adress both customer and admin
+//add & change event
 
-function validateAddAdressForm() {
-    if (streetAdress.classList.contains("valid") && postalCode.classList.contains("valid") && postalTown.classList.contains("valid")) {
+function validateAddEvent() {
+    if (eventName.classList.contains("valid") && director.classList.contains("valid") && originalLanguage.classList.contains("valid") && info.classList.contains("valid") && price.classList.contains("valid") && picture.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;
     }
 }
 
-function validateAddAdressStreetAdress() {
-    //check if empty
-    if (checkIfEmpty(streetAdress, 2)) {
-        return;
-    }
-}
-
-function validateAddAdressPostalCode() {
-    //check if empty
-    if (checkIfEmpty(postalCode, 2)) {
-        return;
-    }
-}
-
-function validateAddAdressPostalTown() {
-    //check if empty
-    if (checkIfEmpty(postalTown, 2)) {
-        return;
-    }
-}
-
-//add & change event
-
-function validateEvent() {
-    if (eventID.classList.contains("valid") && eventName.classList.contains("valid") && premere.classList.contains("valid") && finished.classList.contains("valid") && director.classList.contains("valid") && originalLanguage.classList.contains("valid") && info.classList.contains("valid") && price.classList.contains("valid") && picture.classList.contains("valid")) {
+function validateChangeEvent() {
+    if (eventName.classList.contains("valid") && director.classList.contains("valid") && originalLanguage.classList.contains("valid") && info.classList.contains("valid") && price.classList.contains("valid") && picture.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;
@@ -370,10 +460,11 @@ function validatePicture() {
         return;
     }
 }
+
 //add & change venue
 
 function validateVenue() {
-    if (venueID.classList.contains("valid") && theater.classList.contains("valid") && size.classList.contains("valid")) {
+    if (theater.classList.contains("valid") && size.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;
@@ -400,6 +491,21 @@ function validateTicketsToSell() {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;
+    }
+}
+
+function validateAddTickets() {
+    if (time.classList.contains("valid")) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+}
+
+function validateTime() {
+    //check if empty
+    if (checkIfEmpty(time, 2)) {
+        return;
     }
 }
 
@@ -501,6 +607,11 @@ function containsCharacterSet(field, characterSetNumber) {
             // contains email pattern
             regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             message = "Inte en giltig emailadress.";
+            return matchWithRegEx(regEx, field, message);
+        case 5:
+            // numbers
+            regEx = /(?=.*\d)/;
+            message = "Fältet kan endast innehålla siffror.";
             return matchWithRegEx(regEx, field, message);
         default:
             return false;

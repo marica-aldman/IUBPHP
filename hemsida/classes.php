@@ -3,14 +3,14 @@
 class db_connection {
 
     public function create_connection() {
-        $host = 'localhost'; //'my73b.sqlserver.se';
-        $db   = 'biljettsystem'; //'236969-biljettsystem';
+        $host = 'my73b.sqlserver.se';
+        $db   = '236969-biljettsystem';
         $charset = 'utf8';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
-        $user = 'root'; //'236969_gl70572';
-        $pass =  '';//'keyncat2';
+        $user = '236969_gl70572';
+        $pass =  'keyncat2';
 
         try {
             $pdo = new PDO($dsn, $user, $pass);
@@ -43,9 +43,9 @@ class admin {
         return $toGet;
     }
 
-    public function get_admin_by_adminID() {
+    public function check_admin_username() {
         
-        $sql = "SELECT * FROM admins WHERE adminID = '" .  $this->adminID . "'";
+        $sql = "SELECT * FROM admins WHERE username = '" .  $this->username . "'";
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
@@ -81,28 +81,41 @@ class admin {
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
 
-        $result = $toGet->fetch();
-
+        return $toGet;
     }
 
     function create_admin() {
         
-        $sql = "INSERT INTO admins (adminID, username, password)
-                VALUES ('" . $this->adminID . "', '" . $this->username . "', '" . $this->password ."')";
+        $sql = "INSERT INTO admins (username, password)
+                VALUES ('" . $this->username . "', '" . $this->password ."')";
 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
+    }
+
+    function update_admin_password() {
+        
+        $sql = "UPDATE admins
+                SET password = '" . $this->password . "'
+                WHERE username = '" . $this->username . "'";
+
+        $toDo = $this->pdo->prepare($sql); // prepared statement
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
     }
 
     function delete_admin() {
 
         $sql = "DELETE FROM admins
-                WHERE adminID = '" . $this->adminID . "'"; // sql statement
+                WHERE adminID = '" . $this->username . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
 }
 
@@ -117,32 +130,9 @@ class user {
         $db_con = new db_connection;
         $this->pdo = $db_con->create_connection();
     }
-    
-    public function admin_login() {
-
-        
-        $sql = "SELECT * FROM admins WHERE username = '" . $this->username . "'";
-
-        $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
-
-        $result = $toGet->fetch();
-
-        if($result != NULL) {
-            if($this->password === $result['password']) {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-
-    }
 
     public function client_login() {
 
-        
         $sql = "SELECT * FROM customer_login WHERE username = '" . $this->username . "'";
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
@@ -151,35 +141,25 @@ class user {
         $result = $toGet->fetch();
 
         if($result != NULL) {
-            if($this->password === $result['password']) {
-                return TRUE;
+            if(password_verify($this->password, $result['password'])) {
+                return "same";
             } else {
-                return FALSE;
+                return "not same";
             }
         } else {
-            return FALSE;
+            return "no such user";
         }
 
     }
     
     public function change_password() {
         
-        $sql = "SELECT * FROM customer_login WHERE username = '" .  $this->username . "'";
+        $sql = "UPDATE customer_login
+                SET password = '" .  $this->password . "'
+                WHERE username = '" .  $this->username . "'";
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
-
-        $result = $toGet->fetch();
-
-        if($result != NULL) {
-            if($this->password === $result['password']) {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
 
     }
 
@@ -199,16 +179,6 @@ class user {
     function get_customer_login_by_username() {
         
         $sql = "SELECT * FROM customer_login WHERE username = '" .  $this->username . "'";
-
-        $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
-
-        return $toGet;
-    }
-
-    function get_admin_login_by_username() {
-        
-        $sql = "SELECT * FROM admins WHERE username = '" .  $this->username . "'";
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
@@ -283,89 +253,6 @@ class user {
     }
 }
 
-class adress {
-    public $adressID;
-    public $username;
-    public $streetadress;
-    public $postalnumber;
-    public $postaltown;
-    private $pdo;
-    
-    function __construct() {
-        $db_con = new db_connection;
-        $this->pdo = $db_con->create_connection();
-    }
-    
-    public function get_all_adresses() {
-        
-        $sql = "SELECT * FROM adresses";
-
-        $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
-
-        $result = $toGet->fetch();
-
-    }
-    
-    public function get_customer_adresses() {
-        
-        $sql = "SELECT * FROM adresses WHERE username = '" .  $this->username . "'";
-
-        $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
-
-        return $toGet;
-
-    }
-    
-    public function get_adress_by_id() {
-        
-        $sql = "SELECT * FROM adresses WHERE adressID = '" .  $this->adressID . "'";
-
-        $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
-
-        return $toGet;
-
-    }
-    
-    public function update_customer_adress() {
-        
-        $sql = "UPDATE adresses
-                SET streetadress = '" . $this->streetadress . "',
-                    postalnumber = '" . $this->postalnumber . "',
-                    postaltown = '" . $this->postaltown . "
-                WHERE adressID = '" . $this->adressID . "'";
-
-        $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
-
-        return $toGet;
-
-    }
-    
-    public function create_customer_adress() {
-        
-        $sql = "INSERT INTO adresses (adressID, username, streetadress, postalnumber, postaltown)
-                VALUES ('" . $this->adressID . "', '" . $this->username . "', '" .  $this->streetadress . "', '" .  $this->postalnumber . "', '" .  $this->postaltown . "')"; // sql statement
-                
-        $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
-
-    }
-    
-    public function delete_customer_adress() {
-        
-        $sql = "SELECT * FROM adresses WHERE username = '" .  $this->username . "'";
-
-        $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
-
-        return $toGet;
-
-    }
-}
-
 class event {
     public $eventID;
     public $eventName;
@@ -381,6 +268,20 @@ class event {
     function __construct() {
         $db_con = new db_connection;
         $this->pdo = $db_con->create_connection();
+    }
+
+    function get_new_eventID() {
+
+        $sql = "SELECT MAX(eventID) FROM events"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+
+        $result = $toGet->fetch();
+        $newID = $result['MAX(eventID)'] + 1;
+
+        return $newID;
+
     }
 
     function get_all_events() {
@@ -411,26 +312,42 @@ class event {
                 VALUES ('" . $this->eventID . "', '" . $this->eventName . "', '" .  $this->premere . "', '" .  $this->finished . "', '" .  $this->director . "', '" .  $this->originalLanguage . "', '" .  $this->info . "', '" .  $this->price . "', '" .  $this->picture . "')"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+        
+        return $test;
         
     }
 
     function update_event() {
+        $sql = "";
 
+        if ($this->finished == null) {
         $sql = "UPDATE events
-                SET eventName = '" . $this->eventName . ",
-                    premere = '" . $this->premere . ",
-                    finished = '" . $this->finished . ",
-                    director = '" . $this->director . ",
-                    originalLanguage = '" . $this->originalLanguage . ",
-                    info = '" . $this->info . ",
-                    price = '" . $this->price . ",
-                    picture = '" . $this->picture . "
+                SET eventName = '" . $this->eventName . "',
+                    premere = '" . $this->premere . "',
+                    director = '" . $this->director . "',
+                    originalLanguage = '" . $this->originalLanguage . "',
+                    info = '" . $this->info . "',
+                    price = '" . $this->price . "',
+                    picture = '" . $this->picture . "'
                 WHERE eventID = '" . $this->eventID . "'"; // sql statement
-                
-        $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        } else {
+            $sql = "UPDATE events
+                    SET eventName = '" . $this->eventName . "',
+                        premere = '" . $this->premere . "',
+                        finished = '" . $this->finished . "',
+                        director = '" . $this->director . "',
+                        originalLanguage = '" . $this->originalLanguage . "',
+                        info = '" . $this->info . "',
+                        price = '" . $this->price . "',
+                        picture = '" . $this->picture . "'
+                    WHERE eventID = '" . $this->eventID . "'"; // sql statement
+        }
         
+        $toDo = $this->pdo->prepare($sql); // prepared statement
+        $test = $toDo->execute(); // execute sql statment
+        
+        return $test;
     }
 
     function delete_event() {
@@ -440,7 +357,9 @@ class event {
                 WHERE eventID = '" . $this->eventID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+        
+        return $test;
     }
 
 }
@@ -454,6 +373,20 @@ class venue {
     function __construct() {
         $db_con = new db_connection;
         $this->pdo = $db_con->create_connection();
+    }
+
+    function get_new_venueID() {
+
+        $sql = "SELECT MAX(venueID) FROM venue"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+
+        $result = $toGet->fetch();
+        $newID = $result['MAX(venueID)'] + 1;
+
+        return $newID;
+
     }
 
     function get_venue() {
@@ -484,18 +417,22 @@ class venue {
                 VALUES ('" . $this->venueID . "', '" . $this->theater . "', '" .  $this->size . "')"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
 
     function update_venue() {
 
-        $sql = "INSERT INTO venue (venueID, theater, size)
-                VALUES ('" . $this->venueID . "', '" . $this->theater . "', '" .  $this->size . "')"; // sql statement
+        $sql = "UPDATE venue
+                SET theater = '" . $this->theater . "',
+                    size = '" . $this->size . "'
+                WHERE venueID = '" . $this->venueID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
 
     function delete_venue() {
@@ -505,19 +442,16 @@ class venue {
                 WHERE venueID = '" . $this->username . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
 
 }
 
 class order {
     public $orderID;
-    public $numberOfTickets;
-    public $eventDateID;
-    public $venueID;
     public $username;
-    public $used;
     private $pdo;
     
     function __construct() {
@@ -538,12 +472,39 @@ class order {
 
     function get_order() {
         
-        $sql = "SELECT * FROM tickets WHERE orderID = '" . $this->orderID . "'"; // sql statement
+        $sql = "SELECT * FROM orders WHERE orderID = '" . $this->orderID . "'"; // sql statement
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
 
         return $toGet;
+    }
+
+    function get_new_orderID() {
+        
+        $sql = "SELECT MAX(orderID) FROM orders"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+        
+        $result = $toGet->fetch();
+
+        $orderID = $result['MAX(orderID)'] + 1;
+
+        return $orderID;
+        
+    }
+
+    function create_order() {
+
+        $sql = "INSERT INTO orders (orderID, username)
+                VALUES ('" . $this->orderID . "', '" .  $this->username . "')"; // sql statement
+                
+        $toDo = $this->pdo->prepare($sql); // prepared statement
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
+
     }
 
     function validate_order() {
@@ -639,10 +600,35 @@ class ticket {
 
     }
 
-    function get_ticket_by_eventDateID_and_customer() {
+    function get_new_ticketID() {
+        
+        $sql = "SELECT MAX(ticketID) FROM tickets"; // sql statement
 
-        $sql = "SELECT * FROM tickets WHERE username = '" . $this->username . "'
-                                        AND eventDateID = '" . $this->eventDateID . "'"; // sql statement
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+        
+        $result = $toGet->fetch();
+
+        $ticketID = $result['MAX(ticketID)'] + 1;
+
+        return $ticketID;
+
+    }
+
+    function get_ticket_by_eventDateID() {
+
+        $sql = "SELECT * FROM tickets WHERE eventDateID = '" . $this->eventDateID . "'"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+
+        return $toGet;
+
+    }
+
+    function get_ticket_by_orderID() {
+
+        $sql = "SELECT * FROM tickets WHERE orderID = '" . $this->orderID . "'"; // sql statement
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
@@ -653,11 +639,13 @@ class ticket {
 
     function create_ticket() {
 
-        $sql = "INSERT INTO tickets (ticketID, eventDateID, username, used)
-                VALUES ('" . $this->ticketID . "', '" . $this->eventDateID . "', '" .  $this->username . "', '" .  $this->used . "')"; // sql statement
+        $sql = "INSERT INTO tickets (ticketID, eventDateID, username, orderID, used)
+                VALUES ('" . $this->ticketID . "', '" . $this->eventDateID . "', '" .  $this->username . "', '" .  $this->orderID . "', '" .  $this->used . "')"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
 
     }
 
@@ -670,7 +658,9 @@ class ticket {
                 WHERE ticketID = '" . $this->ticketID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
 
     }
 
@@ -680,7 +670,9 @@ class ticket {
                 WHERE ticketID = '" . $this->ticketID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
 
     }
     
@@ -691,7 +683,9 @@ class ticket {
                 WHERE ticketID = '" . $this->ticketID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
 
     }
     
@@ -702,7 +696,9 @@ class ticket {
                 WHERE ticketID = '" . $this->ticketID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
 
     }
 }
@@ -719,9 +715,9 @@ class unsoldTicket {
         $this->pdo = $db_con->create_connection();
     }
 
-    function get_tickets_by_eventID() {
+    function get_unsoldtickets_by_eventID() {
 
-        $sql = "SELECT * FROM eventdate WHERE eventID = '" . $this->eventID . "'"; // sql statement
+        $sql = "SELECT * FROM eventDate WHERE eventID = '" . $this->eventID . "'"; // sql statement
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
@@ -729,20 +725,35 @@ class unsoldTicket {
         return $toGet;
 
     }
-    function get_tickets_by_eventDateID() {
 
-        $sql = "SELECT * FROM eventdate WHERE eventDateID = '" . $this->eventDateID . "'"; // sql statement
+    function get_unsoldtickets_eventDateID() {
+
+        $sql = "SELECT * FROM eventDate WHERE eventDateID = '" . $this->eventDateID . "'"; // sql statement
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
 
         return $toGet;
+
+    }
+
+    function get_new_eventDate() {
+
+        $sql = "SELECT MAX(eventDateID) FROM eventDate"; // sql statement
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+
+        $result = $toGet->fetch();
+        $newID = $result['MAX(eventDateID)'] + 1;
+
+        return $newID;
 
     }
 
     function get_unsoldtickets() {
 
-        $sql = "SELECT * FROM eventdate"; // sql statement
+        $sql = "SELECT * FROM eventDate"; // sql statement
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
         $toGet->execute(); // execute sql statment
@@ -753,37 +764,40 @@ class unsoldTicket {
 
     function create_unsoldtickets() {
 
-        $sql = "INSERT INTO eventdate (eventDateID, eventID, venueID, dateAndTime)
+        $sql = "INSERT INTO eventDate (eventDateID, eventID, venueID, dateAndTime)
                 VALUES ('" . $this->eventDateID . "', '" . $this->eventID . "', '" .  $this->venueID . "', '" .  $this->dateAndTime . "')"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
 
     function update_unsoldtickets() {
 
-        $sql = "UPDATE eventdate
+        $sql = "UPDATE eventDate
                 SET eventID = '" . $this->eventID . ",
                     venueID = '" . $this->venueID . ",
                     dateAndTime = '" . $this->dateAndTime . "
                 WHERE eventDateID = '" . $this->eventDateID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
 
     function delete_unsoldtickets() {
 
         //OBS do never delete this unless it was never supposed to be there AND no ticketes have been sold. If tickets have been sold make sure all tickets have been payed back/changed before deleting
 
-        $sql = "DELETE FROM events
-                WHERE eventID = '" . $this->eventID . "'"; // sql statement
+        $sql = "DELETE FROM eventDate
+                WHERE eventDateID = '" . $this->eventDateID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
 }
 

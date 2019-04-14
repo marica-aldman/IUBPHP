@@ -1,7 +1,7 @@
 
 <main>
 
-<?php 
+<?php
     //Main page
     if($page == "home" || $page == "client") {
         //start
@@ -29,24 +29,59 @@
         include_once "confirmation.php";
 
     } elseif ($page == "myTickets") {
-        //My tickets
+        if($_SESSION['userID'] != "None") {
+            //My tickets
 
-        include_once "my_tickets.php";
+            include_once "my_tickets.php";
+        } else {
+            // you shouldn't get to this page without a cookie, something is wrong.
+            $toPage = "myTickets";
+            include_once "login.php";
+        }
 
     } elseif ($page == "myTicket") {
-        //My tickets
+        if($_SESSION['userID'] != "None") {
+            //My tickets
 
-        include_once "my_ticket.php";
+            include_once "my_ticket.php";
+        } else {
+            // you shouldn't get to this page without a cookie, something is wrong.
+            $toPage = "myTicket";
+            include_once "login.php";
+        }
 
     } elseif ($page == "customerProfile") {
-        //My profile
+        if($_SESSION['userID'] != "None") {
+            //My profile
 
-        include_once "customer_profile.php";
+            include_once "customer_profile.php";
+        } else {
+            // you shouldn't get to this page without a cookie, something is wrong.
+            $toPage = "customerProfile";
+            include_once "login.php";
+        }
 
-    } elseif ($page == "changeAdress") {
-        //change adress
+    } elseif ($page == "changeCustomerPassword") {
+        if($_SESSION['userID'] != "None") {
+            //change adress
 
-        include_once "change_adress.php";
+            include_once "change_customer_password.php";
+        } else {
+            // you shouldn't get to this page without a cookie, something is wrong.
+            $toPage = "changeCustomerPassword";
+            include_once "login.php";
+        }
+
+    }  elseif ($page == "changeDetails") {
+        if($_SESSION['userID'] != "None") {
+            //change adress
+
+            include_once "change_customer_details.php";
+        } else {
+            // you shouldn't get to this page without a cookie, something is wrong.
+            $toPage = "changeDetails";
+            include_once "login.php";
+        }
 
     }  elseif ($page == "register") {
         //register user

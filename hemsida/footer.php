@@ -4,7 +4,7 @@
         <footer>
             <hr>
             <div class="footer_column">
-                <p>Something</p>
+                <p>© Faringe Bio</p>
             </div>
             <div class="footer_column">
 <?php   if($mainpage == "admin"){ ?>

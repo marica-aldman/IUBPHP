@@ -1,37 +1,41 @@
-<section>
+<?php
+
+    //get user
+
+    $adminObject = new admin;
+    
+    if($_SESSION['userID'] != "None") {
+        $adminObject->username = $_SESSION['userID'];
+
+        $result = $adminObject->get_admin_by_username();
+
+        while($row = $result->fetch()) {
+    
+?>
+
+<section class="list">
+    <div>
         <div>
-            <div>Användarnamn
-            </div>
-            <div><!-- temp div-->
-            </div>
+            <?php echo $err_message; ?>
+        </div>
+    </div>
+    <div>
+        <div>
+            Användarnamn
         </div>
         <div>
-            <button name="changeAdminPassword" onclick="return changeAdminPassword">Ändra lösenord</button><button name="changeAdminUsername" onclick="return changeAdminUsername">Ändra användarnamn</button>
+            <?php echo $row['username']; ?>
         </div>
-    </section>
-
-    <section>
+    </div>
+    <div class="movie_list">
         <form method="post" action="index.php">
-            <div>
-                <div>
-                    Nytt Användarnamn
-                </div>
-                <div>
-                    <input type="text" name="newAdminUsername">
-                </div>
-            </div>
+            <input type="hidden" name="username" value="<?php echo $row['username']; ?>">
+            <button class="generalButton" name="page" value="changeAdminPassword">Ändra lösenord</button>
         </form>
-    </section>
+    </div>
+</section>
+<?php 
 
-    <section>
-        <form method="post" action="index.php">
-            <div>
-                <div>
-                    Nytt Lösenord
-                </div>
-                <div>
-                    <input type="text" name="newAdminPassword">
-                </div>
-            </div>
-        </form>
-    </section>
+        } //selected data
+    } // if logged in
+?>

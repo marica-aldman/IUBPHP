@@ -1,6 +1,31 @@
 <?php
+
+    //check if we have change the details of the user
+
     $userObject = new user;
-    if(isset($_SESSION['userID'])) {
+
+    if(isset($_POST['saveDetails'])) {
+        //sanitize input
+        $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_MAGIC_QUOTES);
+        $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_MAGIC_QUOTES);
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_EMAIL);
+        
+        $userObject->username = $username;
+        $test = $userObject->check_username();
+        if(!$test) {
+
+        $userObject->firstName = $firstName;
+        $userObject->lastName = $lastName;
+
+        $userObject->update_customer();
+        } else {
+            $err_message = "There is already a user with that email adress.";
+        }
+    }
+
+    //get user
+    
+    if($_SESSION['userID'] != "None") {
         $userObject->username = $_SESSION['userID'];
 
         $result = $userObject->get_customer();
@@ -9,7 +34,12 @@
     
 ?>
 
-<section>
+<section class="customer_profile">
+        <div>
+            <div>
+                <?php echo $err_message; ?>
+            </div>
+        </div>
         <div>
             <div>
                 Förnamn
@@ -35,61 +65,11 @@
             </div>
         </div>
         <div>
-            <div>
-                Adresser
-            </div>
-<?php
-                // get all adresses and create a row each for them
-                $adressObject = new adress;
-                $adressObject->adressID = $_POST['change_adress'];
-
-                $adressResult = $adressObject->get_customer_adresses();
-
-                while($row = $adressResult->fetch()) {
-                    $i++;
-?>
-            <div>
-                <div>
-                    <div>
-                        Adress <?php echo $i; ?>
-                    </div>
-                    <div>
-                        <div>
-                            Gatuadress
-                        </div>
-                        <div>
-                            <?php echo $row2['streetadress']; ?>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Postnummer
-                        </div>
-                        <div>
-                            <?php echo $row2['postalnumber']; ?>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Postort
-                        </div>
-                        <div>
-                            <?php echo $row2['postaltown']; ?>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <button page="changeAdress" value="<?php echo $row2['adressID']; ?>">Ändra Adress</button>
-                        </div>
-                        <div>
-                            <button page="removeAdress" value="<?php echo $row2['adressID']; ?>">Tabort Adress</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<?php
-            }    // all adresses
-?>
+            <form method="post" action="index.php">
+                <input type="hidden" name="username" value="<?php echo $row['username']; ?>">
+                <button name="page" value="changeDetails">Ändra uppgifter</button>
+                <button name="page" value="changeCustomerPassword">Ändra lösenord</button>
+            </form>
         </div>
     </section>
 <?php 

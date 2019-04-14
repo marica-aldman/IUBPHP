@@ -18,7 +18,7 @@ body {
   --footer-text-color: #FFFFFF;
 
   --button-bg-color: #24039e;
-  --button-border-color: #24039e;
+  --button-border-color: #3f23a3;
   --button-highlight-color: #3500f5;
   --button-highlight-border-color: #24039e;
   --button-text-color: #FFFFFF;
@@ -27,9 +27,12 @@ body {
   --user-login-button-bg-color: #24039e;
   --user-login-button-border-color: #000000;
   --user-login-button-highlight-color: #3500f5;
+  --user-login-button-disabled-color: #3500f5;
   --user-login-button-highlight-border-color: #cbbdff;
+  --user-login-button-disabled-border-color: #06001d;
   --user-login-button-text-color: #FFFFFF;
   --user-login-button-text-highlight-color: #FFFFFF;
+  --user-login-button-text-disabled-color: #000000;
   
   --overlay-window-bg-color:  #24039e;
   --overlay-window-text-color: #FFFFFF;
@@ -38,7 +41,12 @@ body {
 
   --input-text-color: #000000;
 
+  
+  --form-text: #FFFFFF;
+  --form-borders: #FFFFFF;
+
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
 }

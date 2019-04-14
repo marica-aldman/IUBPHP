@@ -1,6 +1,6 @@
 
 
-<section>
+<section class="ticket_list">
         <table>
             <thead>
                 <tr>
@@ -33,38 +33,43 @@
         while($order = $result->fetch()) {
 
             $ticketObject = new ticket;
-            $ticketObject->username = $order['username'];
-            $ticketObject->eventDateID = $order['eventDateID'];
-            $result2 = $ticketObject->get_ticket_by_eventDateID_and_customer();
+            $ticketObject->orderID = $order['orderID'];
+            $result2 = $ticketObject->get_ticket_by_orderID();
             $numberOfTickets = 0;
             $ticketIDs = [];
+            $eventDateID = "";
+            $eventID = "";
+            $venueID = "";
 
             while($ticketCount = $result2->fetch()){
                 $numberOfTickets++;
+                $eventDateID = $ticketCount['eventDateID'];
                 array_push($ticketIDs, $ticketCount['ticketID']);
             }
 
             //get the specific screening
 
             $movieDateObject = new unsoldTicket;
-            $movieDateObject->eventDateID = $order['eventDateID'];
-            $result2 = $movieDateObject->get_tickets_by_eventDateID();
+            $movieDateObject->eventDateID = $eventDateID;
+            $result2 = $movieDateObject->get_unsoldtickets_eventDateID();
             $movie = $result2->fetch();
             $dateTime = $movie['dateAndTime'];
             $dateTimeSplit = str_split($dateTime, 10);
             $date = $dateTimeSplit[0];
             $time = $dateTimeSplit[1];
+            $eventID = $movie['eventID'];
+            $venueID = $movie['venueID'];
 
             //get the event
 
-            $singleMovieObject->eventID = $order['eventID'];
+            $singleMovieObject->eventID = $eventID;
             $result3 = $singleMovieObject->get_event();
             $event = $result3->fetch();
 
             //get the venue
 
             $venueObject = new venue;
-            $venueObject->venueID = $order['venueID'];
+            $venueObject->venueID = $venueID;
             $result4 = $venueObject->get_venue();
             $venue = $result4->fetch();
  
@@ -93,9 +98,9 @@
                     <td>
                         <form method="post" action="index.php">
                             <input type="hidden" name="page" value="myTicket">
-                            <input type="hidden" name="eventDate" value="<?php echo $movie['eventDateID']; ?>">
-                            <input type="hidden" name="event" value="<?php echo $event['eventID']; ?>">
-                            <input type="hidden" name="venue" value="<?php echo $venue['venueID']; ?>">
+                            <input type="hidden" name="eventDateID" value="<?php echo $eventDateID; ?>">
+                            <input type="hidden" name="event" value="<?php echo $eventID; ?>">
+                            <input type="hidden" name="venue" value="<?php echo $venueID; ?>">
 <?php
                             for($i=0;$i<$numberOfTickets;$i++){
 ?>
@@ -103,7 +108,7 @@
 <?php
                             }
 ?>
-                            <button name="showTicket">Visa Biljetter</button>
+                            <button class="generalButton" name="showTicket">Visa Biljetter</button>
                         </form>
                     </td>
                 </tr>

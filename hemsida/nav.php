@@ -18,114 +18,69 @@
 $page = "";
 $showMovie = "none";
 $mainpage = "client";
-$headerImg = "#";
-
+$headerImg = "img/logo_red.png";
+$toPage = "";
 
 //check for a logg out
 
-if (isset($_POST['toPage'])) {
-    $page = $_POST['toPage'];
-    if(isset($_POST['showMovieNav'])){
-        $showMovie = $_POST['showMovieNav'];
-    } else {
+if(isset($_POST['showMovieNav'])){
+    $showMovie = $_POST['showMovieNav'];
+    unset($_POST['showMovieNav']);
+} else {
     $showMovie = "none";
-    }
-    $mainpage = "client";
 }
+
 //make sure someone regestering returns to the page they started on
 
-if (isset($_POST['fromPage'])) {
-    $fromPage = $_POST['fromPage'];
-}
 if(isset($_POST['page'])) {
+    $page = $_POST['page'];
     // check if it is one of the admin pages
-    if($_POST['page'] == "admin" || $_POST['page'] == "addEvent" || $_POST['page'] == "addVenue" || $_POST['page'] == "addTickets" || $_POST['page'] == "validateTicket" || $_POST['page'] == "adminMyProfile" || $_POST['page'] == "adminLoggedOut" || $_POST['page'] == "adminLogIn"){ echo $_SESSION['userType'];
-        // check wich admin page
-        switch($_POST['page']) {
-            case "addEvent":
-                $page = "addEvent";
-                break;
-            case "addVenue":
-                $page = "addVenue";
-                break;
-            case "addTickets":
-                $page = "addTickets";
-                break;
-            case "validateTicket":
-                $page = "validateTicket";
-                break;
-            case "adminMyProfile":
-                $page = "adminMyProfile";
-                break;
-            case "adminLoggedOut":
-                $page = "adminLoggedOut";
-                break;
-            case "adminLogIn":
-                $page = "adminLogIn";
-                break;
-            default:
-                $page = "admin";
-        }
+    if($page == "admin" || $page == "admins" || $page == "addEvent"|| $page == "changeEvent" || $page == "addVenue"|| $page == "changeVenue" || $page == "addTickets"|| $page == "changeTickets" || $page == "validateTicket" || $page == "adminMyProfile" || $page == "adminLogIn" || $page == "changeAdminPassword" || $page == "event" || $page == "venue" || $page == "tickets" || $page == "newAdmin"){ 
         $mainpage = "admin";
-        $headerImg = "#";
-
-        if($page == "adminLoggedOut") {
-            //logout and
-            $page="admin";
-        }
+        $headerImg = "img/logo_red.png";
 
     //otherwise it isnt an admin page
     } else {
-        //check which page
-        switch($_POST['page']) {
-            case "home":
-                $page = "home";
-                break;
-            case "searchMovies":
-                $page = "searchMovies";
-                break;
-            case "movie":
-                $showMovie = $_POST['showMovie'];
-                $page = "movie";
-                break;
-            case "checkout":
-                $page = "checkout";
-                break;
-            case "confirmation":
-                $page = "confirmation";
-                break;
-            case "myTickets":
-                $page = "myTickets";
-                break;
-            case "myTicket":
-                $page = "myTicket";
-                break;
-            case "customerProfile":
-                $page = "customerProfile";
-                break;
-            case "logIn":
-                $page = "logIn";
-                break;
-            case "register":
-                $page = "register";
-                break;
-            default:
-                $page = "client";
+        //if a specific movie is being shown
+        if($page == "movie") {
+            $showMovie = $_POST['showMovie'];
         }
 
         $mainpage = "client";
-        $headerImg = "#";
-
-        if($page == "loggedOut") {
-            //logout and
-            $page="client";
-        }
+        $headerImg = "img/logo_red.png";
 
     }
+
+    if (isset($_POST['toPage'])) {
+        if($page == "admin") {
+            $page = $_POST['toPage'];
+            $mainpage = "admin";
+        } else {
+            $toPage = $_POST['toPage'];
+            $mainpage = "client";
+            $headerImg = "img/logo_red.png";
+        }
+        unset($_POST['toPage']);
+    }
+
+    unset($_POST['page']);
 } else {
+    if (isset($_POST['toPage'])) {
+        if($page == "admin") {
+            $page = $_POST['toPage'];
+            $mainpage = "admin";
+        } else {
+            $toPage = $_POST['toPage'];
+            $page = "client";
+            $mainpage = "client";
+            $headerImg = "img/logo_red.png";
+        }
+        unset($_POST['toPage']);
+    } else {
         $mainpage = "client";
-        $headerImg = "#";
+        $headerImg = "img/logo_red.png";
         $page="client";
+    }
 }
 
 ?>
@@ -146,7 +101,15 @@ if(isset($_POST['page'])) {
             <i class="fas fa-shopping-cart" id="shopping_cart_icon"></i>
         </div>
 
-        <div class="noOfTicketsCircle <?php if($basketTotalProductTypes==0){ echo "hidden";} ?>" id="noOfTicketsIcon">
+        <div class="noOfTicketsCircle <?php 
+            if(isset($_POST['order'])) {
+                    echo "hidden";
+            } else {
+                if($basketTotalProductTypes==0){
+                    echo "hidden";
+                }
+            }
+            ?>" id="noOfTicketsIcon">
             &nbsp;<?php echo $basketTotalProductTypes; ?>
         </div>
 
@@ -159,6 +122,8 @@ if(isset($_POST['page'])) {
                         </th>
                         <th>Antal
                         </th>
+                        <th>Datum
+                        </th>
                         <th>Pris
                         </th>
                         <th>
@@ -167,50 +132,70 @@ if(isset($_POST['page'])) {
                 </thead>
                 <tbody id="shoppingBasketTable">
 <?php 
-                    if($basketTotalProductTypes>0) {
-                        $i=0;
-                        for($i=1; isset($_COOKIE["eventID" . $i]); $i++) {
-                            $singleMovieObject->eventID = $_COOKIE["eventID" . $i];
-                            $result = $singleMovieObject->get_event();
-                            $row = $result->fetch();
-                        
+                    if(isset($_POST['order'])) {
+
+                    } else {
+                        if($basketTotalProductTypes>0) {
+                            $i=0;
+                            for($i=1; isset($_COOKIE["eventDateID" . $i]); $i++) {
+                                $showingObject->eventDateID = $_COOKIE["eventDateID" . $i];
+                                $result = $showingObject->get_unsoldtickets_eventDateID();
+
+                                $row = $result->fetch();
+                                    
+                                $singleMovieObject->eventID = $row['eventID'];
+                                $result2 = $singleMovieObject->get_event();
+                                $row2 = $result2->fetch();
+
+                                $venueObject->venueID = $row['venueID'];
+                                $result3 = $venueObject->get_venue();
+                                $row3 = $result3->fetch();
+
+                                $dateAndTime = $row['dateAndTime'];
+                                $dateTimeSplit = str_split($dateAndTime, 10);
+                                $date = $dateTimeSplit[0];
+                                $time = $dateTimeSplit[1];
+                    
 ?>
                     <tr>
-                        <td><?php echo $row['eventName']; ?>
+                        <td><?php echo $row2['eventName']; ?>
                         </td>
                         <td>
-                            <button id="remove<?php echo $i; ?>" onclick="return removeTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)"><</button>
-                            <input id="hidden_noOfTickets<?php echo $i; ?>" type="hidden" name="numberOfTickets<?php echo $row['eventID']; ?>" value="<?php echo $_COOKIE["noOfTickets" . $i]; ?>">
+                            <button class="moreOrLess" id="remove<?php
+                             echo $i; 
+                             ?>" onclick="<?php if($page == "checkout") {?>removeTicketCheckout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);<?php } ?>removeTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)"><</button>
+                            <input id="hidden_noOfTickets<?php echo $i; ?>" type="hidden" name="numberOfTickets<?php echo $i; ?>" value="<?php echo $_COOKIE["noOfTickets" . $i]; ?>">
                             <div class="basketText noOfTickets" id="noOfTickets<?php echo $i; ?>"><?php echo $_COOKIE["noOfTickets" . $i]; ?></div>
-                            <button id="add<?php echo $i; ?>" onclick="return addTicket(<?php echo $_COOKIE["noOfTickets" . $i]; ?>, <?php echo $row['eventID']; ?>, <?php echo $row['price']; ?>, <?php echo $i; ?>)">></button>
+                            <button class="moreOrLess" id="add<?php echo $i; ?>" onclick="<?php if($page == "checkout") {?>addTicketCheckout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);<?php } ?>addTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)">></button>
                         </td>
-                        <td ><div class="basketText" id="price<?php echo $i; ?>"><?php $price = (int) $row['price'] * (int) $_COOKIE["noOfTickets" . $i]; echo $price; ?></div>
+                        <td><?php echo $date; ?>
+                        </td>
+                        <td ><div class="basketText" id="price<?php echo $i; ?>"><?php $price = (int) $row2['price'] * (int) $_COOKIE["noOfTickets" . $i]; echo $price; ?></div>
                         </td>
                         <td>
                             <form method="post" action="index.php">
-                                <input type="hidden" name="page" value="movie">
-                                <input type="hidden" name="showMovie" id="movieDelete" value="<?php echo $row['eventID']; ?>" class="movieIdForCheckout">
-                                <input type="hidden" name="cartReload" id="cartReload" value="yes">
-                                <button id="deleteButton<?php echo $i; ?>" onclick="return deleteTicket(<?php echo $i; ?>)">X</button>
+                                <input type="hidden" name="page" value="<?php echo $page; ?>">
+                                <input type="hidden" name="showMovie" id="movieDelete<?php echo $i; ?>" value="<?php echo $row['eventDateID']; ?>" class="movieIdForCheckout">
+                                <input type="hidden" name="cartReload" id="cartReload<?php echo $i; ?>" value="yes">
+                                <button class="deleteButton" id="deleteButton<?php echo $i; ?>" onclick="return deleteTicket(<?php echo $i; ?>)">X</button>
                             </form>
                         </td>
                     </tr>
 
 
 <?php 
+                            }
                         }
                     }
+                    unset($_POST['buyTicket']);
 ?>
-                    <tr>
-                        <td colspan=3>
-                            <form method="post" action="index.php">
-                                <input type="hidden" name="page" value="checkout">
-                                <button onclick="return toCheckout()">Till Kassan</button>
-                            </form>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+            
+            <form method="post" action="index.php">
+                <input type="hidden" name="page" value="checkout">
+                <button class="loginButton" <?php if($basketTotalProductTypes <= 0 || $basketTotalProductTypes == null) { echo "disabled"; } else { echo 'return toCheckout()"'; } ?>>Till Kassan</button>
+            </form>
         </div>
         
         <div class="user_icon" id="user_icon_div" onclick="open_user_window()">
@@ -221,62 +206,67 @@ if(isset($_POST['page'])) {
                 <div class="input-field">
                     <input type="hidden" name="page" value="<?php echo $page; ?>">
                     <input type="hidden" name="client_login" value="yes">
-                <span></span>
+                    <span><?php echo $err_message_login . " " . $err_message; ?></span>
                 </div>
                 <div class="input-field">
                     <label for="username">Användarnamn</label>
-                    <input type="text" name="username" id="user_login_username" onfocusout="validateNavUsername();validateNavForm()">
-                <span></span>
+                    <input type="text" name="username" id="user_login_username" onkeyup="validateNavUsername();validateNavForm()" onpaste="validateNavUsername();validateNavForm()" onclick="validateNavUsername();validateNavForm()">
+                    <span></span>
                 </div>
                 <div class="input-field">
                     <label for="password">Lösenord</label>
-                    <input type="text" name="password" id="user_login_password" onfocusout="validateNavPassword();validateNavForm()">
+                    <input type="password" name="password" id="user_login_password" onkeyup="validateNavPassword();validateNavForm()" onpaste="validateNavPassword();validateNavForm()" onclick="validateNavPassword();validateNavForm()">
                     <span></span>
                 </div>
-                <input type="submit" name="customer_login" value="Logga in" class="user_login_button" id="submitButton" disabled>
+                <div>
+                    <input type="submit" name="customer_login" value="Logga in" class="user_login_button" id="submitButton" disabled>
+                </div>
             </form>
-            <p>
+            <p class="register_text">
                 Om du inte har konto så kan du registrera dig här.
             </p>
             <form method="post" action="index.php">
                 <input type="hidden" name="page" value="register">
-                <input type="hidden" name="fromPage" value="<?php echo $page; ?>">
-                <button class="user_login_button">Registrera dig</button>
+                <input type="hidden" name="toPage" value="<?php echo $page; ?>">
+                <button class="register_button">Registrera dig</button>
             </form>
         </div>
         
-<?php } echo $_SESSION['userType']; ?>
+<?php }  ?>
     </header>
-<?php ?>
 
     <nav>
         <ul>
-<?php   if($mainpage=="admin"){   echo $_SESSION['userType'];
+<?php   if($mainpage=="admin"){
             if(isset($_SESSION['userType']) && $_SESSION['userType'] == "Admin") { ?>
             <form method="post" action="index.php">
                 <li>
-                    <button class="navbutton" name="page" value="addEvent">Lägg till Event</button>
+                    <button class="navbutton" name="page" value="event">Filmer</button>
                 </li>
                 <li>
-                    <button class="navbutton" name="page" value="addVenue">Lägg till Salong</button>
+                    <button class="navbutton" name="page" value="venue">Salong</button>
                 </li>
                 <li>
-                    <button class="navbutton" name="page" value="addTickets">Lägg till Biljetter</button>
+                    <button class="navbutton" name="page" value="tickets">Visningar</button>
                 </li>
                 <li>
                     <button class="navbutton" name="page" value="validateTicket">Verifiera Biljett</button>
                 </li>
                 <li>
+                    <button class="navbutton" name="page" value="admins">Administratörer</button>
+                </li>
+                <li>
                     <button class="navbutton" name="page" value="adminMyProfile">Min Profil</button>
                 </li>
-                <li id="login">
-                    <button class="navbutton" name="page" value="adminLoggedOut">Logga Ut</button>
+                <li>
+                    <input type="hidden" name="toPage" value="admin">
+                    <button class="navbutton" name="adminLoggedOut">Logga Ut</button>
                 </li>
             </form>
 <?php       } else { ?>
             <form method="post" action="index.php">
-                <li id="logout">
-                    <button class="navbutton" name="page" value="adminLogIn"><?php echo $_SESSION['userType']; ?> Logga In</button>
+                <li>
+                    <button class="navbutton" name="page" value="adminLogIn">Logga In</button>
                 </li>
             </form>
 <?php       }
@@ -285,7 +275,7 @@ if(isset($_POST['page'])) {
 ?>        
             <form method="post" action="index.php">
                 <li>
-                    <button class="navbutton" name="page" value="home"><?php echo $_SESSION['userType']; ?>Hem</button>
+                    <button class="navbutton" name="page" value="home">Hem</button>
                 </li>
                 <li>
                     <button class="navbutton" name="page" value="searchMovies">Filmer</button>
@@ -296,7 +286,7 @@ if(isset($_POST['page'])) {
                 <li>
                     <button class="navbutton" name="page" value="customerProfile">Min profil</button>
                 </li>
-                <li id="logout">
+                <li>
 <?php 
     if($page == "movie") {
 ?>
@@ -324,4 +314,4 @@ if(isset($_POST['page'])) {
         }
 ?>
         </ul>
-    </nav>
+    </nav><?php echo $page; ?>

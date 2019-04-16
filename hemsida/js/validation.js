@@ -9,8 +9,8 @@ var passwordRepeat = document.getElementById("passwordRepeat");
 var oldPassword = document.getElementById("oldPassword");
 
 //  //navLogin
-var username1 = document.getElementById("user_login_username"); //username in nav login
-var password1 = document.getElementById("user_login_password"); //password in nav login
+var username1 = document.getElementById("userLoginUsername"); //username in nav login
+var password1 = document.getElementById("userLoginPassword"); //password in nav login
 
 //  //checkout login & adminlogin
 var username2 = document.getElementById("username"); // username in checkout
@@ -74,53 +74,53 @@ var red = "#da0000";
 
 //validate tickets and orders
 
-function validateOrder() {
+function validate_order() {
     //check if empty
-    if (checkIfEmpty(orderID1, 2)) {
+    if (check_if_empty(orderID1, 2)) {
         return;
     }
     //check that it only contains numbers
-    if (!containsCharacterSet(orderID1, 5)) {
+    if (!contains_character_set(orderID1, 5)) {
         return;
     }
 }
 
-function invalidateOrder() {
+function invalidate_order() {
     //check if empty
-    if (checkIfEmpty(orderID2, 2)) {
+    if (check_if_empty(orderID2, 2)) {
         return;
     }
     //check that it only contains numbers
-    if (!containsCharacterSet(orderID2, 5)) {
+    if (!contains_character_set(orderID2, 5)) {
         return;
     }
 }
 
-function validateTicket() {
+function validate_ticket() {
     //check if empty
-    if (checkIfEmpty(ticketID1, 2)) {
+    if (check_if_empty(ticketID1, 2)) {
         return;
     }
     //check that it only contains numbers
-    if (!containsCharacterSet(ticketID1, 5)) {
+    if (!contains_character_set(ticketID1, 5)) {
         return;
     }
 }
 
-function invalidateTicket() {
+function invalidate_ticket() {
     //check if empty
-    if (checkIfEmpty(ticketID2, 2)) {
+    if (check_if_empty(ticketID2, 2)) {
         return;
     }
     //check that it only contains numbers
-    if (!containsCharacterSet(ticketID2, 5)) {
+    if (!contains_character_set(ticketID2, 5)) {
         return;
     }
 }
 
 // change customer data
 
-function checkValidationCustomerDetails() {
+function check_validation_customer_details() {
 
     if (firstName.classList.contains("valid") && lastName.classList.contains("valid") && email.classList.contains("valid")) {
         submitButton.disabled = false;
@@ -131,7 +131,7 @@ function checkValidationCustomerDetails() {
 
 //register
 
-function checkValidationRegister() {
+function check_validation_register() {
 
     if (firstName.classList.contains("valid") && lastName.classList.contains("valid") && email.classList.contains("valid") && password.classList.contains("valid") && passwordRepeat.classList.contains("valid")) {
         submitButton.disabled = false;
@@ -140,46 +140,55 @@ function checkValidationRegister() {
     }
 }
 
-function validateFirstName() {
+function check_validation_register_admin() {
+
+    if (email.classList.contains("valid") && password.classList.contains("valid") && passwordRepeat.classList.contains("valid")) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+}
+
+function validate_first_name() {
     //check if empty
-    if (checkIfEmpty(firstName, 2)) {
+    if (check_if_empty(firstName, 2)) {
         return;
     }
     //check that it only contains letters
-    if (!checkIfOnlyLetters(firstName)) {
+    if (!check_if_only_letters(firstName)) {
         return;
     }
 }
 
-function validateLastName() {
+function validate_last_name() {
     //check if empty
-    if (checkIfEmpty(lastName, 2)) {
+    if (check_if_empty(lastName, 2)) {
         return;
     }
     //check that it only contains letters
-    if (!checkIfOnlyLetters(lastName)) {
+    if (!check_if_only_letters(lastName)) {
         return;
     }
 }
 
-function validateEmail() {
+function validate_email() {
     //check if empty
-    if (checkIfEmpty(email, 2)) {
+    if (check_if_empty(email, 2)) {
         return;
     }
     //check that it is a valid email adress
-    if (!containsCharacterSet(email, 4)) {
+    if (!contains_character_set(email, 4)) {
         return;
     }
 }
 
-function validatePassword() {
+function validate_password() {
     //check if empty
-    if (checkIfEmpty(password, 2)) {
+    if (check_if_empty(password, 2)) {
         return;
     }
     //check that it is long enough, first number is minLength, second is maxLength
-    if (!meetsLength(password, 8, 32)) {
+    if (!meets_length(password, 8, 32)) {
         return;
     }
     //check that it contains:
@@ -188,25 +197,25 @@ function validatePassword() {
     // 3 - large, small letters and a number
     // 4 - contains email pattern
     // 5 - numbers
-    if (!containsCharacterSet(password, 3)) {
+    if (!contains_character_set(password, 3)) {
         return;
     }
 
     return true;
 }
 
-function validatePasswordRepeat() {
+function validate_password_repeat() {
 
     if (password.className === "invalid") {
-        setInvalid(passwordRepeat, "Lösenordet måste vara giltigt.");
+        set_invalid(passwordRepeat, "Lösenordet måste vara giltigt.");
         return;
     }
     //check that it is the same as Password
     if (password.value !== passwordRepeat.value) {
-        setInvalid(passwordRepeat, "Inte samma lösenord.");
+        set_invalid(passwordRepeat, "Inte samma lösenord.");
         return;
     } else {
-        setValid(passwordRepeat);
+        set_valid(passwordRepeat);
         return;
     }
     return true;
@@ -214,7 +223,7 @@ function validatePasswordRepeat() {
 
 //nav
 
-function validateNavForm() {
+function validate_nav_form() {
     if (username1.classList.contains("valid") && password1.classList.contains("valid")) {
         submitButton1.disabled = false;
     } else {
@@ -222,27 +231,27 @@ function validateNavForm() {
     }
 }
 
-function validateNavUsername() {
+function validate_nav_username() {
     //check if empty
-    if (checkIfEmpty(username1, 1)) {
+    if (check_if_empty(username1, 1)) {
         return;
     }
     //check that it is a valid email adress
-    if (!containsCharacterSet(username1, 4)) {
+    if (!contains_character_set(username1, 4)) {
         return;
     }
 }
 
-function validateNavPassword() {
+function validate_nav_password() {
     //check if empty
-    if (checkIfEmpty(password1, 1)) {
+    if (check_if_empty(password1, 1)) {
         return;
     }
 }
 
 //checkout login & admin login
 
-function validateLoginForm() {
+function validate_login_form() {
     if (username2.classList.contains("valid") && password.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
@@ -250,27 +259,27 @@ function validateLoginForm() {
     }
 }
 
-function validateLoginUsername() {
+function validate_login_username() {
     //check if empty
-    if (checkIfEmpty(username2, 1)) {
+    if (check_if_empty(username2, 1)) {
         return;
     }
     //check that it is a valid email adress
-    if (!containsCharacterSet(username2, 4)) {
+    if (!contains_character_set(username2, 4)) {
         return;
     }
 }
 
-function validateLoginPassword() {
+function validate_login_password() {
     //check if empty
-    if (checkIfEmpty(password, 1)) {
+    if (check_if_empty(password, 1)) {
         return;
     }
 }
 
 //change password
 
-function validateNewPasswordForm() {
+function validate_new_password_form() {
     if (oldPassword.classList.contains("valid") && password.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
@@ -278,192 +287,100 @@ function validateNewPasswordForm() {
     }
 }
 
-function validateOldPassword() {
+function validate_old_password() {
     //check if empty
-    if (checkIfEmpty(oldPassword, 1)) {
+    if (check_if_empty(oldPassword, 1)) {
         return;
     }
 }
 
-function validateNewPassword() {
+function validate_new_password() {
     //check if empty
-    if (checkIfEmpty(password, 2)) {
+    if (check_if_empty(password, 2)) {
         return;
     }
     //check that it is long enough, first number is minLength, second is maxLength
-    if (!meetsLength(password, 8, 32)) {
+    if (!meets_length(password, 8, 32)) {
         return;
     }
     //check containts
-    if (!containsCharacterSet(password, 3)) {
+    if (!contains_character_set(password, 3)) {
         return;
     }
 }
 
-function validateRepeatPassword() {
+function validate_repeat_password() {
     if (password.className === "invalid") {
-        setInvalid(passwordRepeat, "Lösenordet måste vara giltigt.");
+        set_invalid(passwordRepeat, "Lösenordet måste vara giltigt.");
         return;
     }
     //check that it is the same as Password
     if (password.value !== passwordRepeat.value) {
-        setInvalid(passwordRepeat, "Inte samma lösenord.");
+        set_invalid(passwordRepeat, "Inte samma lösenord.");
         return;
     } else {
-        setValid(passwordRepeat);
+        set_valid(passwordRepeat);
         return;
     }
     return true;
 }
 
-// change ticket admin
-
-function validateTicketForm() {
-    if (ticketID.classList.contains("valid") && eventID.classList.contains("valid") && eventDateID.classList.contains("valid") && venueID.classList.contains("valid") && date.classList.contains("valid") && time.classList.contains("valid") && username.classList.contains("valid") && used.classList.contains("valid")) {
-        submitButton.disabled = false;
-    } else {
-        submitButton.disabled = true;
-    }
-}
-
-function validateTicketID() {
-    //check if empty
-    if (checkIfEmpty(ticketID, 2)) {
-        return;
-    }
-}
-
-function validateEventID() {
-    //check if empty
-    if (checkIfEmpty(eventID, 2)) {
-        return;
-    }
-}
-
-function validateEventDateID() {
-    //check if empty
-    if (checkIfEmpty(eventDateID, 2)) {
-        return;
-    }
-}
-
-function validateVenueID() {
-    //check if empty
-    if (checkIfEmpty(venueID, 2)) {
-        return;
-    }
-}
-
-function validateDate() {
-    //check if empty
-    if (checkIfEmpty(date, 2)) {
-        return;
-    }
-}
-
-function validateTime() {
-    //check if empty
-    if (checkIfEmpty(time, 2)) {
-        return;
-    }
-}
-
-function validateUsed() {
-    //check if empty
-    if (checkIfEmpty(used, 2)) {
-        return;
-    }
-}
-
-function validateUsername() {
-    //check if empty
-    if (checkIfEmpty(username, 2)) {
-        return;
-    }
-
-    //check that it is an email
-    if (!containsCharacterSet(username, 4)) {
-        return;
-    }
-}
-
 //add & change event
 
-function validateAddEvent() {
-    if (eventName.classList.contains("valid") && director.classList.contains("valid") && originalLanguage.classList.contains("valid") && info.classList.contains("valid") && price.classList.contains("valid") && picture.classList.contains("valid")) {
+function validate_add_event() {
+    if (eventName.classList.contains("valid") && director.classList.contains("valid") && originalLanguage.classList.contains("valid") && info.classList.contains("valid") && price.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;
     }
 }
 
-function validateChangeEvent() {
-    if (eventName.classList.contains("valid") && director.classList.contains("valid") && originalLanguage.classList.contains("valid") && info.classList.contains("valid") && price.classList.contains("valid") && picture.classList.contains("valid")) {
+function validate_change_event() {
+    if (eventName.classList.contains("valid") && director.classList.contains("valid") && originalLanguage.classList.contains("valid") && info.classList.contains("valid") && price.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;
     }
 }
 
-function validateEventName() {
+function validate_event_name() {
     //check if empty
-    if (checkIfEmpty(eventName, 2)) {
+    if (check_if_empty(eventName, 2)) {
         return;
     }
 }
 
-function validatePremere() {
+function validate_director() {
     //check if empty
-    if (checkIfEmpty(premere, 2)) {
+    if (check_if_empty(director, 2)) {
         return;
     }
 }
 
-function validateFinished() {
+function validate_original_language() {
     //check if empty
-    if (checkIfEmpty(finished, 2)) {
+    if (check_if_empty(originalLanguage, 2)) {
         return;
     }
 }
 
-function validateDirector() {
+function validate_info() {
     //check if empty
-    if (checkIfEmpty(director, 2)) {
+    if (check_if_empty(info, 2)) {
         return;
     }
 }
 
-function validateOriginalLanguage() {
+function validate_price() {
     //check if empty
-    if (checkIfEmpty(originalLanguage, 2)) {
-        return;
-    }
-}
-
-function validateInfo() {
-    //check if empty
-    if (checkIfEmpty(info, 2)) {
-        return;
-    }
-}
-
-function validatePrice() {
-    //check if empty
-    if (checkIfEmpty(price, 2)) {
-        return;
-    }
-}
-
-function validatePicture() {
-    //check if empty
-    if (checkIfEmpty(picture, 2)) {
+    if (check_if_empty(price, 2)) {
         return;
     }
 }
 
 //add & change venue
 
-function validateVenue() {
+function validate_venue() {
     if (theater.classList.contains("valid") && size.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
@@ -471,30 +388,23 @@ function validateVenue() {
     }
 }
 
-function validateTheater() {
+function validate_theater() {
     //check if empty
-    if (checkIfEmpty(theater, 2)) {
+    if (check_if_empty(theater, 2)) {
         return;
     }
 }
 
-function validateSize() {
+function validate_size() {
     //check if empty
-    if (checkIfEmpty(size, 2)) {
+    if (check_if_empty(size, 2)) {
         return;
     }
 }
+
 //add & change tickets to sell
 
-function validateTicketsToSell() {
-    if (eventID.classList.contains("valid") && eventDateID.classList.contains("valid") && venueID.classList.contains("valid") && date.classList.contains("valid") && time.classList.contains("valid")) {
-        submitButton.disabled = false;
-    } else {
-        submitButton.disabled = true;
-    }
-}
-
-function validateAddTickets() {
+function validate_add_tickets() {
     if (time.classList.contains("valid")) {
         submitButton.disabled = false;
     } else {
@@ -502,45 +412,35 @@ function validateAddTickets() {
     }
 }
 
-function validateTime() {
+function validate_time() {
     //check if empty
-    if (checkIfEmpty(time, 2)) {
+    if (check_if_empty(time, 2)) {
         return;
-    }
-}
-
-// change admin data
-
-function validateAdminData() {
-    if (username2.classList.contains("valid") && password.classList.contains("valid") && passwordRepeat.classList.contains("valid")) {
-        submitButton.disabled = false;
-    } else {
-        submitButton.disabled = true;
     }
 }
 
 //utility functions
 
-function checkIfEmpty(field, needed) {
-    if (isEmpty(field.value.trim())) {
+function check_if_empty(field, needed) {
+    if (is_empty(field.value.trim())) {
         //set field invalid
         if (needed == 1) {
             // case = 1, if a person chooses to not log in dont ask for input in the field
-            setInvalid(field, "");
+            set_invalid(field, "");
             return true;
         } else {
             // case = 2, for all required fields in forms
-            setInvalid(field, "Fältet kan inte vara tomt");
+            set_invalid(field, "Fältet kan inte vara tomt");
             return true;
         }
     } else {
         //set field to valid
-        setValid(field);
+        set_valid(field);
         return false;
     }
 }
 
-function isEmpty(value) {
+function is_empty(value) {
     if (value === "") {
         return true;
     } else {
@@ -548,82 +448,82 @@ function isEmpty(value) {
     }
 }
 
-function setInvalid(field, message) {
+function set_invalid(field, message) {
     field.classList.add("invalid");
     field.classList.remove("valid");
     field.nextElementSibling.innerHTML = message;
     field.nextElementSibling.style.color = red;
 }
 
-function setValid(field) {
+function set_valid(field) {
     field.classList.remove("invalid");
     field.classList.add("valid");
     field.nextElementSibling.innerHTML = '';
 }
 
-function checkIfOnlyLetters(field) {
+function check_if_only_letters(field) {
     if (/^[a-zA-Z ]+$/.test(field.value)) {
-        setValid(field);
+        set_valid(field);
         return true;
     } else {
-        setInvalid(field, "Fältet kan bara innehålla bokstäver");
+        set_invalid(field, "Fältet kan bara innehålla bokstäver");
         return false;
     }
 }
 
-function meetsLength(field, minLength, maxLength) {
+function meets_length(field, minLength, maxLength) {
     if (field.value.length >= minLength && field.value.length <= maxLength) {
-        setValid(field);
+        set_valid(field);
         return true;
     } else if (field.value.length < minLength) {
-        setInvalid(field, "The password has to be atleast " + minLength + " characters long.")
+        set_invalid(field, "The password has to be atleast " + minLength + " characters long.")
         return false;
     } else if (field.value.length > maxLength) {
-        setInvalid(field, "The password can't be longer than " + maxLength + " characters.")
+        set_invalid(field, "The password can't be longer than " + maxLength + " characters.")
         return false;
     }
     return false;
 }
 
-function containsCharacterSet(field, characterSetNumber) {
+function contains_character_set(field, characterSetNumber) {
     var regEx;
     switch (characterSetNumber) {
         case 1:
             // letters
             regEx = /(?=.*[a-zA-Z])/;
             message = "Fältet måste innehålla minst en bokstav.";
-            return matchWithRegEx(regEx, field, message);
+            return match_with_reg_ex(regEx, field, message);
         case 2:
             // letters and numbers
             regEx = /(?=.*\d)(?=.*[a-zA-Z])/;
             message = "Fältet måste innehålla både bokstäver och siffror.";
-            return matchWithRegEx(regEx, field, message);
+            return match_with_reg_ex(regEx, field, message);
         case 3:
             // large and small letters and a number
             regEx = regEx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/;
             message = "Fältet måste innehålla minst en stor och en liten bokstav samt en siffra.";
-            return matchWithRegEx(regEx, field, message);
+            return match_with_reg_ex(regEx, field, message);
         case 4:
             // contains email pattern
             regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             message = "Inte en giltig emailadress.";
-            return matchWithRegEx(regEx, field, message);
+            return match_with_reg_ex(regEx, field, message);
         case 5:
             // numbers
             regEx = /(?=.*\d)/;
             message = "Fältet kan endast innehålla siffror.";
-            return matchWithRegEx(regEx, field, message);
+            return match_with_reg_ex(regEx, field, message);
         default:
             return false;
     }
 }
 
-function matchWithRegEx(regEx, field, message) {
+function match_with_reg_ex(regEx, field, message) {
     if (field.value.match(regEx)) {
-        setValid(field);
+        set_valid(field);
         return true;
     } else {
-        setInvalid(field, message);
+        set_invalid(field, message);
         return false;
     }
 }

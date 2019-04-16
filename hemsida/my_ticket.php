@@ -1,6 +1,5 @@
 <?php
     if(isset($_POST['showTicket'])) {
-    
         //get the specific screening
 
         $movieDateObject = new unsoldTicket;
@@ -30,7 +29,7 @@
             $ticketID = $_POST['ticketID' . $i];
 ?>
 
-<section class="single_ticket">
+<section class="singleTicket">
         <table>
             <tbody>
                 <!-- temp row-->

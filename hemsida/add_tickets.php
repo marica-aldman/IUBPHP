@@ -19,16 +19,17 @@
         $movieDateObject->eventID = $event;
         $movieDateObject->dateAndTime = $date . " " . $time;
         
-        $success = $venueObject->update_unsoldtickets();
+        $success = $movieDateObject->create_unsoldtickets();
         if($success) {
             $errOrNot = "Klart";
         } else {
             $errOrNot = "Nått gick fel.";
         } 
+        unset($_POST['saveUnsoldTickets']);
     }
 ?>
 
-<section class="add_and_change">
+<section class="addAndChange">
         <div>
             <?php echo $errOrNot; ?>&nbsp;
         </div>
@@ -42,7 +43,7 @@
                         <td>
 <?php  
     if(isset($_POST['saveUnsoldTickets'])) {
-        echo get_venue_options_with_select($movieDateObject->eventID);
+        echo get_event_options_with_select($movieDateObject->eventID);
     } else {
         echo get_event_options();
     }
@@ -71,7 +72,7 @@
                             if(isset($_POST['saveUnsoldTickets'])) {
                                 echo $_POST['time'];
                             }
-                            ?>" onkeyup="validateAddTickets();validateTime()" onclick="validateAddTickets();validateTime()" onpaste="validateAddTickets();validateTime()">
+                            ?>" onkeyup="validate_add_tickets();validate_time()" onclick="validate_add_tickets();validate_time()" onpaste="validate_add_tickets();validate_time()" onfocusout="validate_add_tickets();validate_time()">
                             <span></span>
                         </td>
                     </tr>

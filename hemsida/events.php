@@ -1,7 +1,7 @@
 <section class="list">
     <aside>
         <form method="post" action="index.php">
-            <ul class="add_button">
+            <ul class="addButton">
                 <li>
                     <button name="page" class="generalButton" value="addEvent">Lägg till ny film</button>
                 </li>
@@ -10,7 +10,7 @@
     </aside>
 
     
-    <section class="event_list">
+    <section class="eventList">
         <table>
             <thead>
                 <tr>

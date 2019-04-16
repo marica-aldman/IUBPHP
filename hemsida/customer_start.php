@@ -1,4 +1,4 @@
-    <section class="start_page">
+    <section class="startPage">
         <p>
             Välkommen till Faringe BIO!
         </p>

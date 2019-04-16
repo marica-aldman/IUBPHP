@@ -1,6 +1,6 @@
 <section>
 
-<?php //list the movies 
+<?php //show movie 
 
 $ticketsLeft = 0;
 
@@ -74,7 +74,7 @@ if(isset($_POST['showMovie'])) {
                         echo $ticketsLeft;
                     }
                     ?>" min="1">
-                    <button name="buyTicket" id="buyButton" onclick="return addNewTicket(<?php echo $row['eventDateID']; ?>, '<?php echo $page; ?>', '<?php echo $date; ?>')"<?php
+                    <button name="buyTicket" id="buyButton" onclick="return add_new_ticket(<?php echo $row['eventDateID']; ?>, '<?php echo $page; ?>', '<?php echo $date; ?>')"<?php
                     if($ticketsLeft == 0) {
                         echo "disabled";
                     }
@@ -90,7 +90,7 @@ if(isset($_POST['showMovie'])) {
 } else {
 ?>
 
-        <p>Something went wrong. Try going back again. If the problem persists contact IT support.</p>
+        <p>Något gick fel. Kontakta IT-supporten.</p>
     </section>
 
 

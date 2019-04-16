@@ -1,19 +1,25 @@
 <?php
     if(isset($_POST['order'])) {
         //order save and confirm
-    
-        $errOrNot = [];
-        $username = $_SESSION['userID'];
+        
         $numberOfProductTypes = FILTER_INPUT(INPUT_COOKIE, 'basketTotalProductTypes', FILTER_SANITIZE_NUMBER_INT);
-        $orderObject->orderID = $orderObject->get_new_orderID();
-        $orderObject->username = $username;
+        $errOrNot = [];
+        $orderIDS = [];
 
-        $success = $orderObject->create_order();
+        // save one order per movie
 
-        // if order then save tickets
+        for($i=1; $numberOfProductTypes >= $i; $i++) {
+            $username = $_SESSION['userID'];
+            $orderObject->orderID = $orderObject->get_new_orderID();
+            $orderObject->username = $username;
 
-        if($success){
-            for($i=1; $numberOfProductTypes >= $i; $i++) {
+            array_push($orderIDS, $orderObject->orderID);
+
+            $success = $orderObject->create_order();
+
+            // if order then save tickets
+
+            if($success){
                 $numberOfTickets = FILTER_INPUT(INPUT_COOKIE, 'noOfTickets' . $i, FILTER_SANITIZE_NUMBER_INT);
                 for($j=1; $numberOfTickets>=$j; $j++){
                     $ticketObject->ticketID = $ticketObject->get_new_ticketID();
@@ -25,12 +31,12 @@
                     $test = $ticketObject->create_ticket();
                     if($test){
                     } else {
-                        array_push($errOrNot, "Biljett" . $i . " inte sparad");
+                        array_push($errOrNot, "Biljett " . $i . " inte sparad");
                     }
                 }
+            } else {
+                array_push($errOrNot, "Kunde inte spara order. Kontakta kundservice.");
             }
-        } else {
-            array_push($errOrNot, "Kunde inte spara order. Kontakta kundservice.");
         }
 
 ?>
@@ -90,7 +96,7 @@
 ?>
                     <tr>
                         <td>
-                            <?php echo $row2['eventName']; ?>
+                            <?php echo $orderIDS[$i - 1]; ?>
                         </td>
                         <td>
                             <?php echo $row2['eventName']; ?>

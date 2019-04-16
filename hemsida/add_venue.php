@@ -19,7 +19,7 @@
     }
 ?>
 
-<section class="add_and_change">
+<section class="addAndChange">
         <div>
 <?php
         if(isset($_POST['saveVenue'])) {
@@ -39,7 +39,7 @@
                             if(isset($_POST['theater'])) {
                                 echo $_POST['theater'];
                             }
-                            ?>" onkeyup="validateVenue();validateTheater()" onpaste="validateVenue();validateTheater()" onclick="validateVenue();validateTheater()">
+                            ?>" onkeyup="validate_venue();validate_theater()" onpaste="validate_venue();validate_theater()" onclick="validate_venue();validate_theater()">
                             <span></span>
                         </td>
                     </tr>
@@ -52,7 +52,7 @@
                             if(isset($_POST['size'])) {
                                 echo $_POST['size'];
                             }
-                            ?>" onkeyup="validateVenue();validateSize()" onpaste="validateVenue();validateSize()" onclick="validateVenue();validateSize()">
+                            ?>" onkeyup="validate_venue();validate_size()" onpaste="validate_venue();validate_size()" onclick="validate_venue();validate_size()">
                             <span></span>
                         </td>
                     </tr>

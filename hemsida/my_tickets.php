@@ -1,6 +1,6 @@
 
 
-<section class="ticket_list">
+<section class="ticketList">
         <table>
             <thead>
                 <tr>

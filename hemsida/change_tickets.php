@@ -14,12 +14,13 @@
         $time = filter_input(INPUT_POST, 'time', FILTER_SANITIZE_MAGIC_QUOTES);
 
         $movieDateObject = new unsoldTicket;
-        $movieDateObject->eventDateID = filter_input(INPUT_POST, 'eventDate', FILTER_SANITIZE_NUMBER_INT);
+        $movieDateObject->eventDateID = filter_input(INPUT_POST, 'eventDateID', FILTER_SANITIZE_NUMBER_INT);
         $movieDateObject->venueID = $venue;
         $movieDateObject->eventID = $event;
         $movieDateObject->dateAndTime = $date . " " . $time;
         
-        $success = $venueObject->update_unsoldtickets();
+        $success = $movieDateObject->update_unsoldtickets();
+
         if($success) {
             $errOrNot = "Klart";
         } else {
@@ -28,7 +29,7 @@
     }
 ?>
 
-<section class="add_and_change">
+<section class="addAndChange">
         <div>
             <?php echo $errOrNot; ?>&nbsp;
         </div>
@@ -45,6 +46,7 @@
     $dateTimeSplit = str_split($dateTime, 10);
     $date = $dateTimeSplit[0];
     $time = $dateTimeSplit[1];
+    unset($_POST['eventDateID']);
 
 ?>
                 <form method="post" action="index.php">
@@ -72,7 +74,7 @@
                             Tid:
                         </td>
                         <td>
-                            <input class="timeAndText" type="text" name="time" id="time" value="<?php echo $time; ?>">
+                            <input class="timeAndText" type="text" name="time" id="time" value="<?php echo $time; ?>" onkeyup="validate_add_tickets();validate_time()" onclick="validate_add_tickets();validate_time()" onpaste="validate_add_tickets();validate_time()">
                             <span></span>
                         </td>
                     </tr>
@@ -91,7 +93,7 @@
                         <td>
                             <input type="hidden" name="page" value="changeTickets">
                             <input type="hidden" name="eventDateID" value="<?php echo $movie['eventDateID']; ?>">
-                            <button class="loginButton" name="saveUnsoldTickets" value="yes" id="submit">Spara</button>
+                            <button class="loginButton" name="saveUnsoldTickets" value="yes" id="submit" disabled>Spara</button>
                         </td>
                     </tr>
                 </form>

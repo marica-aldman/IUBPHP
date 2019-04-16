@@ -1,7 +1,7 @@
-<section class="search_and_list">
+<section class="searchAndList">
 
     
-    <section class="movie_list">
+    <section class="movieList">
 
 <?php //list the movies 
     $unsoldTicketObject = new unsoldTicket;
@@ -43,7 +43,7 @@
 
         <!-- template card -->
 
-        <section class="movie_list_card">
+        <section class="movieListCard">
             <div>
                 <img src="<?php echo $row2['picture']; ?>">
             </div>

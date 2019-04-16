@@ -7,28 +7,28 @@
         För att köpa biljetter behöver du vara inloggad.
     </div>
 <?php
-        if($err_message_login !== "") {
+        if($errMessageLogin !== "") {
 ?>
     <div class="centerErrMessage">
-        <?php echo $err_message_login; ?>
+        <?php echo $errMessageLogin; ?>
     </div>
 <?php
         }
 ?>
     <form method="post" action="index.php">
-        <div class="input-field">
+        <div class="inputField">
             <input type="hidden" name="page" value="checkout">
-            <input type="hidden" name="client_login" value="yes">
+            <input type="hidden" name="clientLogin" value="yes">
             <span></span>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <label for="username">Användarnamn</label>
-            <input type="text" name="username" id="username" onkeyup="validateLoginUsername();validateLoginForm()" onpaste="validateLoginUsername();validateLoginForm()" onclick="validateLoginUsername();validateLoginForm()">
+            <input type="text" name="username" id="username" onkeyup="validate_login_username();validate_login_form()" onpaste="validate_login_username();validate_login_form()" onclick="validate_login_username();validate_login_form()">
             <span></span>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <label for="password">Lösenord</label>
-            <input type="password" name="password" id="password" onkeyup="validateLoginPassword();validateLoginForm()" onpaste="validateLoginPassword();validateLoginForm()" onclick="validateLoginPassword();validateLoginForm()">
+            <input type="password" name="password" id="password" onkeyup="validate_login_password();validate_login_form()" onpaste="validate_login_password();validate_login_form()" onclick="validate_login_password();validate_login_form()">
             <span></span>
         </div>
         <div>
@@ -104,18 +104,18 @@
                         <td><?php echo $time; ?>
                         </td>
                         <td>
-                            <button class="moreOrLess" id="removeCheckout<?php echo $i; ?>" onclick="removeTicketCheckout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);removeTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)"><</button>
+                            <button class="moreOrLess" id="removeCheckout<?php echo $i; ?>" onclick="remove_ticket_checkout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);remove_ticket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)"><</button>
                             <input id="hidden_noOfTicketsCheckout<?php echo $i; ?>" type="hidden" name="numberOfTickets<?php echo $row['eventDateID']; ?>" value="<?php echo $_COOKIE["noOfTickets" . $i]; ?>">
-                            <div class="basketText noOfTickets" id="noOfTicketsCheckout<?php echo $i; ?>"><?php echo $_COOKIE["noOfTickets" . $i]; ?></div>
-                            <button class="moreOrLess" id="addCheckout<?php echo $i; ?>" onclick="addTicketCheckout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);addTicket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)">></button>
+                            <div class="basketText noOfTicketsCheckout" id="noOfTicketsCheckout<?php echo $i; ?>"><?php echo $_COOKIE["noOfTickets" . $i]; ?></div>
+                            <button class="moreOrLess" id="addCheckout<?php echo $i; ?>" onclick="add_ticket_checkout(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>);add_ticket(<?php echo $_COOKIE['noOfTickets' . $i]; ?>, <?php echo $row['eventDateID']; ?>, <?php echo $row2['price']; ?>, <?php echo $i; ?>)">></button>
                         </td>
-                        <td ><div class="basketText" id="priceCheckout<?php echo $i; ?>"><?php $price = (int) $row2['price'] * (int) $_COOKIE["noOfTickets" . $i]; echo $price; ?></div>
+                        <td><div class="basketText" id="priceCheckout<?php echo $i; ?>"><?php $price = (int) $row2['price'] * (int) $_COOKIE["noOfTickets" . $i]; echo $price; ?></div>
                         </td>
                         <td>
                             <form method="post" action="index.php">
                                 <input type="hidden" name="page" value="checkout">
-                                <input type="hidden" name="showMovie" id="checkoutMovieDelete<?php echo $i; ?>" class="movieIdForCheckout">
-                                <button class="deleteButton" id="checkoutDeleteButton<?php echo $i; ?>" onclick="return deleteTicket(<?php echo $i; ?>)">X</button>
+                                <input type="hidden" name="showMovie" id="checkoutMovieDelete<?php echo $i; ?>" class="movieIdForCheckoutInCheckout" value="<?php echo $row['eventDateID']; ?>">
+                                <button class="deleteButton" id="checkoutDeleteButton<?php echo $i; ?>" onclick="return delete_ticket(<?php echo $i; ?>)">X</button>
                             </form>
                         </td>
                     </tr>
@@ -145,7 +145,7 @@
  ?>   
     <form method="post" action="index.php">
         <input type="hidden" name="page" value="confirmation">
-        <button name="order" value="yes" class="loginButton" <?php if($basketTotalProductTypes <= 0 || $basketTotalProductTypes == null) { echo "disabled"; } else { echo 'onclick="return toConfirm()"'; } ?>>Beställ</button>
+        <button name="order" value="yes" class="loginButton" <?php if($basketTotalProductTypes <= 0 || $basketTotalProductTypes == null) { echo "disabled"; } else { echo 'onclick="return to_confirm()"'; } ?>>Beställ</button>
     </form>
 </div>
 

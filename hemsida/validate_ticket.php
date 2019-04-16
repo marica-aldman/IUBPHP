@@ -5,14 +5,14 @@
             <div>
 <?php
             if(isset($_POST['validateTicketButton'])) {
-                echo $err_message; 
+                echo $errMessage; 
             }
 ?>
                 <input type="hidden" name="page" value="validateTicket">
             </div>
             <div>
                 <label for="ticketID">Biljettnummer</label>
-                <input type="number" name="ticketID" id="ticketID1" onkeyup="validateTicket()" onpaste="validateTicket()" onclick="validateTicket()">
+                <input type="number" name="ticketID" id="ticketID1" onkeyup="validate_ticket()" onpaste="validate_ticket()" onclick="validate_ticket()">
             </div>
             <button class="generalButton" name="validateTicketButton">Validera biljett</button>
         </form>
@@ -23,14 +23,14 @@
             <div>
 <?php
             if(isset($_POST['invalidateTicketButton'])) {
-                echo $err_message; 
+                echo $errMessage; 
             }
 ?>
                 <input type="hidden" name="page" value="validateTicket">
             </div>
             <div>
                 <label for="ticketID2">Biljettnummer</label>
-                <input type="text" name="ticketID2" id="ticketID2" onkeyup="invalidateTicket()" onpaste="invalidateTicket()" onclick="invalidateTicket()">
+                <input type="text" name="ticketID2" id="ticketID2" onkeyup="invalidate_ticket()" onpaste="invalidate_ticket()" onclick="invalidate_ticket()">
             </div>
             <button class="generalButton" name="invalidateTicketButton">Avvalidera biljett</button>
         </form>
@@ -41,14 +41,14 @@
             <div>
 <?php
             if(isset($_POST['validateOrderButton'])) {
-                echo $err_message; 
+                echo $errMessage; 
             }
 ?>
                 <input type="hidden" name="page" value="validateTicket">
             </div>
             <div>
                 <label for="orderID">Ordernummer</label>
-                <input type="text" name="orderID" id="orderID1" onkeyup="validateOrder()" onpaste="validateOrder()" onclick="validateOrder()">
+                <input type="text" name="orderID" id="orderID1" onkeyup="validate_order()" onpaste="validate_order()" onclick="validate_order()">
             </div>
             <button class="generalButton" name="validateOrderButton">Validera Order</button>
         </form>
@@ -59,14 +59,14 @@
             <div>
 <?php
             if(isset($_POST['invalidateOrderButton'])) {
-                echo $err_message; 
+                echo $errMessage; 
             }
 ?>
                 <input type="hidden" name="page" value="validateTicket">
             </div>
             <div>
                 <label for="orderID2">Ordernummer</label>
-                <input type="text" name="orderID2" id="orderID2" onkeyup="invalidateOrder()" onpaste="invalidateOrder()" onclick="invalidateOrder()">
+                <input type="text" name="orderID2" id="orderID2" onkeyup="invalidate_order()" onpaste="invalidate_order()" onclick="invalidate_order()">
             </div>
             <button class="generalButton" name="invalidateOrderButton">Avvalidera Order</button>
         </form>

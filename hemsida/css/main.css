@@ -26,7 +26,7 @@ header button {
     border: none;
 }
 
-.behind-overlay-windows {
+.behindOverlayWindows {
     position: fixed;
     top: 0;
     right: 0;
@@ -38,7 +38,7 @@ header button {
     height: 100%;
 }
 
-.shopping_cart_icon {
+.shoppingCartIcon {
     position: absolute;
     top: 90px;
     right: 150px;
@@ -77,7 +77,7 @@ header button {
     z-index: 2;
 }
 
-.shopping_cart_window {
+.shoppingCartWindow {
     background-color: var(--overlay-window-bg-color);
     color: var(--overlay-window-text-color);
     position: absolute;
@@ -96,30 +96,30 @@ header button {
     z-index: 2;
 }
 
-.shopping_cart_window table {
+.shoppingCartWindow table {
     border-collapse: collapse;
     z-index: 2;
 }
 
-.shopping_cart_window table thead tr th {
+.shoppingCartWindow table thead tr th {
     border-bottom: 1px solid #000000;
     color: var(--overlay-window-text-color);
     padding: 2px;
     z-index: 2;
 }
 
-.shopping_cart_window table tbody tr td {
+.shoppingCartWindow table tbody tr td {
     border-bottom: 1px solid #000000;
     color: var(--overlay-window-text-color);
     padding: 5px;
     z-index: 2;
 }
 
-.shopping_cart_window table tbody tr:last-child td {
+.shoppingCartWindow table tbody tr:last-child td {
     border: none;
 }
 
-.shopping_cart_window table tbody tr td input.numberOfTickets {
+.shoppingCartWindow table tbody tr td input.numberOfTickets {
     width: 1em;
     padding: 1px;
     text-align: center;
@@ -134,7 +134,7 @@ header button {
     display:inline;
 }
 
-.user_icon {
+.userIcon {
     position: absolute;
     top: 90px;
     right: 180px;
@@ -159,7 +159,7 @@ header button {
     z-index: 2;
 }
 
-.user_login {
+.userLogin {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -183,7 +183,7 @@ header button {
     z-index: 2;
 }
 
-.user_login form {
+.userLogin form {
     padding: 15px;
     padding-top: 5px;
     padding-bottom: 0;
@@ -194,17 +194,17 @@ header button {
     align-items: center;
 }
 
-.user_login form div label {
+.userLogin form div label {
     color: var(--overlay-window-text-color);
     margin-bottom: 15px;
     z-index: 2;
 }
 
-#user_login_username {
+#userLoginUsername {
     margin-bottom: 15px;
 }
 
-.user_login_button {
+.userLoginButton {
     background-color: var(--user-login-button-bg-color);
     border: 2px solid var(--user-login-button-border-color);
     border-radius: 10px;
@@ -216,26 +216,26 @@ header button {
     z-index: 2;
 }
 
-.user_login_button:hover {
+.userLoginButton:hover {
     background-color: var(--user-login-button-highlight-color);
     border: 2px solid var(--user-login-button-highlight-border-color);
     color: var(--user-login-button-text-highlight-color);
 }
 
-.user_login_button:disabled {
+.userLoginButton:disabled {
     background-color: var(--user-login-button-disabled-color);
     border: 2px solid var(--user-login-button-disabled-border-color);
     color: var(--user-login-button-text-disabled-color);
 }
 
-.user_login .register_text {
+.userLogin .registerText {
     margin-top: 4px;
     margin-bottom: 2px;
     padding: 0;
     font-size: 11px;
 }
 
-.user_login .register_button {
+.userLogin .registerButton {
     background-color: var(--user-login-button-bg-color);
     border: 2px solid var(--user-login-button-border-color);
     border-radius: 10px;
@@ -247,7 +247,7 @@ header button {
     width: 100px;
 }
 
-.user_login .register_button:hover {
+.userLogin .registerButton:hover {
     background-color: var(--user-login-button-highlight-color);
     border: 2px solid var(--user-login-button-highlight-border-color);
 }
@@ -331,7 +331,7 @@ main {
     justify-content: center;
 }
 
-.start_page {
+.startPage {
     display: flex;
     justify-content: center;
 }
@@ -348,7 +348,7 @@ section div img {
     margin-right: 20px;
 }
 
-.search_and_list {
+.searchAndList {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -359,63 +359,63 @@ aside {
     display: inline-block;
 }
 
-.search_movie li {
+.searchMovie li {
     list-style: none;
 }
 
-.search_movie li input {
+.searchMovie li input {
     width: 100%;
 }
 
-.event_list table {
+.eventList table {
     
     color: var(--form-text);
 }
 
-.movie_list {
+.movieList {
     display: inline-block;
     width: 70%;
 }
 
-.movie_list_card {
+.movieListCard {
     width: 100%;
 }
 
-.movie_list_card div:first-child {
+.movieListCard div:first-child {
     width: 30%;
 }
 
-.movie_list_card div:nth-child(2) {
+.movieListCard div:nth-child(2) {
     width: 60%;
     padding-left: 50px;
 }
 
-.movie_list_card div:last-child form {
+.movieListCard div:last-child form {
     text-align: end;
 }
 
-.movie_list_card div:last-child button {
+.movieListCard div:last-child button {
     background-color: var(--button-border-color);
     color: var(--button-text-color);
     border: 2px solid var(--button-border-color);
     border-radius: 10px;
 }
 
-.movie_list_card div:last-child button:hover {
+.movieListCard div:last-child button:hover {
     background-color: var(--button-highlight-color);
     color: var(--button-text-highlight-color);
     border: 2px solid var(--button-highlight-border-color);
     border-radius: 10px;
 }
 
-.main_admin {
+.mainAdmin {
     display: flex;
     justify-content: center;
     margin: 0;
     padding: 0;
 }
 
-.admin_login {
+.adminLogin {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -425,7 +425,7 @@ aside {
     margin-top: 20px; 
 }
 
-.admin_login div {
+.adminLogin div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -433,11 +433,11 @@ aside {
     width: 100%;
 }
 
-.admin_login div form input {
+.adminLogin div form input {
     border-radius: 10px;
 }
 
-.input-field {
+.inputField {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -497,30 +497,18 @@ aside {
     margin-top: 5px;
 }
 
-.customer_profile {
+.customerProfile {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.customer_profile div div {
+.customerProfile div div {
     display: inline-block;
     width: 48%;
 }
 
-.customer_profile .adress_list {
-    width: 75%;
-}
-
-.customer_profile .adress_list div {
-    width: 100%;
-}
-.customer_profile .adress_list div div {
-    display: inline-block;
-    width: 48%;
-}
-
-.customer_profile .adress_list div div button {
+.customerProfile div button {
     background-color: var(--button-bg-color);
     border: 2px solid var(--button-border-color);
     border-radius: 10px;
@@ -531,24 +519,7 @@ aside {
     margin-bottom: 0px;
 }
 
-.customer_profile .adress_list div div button:hover {
-    background-color: var(--button-highlight-color);
-    border: 2px solid var(-button-highlight-border-color);
-}
-
-
-.customer_profile div button {
-    background-color: var(--button-bg-color);
-    border: 2px solid var(--button-border-color);
-    border-radius: 10px;
-    color: var(--footer-text-color);
-    font-size: 0.8em;
-    padding: 5px;
-    margin-top: 15px;
-    margin-bottom: 0px;
-}
-
-.customer_profile div button:hover {
+.customerProfile div button:hover {
     background-color: var(--button-highlight-color);
     border: 2px solid var(-button-highlight-border-color);
 }
@@ -656,18 +627,18 @@ aside {
     width: 100%;
 }
 
-.add_button li {
+.addButton li {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.add_button {
+.addButton {
     margin: 0;
     padding: 0;
 }
 
-.movie_list {
+.movieList {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -703,7 +674,7 @@ aside {
     align-items: center;
 }
 
-.add_and_change {
+.addAndChange {
     margin: 0;
     margin-top: 20px;
     padding: 0;
@@ -713,34 +684,34 @@ aside {
     align-items: center;
 }
 
-.add_and_change div:first-child {
+.addAndChange div:first-child {
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
-.add_and_change form table {
+.addAndChange form table {
     color: var(--form-text);
     width: 100%;
 }
 
-.add_and_change form table tbody {
+.addAndChange form table tbody {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.add_and_change form table tbody {
+.addAndChange form table tbody {
     width: 100%;
 }
 
-.add_and_change form table tbody tr {
+.addAndChange form table tbody tr {
     display: flex;
     align-items: space-between;
     width: 100%;
 }
 
-.add_and_change form table tbody tr td {
+.addAndChange form table tbody tr td {
     width: 50%;
 }
 
@@ -758,7 +729,7 @@ aside {
     box-sizing: border-box;
 }
 
-.new_admin {
+.newAdmin {
     margin: 0;
     margin-top: 20px;
     padding: 0;
@@ -768,12 +739,12 @@ aside {
     align-items: center;
 }
 
-.new_admin:last-child form {
+.newAdmin:last-child form {
     width: 100%;
     align-items: left;
 }
 
-.new_admin_form {
+.newAdminForm {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -782,7 +753,7 @@ aside {
     align-items: center;
 }
 
-.checkout, .confirmation, .ticket_list, .event_list {
+.checkout, .confirmation, .ticketList, .eventList {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -802,7 +773,7 @@ aside {
     font-size: 1em;
 }
 
-.ticket_list table, .event_list table {
+.ticketList table, .eventList table {
     width: 70%;
     border-collapse: collapse;
     color: var(--form-text);
@@ -814,7 +785,7 @@ aside {
     margin-bottom: 4px;
 }
 
-.ticket_list table tbody tr td, .event_list table tbody tr td {
+.ticketList table tbody tr td, .eventList table tbody tr td {
     color: var(--form-text);
     margin-top: 4px;
     margin-bottom: 4px;
@@ -830,7 +801,7 @@ aside {
     justify-content: center;
 }
 
-.ticket_list table tbody tr td:last-child .generalButton, .event_list table tbody tr td:last-child .generalButton {
+.ticketList table tbody tr td:last-child .generalButton, .eventList table tbody tr td:last-child .generalButton {
     margin: 2px;
 }
 
@@ -842,7 +813,7 @@ aside {
     border-bottom: 2px solid var(--form-borders);
 }
 
-.ticket_list table thead tr, .event_list table thead tr {
+.ticketList table thead tr, .eventList table thead tr {
     border-bottom: 2px solid var(--form-borders);
 }
 
@@ -850,7 +821,7 @@ aside {
     border-bottom: 2px solid var(--form-borders);
 }
 
-.ticket_list table tbody tr, .event_list table tbody tr {
+.ticketList table tbody tr, .eventList table tbody tr {
     border-bottom: 2px solid var(--form-borders);
 }
 
@@ -858,7 +829,7 @@ aside {
     border-bottom: none;
 }
 
-.ticket_list table tbody tr:last-child {
+.ticketList table tbody tr:last-child {
     border-bottom: none;
 }
 
@@ -867,26 +838,26 @@ aside {
     text-align: center;
 }
 
-.event_list table tbody tr td {
+.eventList table tbody tr td {
     text-align: center;
 }
 
-.ticket_list table tbody tr td:nth-child(6){
+.ticketList table tbody tr td:nth-child(6){
     text-align: center;
 }
 
-.ticket_list table tbody tr td:first-child{
+.ticketList table tbody tr td:first-child{
     text-align: center;
 }
 
-.single_ticket {
+.singleTicket {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.single_ticket table {
+.singleTicket table {
     color: var(--form-text);
     width: 30%;
 }
@@ -908,13 +879,13 @@ footer hr {
     width: 100%;
 }
 
-.footer_column {
+.footerColumn {
     width: 25%;
     display: flex;
     justify-content: center;
 }
 
-.footer_column button {
+.footerColumn button {
     background-color: var(--button-bg-color);
     border: 2px solid var(--button-border-color);
     border-radius: 10px;
@@ -923,7 +894,7 @@ footer hr {
     padding: 5px;
 }
 
-.footer_column button:hover {
+.footerColumn button:hover {
     background-color: var(--button-highlight-color);
     border: 2px solid var(--button-highlight-border-color);
 }

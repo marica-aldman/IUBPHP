@@ -16,7 +16,7 @@
 <section class="list">
     <div>
         <div>
-            <?php echo $err_message; ?>
+            <?php echo $errMessage; ?>
         </div>
     </div>
     <div>
@@ -27,7 +27,7 @@
             <?php echo $row['username']; ?>
         </div>
     </div>
-    <div class="movie_list">
+    <div class="movieList">
         <form method="post" action="index.php">
             <input type="hidden" name="username" value="<?php echo $row['username']; ?>">
             <button class="generalButton" name="page" value="changeAdminPassword">Ändra lösenord</button>

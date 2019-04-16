@@ -35,7 +35,7 @@
     }
 ?>
 
-<section class="add_and_change">
+<section class="addAndChange">
         <div>
             <?php echo $errOrNot; ?>&nbsp;
         </div>
@@ -56,7 +56,7 @@
                             Titel:
                         </td>
                         <td>
-                            <input type="text" class="timeAndText valid" name="eventName" id="eventName" value="<?php echo $row['eventName']; ?>" onkeyup="validateChangeEvent();validateEventName()" onpaste="validateChangeEvent();validateEventName()" onclick="validateChangeEvent();validateEventName()">
+                            <input type="text" class="timeAndText valid" name="eventName" id="eventName" value="<?php echo $row['eventName']; ?>" onkeyup="validate_change_event();validate_event_name()" onpaste="validate_change_event();validate_event_name()" onclick="validate_change_event();validate_event_name()">
                             <span></span>
                         </td>
                     </tr>
@@ -93,7 +93,7 @@
                             Regisör:
                         </td>
                         <td>
-                            <input type="text" class="timeAndText valid" name="director" id="director" value="<?php echo $row['director']; ?>" onkeyup="validateChangeEvent();validateDirector()" onpaste="validateChangeEvent();validateDirector()" onclick="validateChangeEvent();validateDirector()">
+                            <input type="text" class="timeAndText valid" name="director" id="director" value="<?php echo $row['director']; ?>" onkeyup="validate_change_event();validate_director()" onpaste="validate_change_event();validate_director()" onclick="validate_change_event();validate_director()">
                             <span></span>
                         </td>
                     </tr>
@@ -102,7 +102,7 @@
                             Orginalspråk:
                         </td>
                         <td>
-                            <input type="text" class="timeAndText valid" name="originalLanguage" id="originalLanguage" value="<?php echo $row['originalLanguage']; ?>" onkeyup="validateChangeEvent();validateOriginalLanguage()" onpaste="validateChangeEvent();validateOriginalLanguage()" onclick="validateChangeEvent();validateOriginalLanguage()">
+                            <input type="text" class="timeAndText valid" name="originalLanguage" id="originalLanguage" value="<?php echo $row['originalLanguage']; ?>" onkeyup="validate_change_event();validate_original_language()" onpaste="validate_change_event();validate_original_language()" onclick="validate_change_event();validate_original_language()">
                             <span></span>
                         </td>
                     </tr>
@@ -111,7 +111,7 @@
                             Info:
                         </td>
                         <td>
-                            <input type="text" class="timeAndText valid" name="info" id="info" value="<?php echo $row['info']; ?>" onkeyup="validateChangeEvent();validateInfo()" onpaste="validateChangeEvent();validateInfo()" onclick="validateChangeEvent();validateInfo()">
+                            <input type="text" class="timeAndText valid" name="info" id="info" value="<?php echo $row['info']; ?>" onkeyup="validate_change_event();validate_info()" onpaste="validate_change_event();validate_info()" onclick="validate_change_event();validate_info()">
                             <span></span>
                         </td>
                     </tr>
@@ -120,7 +120,7 @@
                             Pris:
                         </td>
                         <td>
-                            <input type="number" class="timeAndText valid" name="price" id="price" value="<?php echo $row['price']; ?>" onkeyup="validateChangeEvent();validatePrice()" onpaste="validateChangeEvent();validatePrice()" onclick="validateChangeEvent();validatePrice()">
+                            <input type="number" class="timeAndText valid" name="price" id="price" value="<?php echo $row['price']; ?>" onkeyup="validate_change_event();validate_price()" onpaste="validate_change_event();validate_price()" onclick="validate_change_event();validate_price()">
                             <span></span>
                         </td>
                     </tr>
@@ -129,7 +129,7 @@
                             Bildlänk:
                         </td>
                         <td>
-                            <input type="text" class="timeAndText valid" name="pictureLink" id="pictureLink" value="<?php echo $row['picture']; ?>" onkeyup="validateChangeEvent();validatePicture()" onpaste="validateChangeEvent();validatePicture()" onclick="validateChangeEvent();validatePicture()">
+                            <input type="text" class="timeAndText valid" name="pictureLink" id="pictureLink" value="<?php echo $row['picture']; ?>">
                             <span></span>
                         </td>
                     </tr>

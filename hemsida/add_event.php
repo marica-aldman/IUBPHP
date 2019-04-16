@@ -30,7 +30,7 @@
     }
 ?>
 
-<section class="add_and_change">
+<section class="addAndChange">
         <div>
 <?php
         if(isset($_POST['saveEvent'])) {
@@ -50,8 +50,8 @@
                             if(isset($_POST['saveEvent'])) {
                                 echo $_POST['eventName'];
                             }
-                            ?>" onkeyup="validateAddEvent();validateEventName()" onpaste="validateAddEvent();validateEventName()"
-                            onclick="validateAddEvent();validateEventName()">
+                            ?>" onkeyup="validate_add_event();validate_event_name()" onpaste="validate_add_event();validate_event_name()"
+                            onclick="validate_add_event();validate_event_name()">
                             <span></span>
                         </td>
                     </tr>
@@ -64,7 +64,7 @@
                             if(isset($_POST['saveEvent'])) {
                                 echo $_POST['premere'];
                             }
-                            ?>" onkeyup="validateAddEvent();validatePremere()" onpaste="validateAddEvent();validatePremere()" onclick="validateAddEvent();validatePremere()">
+                            ?>">
                             <span></span>
                         </td>
                     </tr>
@@ -77,7 +77,7 @@
                             if(isset($_POST['saveEvent'])) {
                                 echo $_POST['director'];
                             }
-                            ?>" onkeyup="validateAddEvent();validateDirector()" onpaste="validateAddEvent();validateDirector()" onclick="validateAddEvent();validateDirector()">
+                            ?>" onkeyup="validate_add_event();validate_director()" onpaste="validate_add_event();validate_director()" onclick="validate_add_event();validate_director()">
                             <span></span>
                         </td>
                     </tr>
@@ -90,7 +90,7 @@
                             if(isset($_POST['saveEvent'])) {
                                 echo $_POST['originalLanguage'];
                             }
-                            ?>" onkeyup="validateAddEvent();validateOriginalLanguage()" onpaste="validateAddEvent();validateOriginalLanguage()" onclick="validateAddEvent();validateOriginalLanguage()">
+                            ?>" onkeyup="validate_add_event();validate_original_language()" onpaste="validate_add_event();validate_original_language()" onclick="validate_add_event();validate_original_language()">
                             <span></span>
                         </td>
                     </tr>
@@ -103,7 +103,7 @@
                             if(isset($_POST['saveEvent'])) {
                                 echo $_POST['info'];
                             }
-                            ?>" onkeyup="validateAddEvent();validateInfo()" onpaste="validateAddEvent();validateInfo()" onclick="validateAddEvent();validateInfo()">
+                            ?>" onkeyup="validate_add_event();validate_info()" onpaste="validate_add_event();validate_info()" onclick="validate_add_event();validate_info()">
                             <span></span>
                         </td>
                     </tr>
@@ -116,7 +116,7 @@
                             if(isset($_POST['saveEvent'])) {
                                 echo $_POST['price'];
                             }
-                            ?>" onkeyup="validateAddEvent();validatePrice()" onpaste="validateAddEvent();validatePrice()" onclick="validateAddEvent();validatePrice()">
+                            ?>" onkeyup="validate_add_event();validate_price()" onpaste="validate_add_event();validate_price()" onclick="validate_add_event();validate_price()">
                             <span></span>
                         </td>
                     </tr>
@@ -129,7 +129,7 @@
                             if(isset($_POST['saveEvent'])) {
                                 echo $_POST['pictureLink'];
                             }
-                            ?>" onkeyup="validateAddEvent();validatePicture()" onpaste="validateAddEvent();validatePicture()" onclick="validateAddEvent();validatePicture()">
+                            ?>" onkeyup="validate_add_event();validate_picture()" onpaste="validate_add_event();validate_picture()" onclick="validate_add_event();validate_picture()">
                             <span></span>
                         </td>
                     </tr>

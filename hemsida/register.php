@@ -1,42 +1,42 @@
 <div class="register">
     <form method="post" action="index.php" id="registrationForm" >
-        <div class="input-field">
+        <div class="inputField">
             <input type="hidden" name="page" value="<?php echo $toPage; ?>">
             <input type="hidden" name="register" value="new">
             <span></span>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <p>
                 Ditt användarnamn kommer vara detsamma som din emailadress.
             </p>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <label for="firstName">Förnamn</label>
-            <input id="firstName" type="text" name="firstName" onkeyup="validateFirstName();checkValidationRegister()" onpaste="validateFirstName();checkValidationRegister()" onclick="validateFirstName();checkValidationRegister()">
+            <input id="firstName" type="text" name="firstName" onkeyup="validate_first_name();check_validation_register()" onpaste="validate_first_name();check_validation_register()" onclick="validate_first_name();check_validation_register()">
             <span></span>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <label for="lastName">Efternamn</label>
-            <input id="lastName"  type="text" name="lastName" onkeyup="validateLastName();checkValidationRegister()" onpaste="validateLastName();checkValidationRegister()" onclick="validateLastName();checkValidationRegister()">
+            <input id="lastName"  type="text" name="lastName" onkeyup="validate_last_name();check_validation_register()" onpaste="validate_last_name();check_validation_register()" onclick="validate_last_name();check_validation_register()">
             <span></span>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <label for="email">Email</label>
-            <input id="email" type="email" name="email" onkeyup="validateEmail();checkValidationRegister()" onpaste="validateEmail();checkValidationRegister()" onclick="validateEmail();checkValidationRegister()">
+            <input id="email" type="email" name="email" onkeyup="validateEmail();check_validation_register()" onpaste="validateEmail();check_validation_register()" onclick="validateEmail();check_validation_register()">
             <span></span>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <label for="password">Lösenord</label>
-            <input id="password" type="password" name="password" onkeyup="validatePassword();checkValidationRegister()" onpaste="validatePassword();checkValidationRegister()" onclick="validatePassword();checkValidationRegister()">
+            <input id="password" type="password" name="password" onkeyup="validate_password();check_validation_register()" onpaste="validate_password();check_validation_register()" onclick="validate_password();check_validation_register()">
             <span></span>
         </div>
-        <div class="input-field">
+        <div class="inputField">
             <label for="passwordRepeat">Repitera Lösenord</label>
-            <input id="passwordRepeat" type="password" name="passwordRepeat" onkeyup="validatePasswordRepeat();checkValidationRegister()" onpaste="validatePasswordRepeat();checkValidationRegister()" onclick="validatePasswordRepeat();checkValidationRegister()">
+            <input id="passwordRepeat" type="password" name="passwordRepeat" onkeyup="validate_password_repeat();check_validation_register()" onpaste="validate_password_repeat();check_validation_register()" onclick="validate_password_repeat();check_validation_register()">
             <span></span>
         </div>
         <div>
-            <button id="submit" class="loginButton" disabled onclick="return alertGDPR()">Logga in</button>
+            <button id="submit" class="loginButton" disabled onclick="return alert_GDPR()">Logga in</button>
         </div>
     </form>
 </div>

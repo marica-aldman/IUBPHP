@@ -4,13 +4,17 @@ class db_connection {
 
     public function create_connection() {
         $host = 'my73b.sqlserver.se';
+        //$host = 'localhost';
         $db   = '236969-biljettsystem';
+        //$db   = 'biljettsystem';
         $charset = 'utf8';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
         $user = '236969_gl70572';
         $pass =  'keyncat2';
+        //$user = 'root';
+        //$pass =  '';
 
         try {
             $pdo = new PDO($dsn, $user, $pass);
@@ -23,7 +27,6 @@ class db_connection {
 }
 
 class admin {
-    public $adminID;
     public $username;
     public $password;
     private $pdo;
@@ -51,6 +54,19 @@ class admin {
         $toGet->execute(); // execute sql statment
 
         return $toGet;
+    }
+
+    public function check_unique_username() {
+        
+        $sql = "SELECT * FROM admins WHERE username = '" .  $this->username . "'";
+
+        $toGet = $this->pdo->prepare($sql); // prepared statement
+        $toGet->execute(); // execute sql statment
+        if($result = $toGet->fetch()) {
+        return true;
+        } else {
+            return false;
+        }
     }
 
     public function admin_login() {
@@ -159,7 +175,9 @@ class user {
                 WHERE username = '" .  $this->username . "'";
 
         $toGet = $this->pdo->prepare($sql); // prepared statement
-        $toGet->execute(); // execute sql statment
+        $test = $toGet->execute(); // execute sql statment
+
+        return $test;
 
     }
 
@@ -211,11 +229,14 @@ class user {
         
         $sql = "UPDATE customers
                 SET lastName = '" . $this->lastName . "',
-                    firstname = '" . $this->firstName . "'
+                    firstName = '" . $this->firstName . "'
                 WHERE username = '" . $this->username . "'";
 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
+        var_dump($test);
 
     }
 
@@ -231,8 +252,9 @@ class user {
                 VALUES ('" . $this->username . "', '" .  $this->password . "')"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
 
+        return $test;
     }
     
     function delete_customer() {
@@ -249,7 +271,9 @@ class user {
                 WHERE username = '" . $this->username . "'";
 
         $toDo = $this->pdo->prepare($sql); // prepared statement
-        $toDo->execute(); // execute sql statment
+        $test = $toDo->execute(); // execute sql statment
+
+        return $test;
     }
 }
 
@@ -776,9 +800,9 @@ class unsoldTicket {
     function update_unsoldtickets() {
 
         $sql = "UPDATE eventDate
-                SET eventID = '" . $this->eventID . ",
-                    venueID = '" . $this->venueID . ",
-                    dateAndTime = '" . $this->dateAndTime . "
+                SET eventID = '" . $this->eventID . "',
+                    venueID = '" . $this->venueID . "',
+                    dateAndTime = '" . $this->dateAndTime . "'
                 WHERE eventDateID = '" . $this->eventDateID . "'"; // sql statement
                 
         $toDo = $this->pdo->prepare($sql); // prepared statement

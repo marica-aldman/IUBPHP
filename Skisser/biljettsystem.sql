@@ -1,3 +1,5 @@
+USE biljettsystem; /* for localhost only */
+
 DROP TABLE IF EXISTS adresses;
 DROP TABLE IF EXISTS customer_login;
 DROP TABLE IF EXISTS tickets;

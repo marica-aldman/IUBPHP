@@ -2,7 +2,7 @@
 
     $ticketObject = new ticket;
     $orderObject = new order;
-    $err_message = "";
+    $errMessage = "";
 
     //check if there is a ticket to validate
 
@@ -17,14 +17,14 @@
             //check if the ticket has already been used
             if($test['used'] == 1){
                 //ticket has already been used
-                $err_message = "Biljetten är redan använd.";
+                $errMessage = "Biljetten är redan använd.";
             } else {
             $ticketObject->validate_ticket();
-            $err_message = "Klart.";
+            $errMessage = "Klart.";
             }
         } else {
-        //if there is no ticket return to validate_ticket.php with err_message
-            $err_message = "Felaktigt biljettnummer.";
+        //if there is no ticket return to validate_ticket.php with errMessage
+            $errMessage = "Felaktigt biljettnummer.";
         }
 
     // check if there is a ticket to invalidate
@@ -39,36 +39,36 @@
             //check if the ticket has already been used
             if($test['used'] == 1){
                 $ticketObject->invalidate_ticket();
-                $err_message = "Klart.";
+                $errMessage = "Klart.";
             } else {
             //ticket hasn't been used
-            $err_message = "Biljetten är inte använd.";
+            $errMessage = "Biljetten är inte använd.";
             }
         } else {
-        //if there is no ticket return to validate_ticket.php with err_message
-            $err_message = "Felaktigt biljettnummer.";
+        //if there is no ticket return to validate_ticket.php with errMessage
+            $errMessage = "Felaktigt biljettnummer.";
         }
         
     // check if there is an order to validate
     } else if(isset($_POST['orderID'])){
-        //attempt to validate the order, sett $err_message if any errors
+        //attempt to validate the order, sett $errMessage if any errors
         $orderID = FILTER_INPUT(INPUT_POST, 'orderID', FILTER_SANITIZE_NUMBER_INT);
         $orderObject->orderID = $orderID;
-        $err_message = $orderObject->validate_order();
+        $errMessage = $orderObject->validate_order();
 
-        if($err_message == ""){
-            $err_message = "Klart.";
+        if($errMessage == ""){
+            $errMessage = "Klart.";
         }
         
     // check if there is an order to invalidate
     } else if(isset($_POST['orderID2'])){
-        //attempt to invalidate the order, sett $err_message if any errors
+        //attempt to invalidate the order, sett $errMessage if any errors
         $orderID = FILTER_INPUT(INPUT_POST, 'orderID2', FILTER_SANITIZE_NUMBER_INT);
         $orderObject->orderID = $orderID;
-        $err_message = $orderObject->invalidate_order();
+        $errMessage = $orderObject->invalidate_order();
 
-        if($err_message == ""){
-            $err_message = "Klart.";
+        if($errMessage == ""){
+            $errMessage = "Klart.";
         }
     }
     // show the forms

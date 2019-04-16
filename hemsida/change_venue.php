@@ -19,7 +19,7 @@
     }
 ?>
 
-<section class="add_and_change">
+<section class="addAndChange">
         <div>
             <?php echo $errOrNot; ?>&nbsp;
         </div>
@@ -40,7 +40,7 @@
                             Salongsnamn:
                         </td>
                         <td>
-                            <input  class="timeAndText valid" type="text" class="valid" name="theater" id="theater" value="<?php echo $row['theater']; ?>" onkeyup="validateVenue();validateTheater()" onpaste="validateVenue();validateTheater()" onclick="validateVenue();validateTheater()">
+                            <input class="timeAndText valid" type="text" class="valid" name="theater" id="theater" value="<?php echo $row['theater']; ?>" onkeyup="validate_venue();validate_theater()" onpaste="validate_venue();validate_theater()" onclick="validate_venue();validate_theater()">
                             <span></span>
                         </td>
                     </tr>
@@ -49,7 +49,7 @@
                             Storlek:
                         </td>
                         <td>
-                            <input  class="timeAndText valid" type="number" name="size" id="size" value="<?php echo $row['size']; ?>" onkeyup="validateVenue();validateSize()" onpaste="validateVenue();validateSize()" onclick="validateVenue();validateSize()">
+                            <input class="timeAndText valid" type="number" name="size" id="size" value="<?php echo $row['size']; ?>" onkeyup="validate_venue();validate_size()" onpaste="validate_venue();validate_size()" onclick="validate_venue();validate_size()">
                             <span></span>
                         </td>
                     </tr>

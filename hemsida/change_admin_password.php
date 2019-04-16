@@ -10,16 +10,19 @@
         $user = $result->fetch();
 
         if(isset($_POST['saveDetails'])) {
-            if($user['password'] != $_POST['previousPassword']) {
-                $doneOrError = "Fel lösenord";
-            } else {
-                $newPassword = $_POST['newPassword'];
-                var_dump($newPassword);
+            $previousPassword = $_POST['previousPassword'];
+            $newPassword = $_POST['newPassword'];
+
+            $success = password_verify($previousPassword, $user['password']);
+
+            if($success) {
                 $adminObject->password = password_hash($newPassword, PASSWORD_DEFAULT);
-                var_dump($adminObject->password);
                 $adminObject->update_admin_password();
                 $doneOrError = "Klart";
-            }           
+            } else {
+                $doneOrError = "Fel lösenord";
+            }
+            unset($_POST['saveDetails']); 
         }
     
 ?>
@@ -34,7 +37,7 @@
                 Nuvarande lösenord
             </div>
             <div>
-                <input type="password" name="previousPassword" id="oldPassword" onkeyup="validateOldPassword();validateNewPasswordForm()" onpaste="validateOldPassword();validateNewPasswordForm()" onclick="validateOldPassword();validateNewPasswordForm()">
+                <input type="password" name="previousPassword" id="oldPassword" onkeyup="validate_old_password();validate_new_password_form()" onpaste="validate_old_password();validate_new_password_form()" onclick="validate_old_password();validate_new_password_form()">
                 <span><?php if($doneOrError != "Klart") { echo $doneOrError; } ?></span>
             </div>
         </div>
@@ -43,7 +46,7 @@
                 Nytt lösenord
             </div>
             <div>
-                <input type="password" name="newPassword" id="password" onkeyup="validateNewPassword();validateNewPasswordForm()" onpaste="validateNewPassword();validateNewPasswordForm()" onclick="validateNewPassword();validateNewPasswordForm()">
+                <input type="password" name="newPassword" id="password" onkeyup="validate_new_password();validate_new_password_form()" onpaste="validate_new_password();validate_new_password_form()" onclick="validate_new_password();validate_new_password_form()">
                 <span></span>
             </div>
         </div>
@@ -52,7 +55,7 @@
                 Repitera nytt lösenord
             </div>
             <div>
-                <input type="password" name="checkPassword" id="passwordRepeat" onkeyup="validateRepeatPassword();validateNewPasswordForm() onpaste="validateRepeatPassword();validateNewPasswordForm() onclick="validateRepeatPassword();validateNewPasswordForm()">
+                <input type="password" name="checkPassword" id="passwordRepeat" onkeyup="validate_repeat_password();validate_new_password_form() onpaste="validate_repeat_password();validate_new_password_form() onclick="validate_repeat_password();validate_new_password_form()">
                 <span></span>
             </div>
         </div>

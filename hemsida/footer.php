@@ -3,10 +3,10 @@
 ?>
         <footer>
             <hr>
-            <div class="footer_column">
+            <div class="footerColumn">
                 <p>© Faringe Bio</p>
             </div>
-            <div class="footer_column">
+            <div class="footerColumn">
 <?php   if($mainpage == "admin"){ ?>
                 <form method="post" action="index.php">
                     <button name="page" value="client">Huvudsida</button>
@@ -18,8 +18,8 @@
                 <form method="post" action="index.php">
                     <button name="page" value="admin">Admin sidor</button>
                 </form>
-            </div>
 <?php   } ?>
+            </div>
 
         </footer>
         </div>

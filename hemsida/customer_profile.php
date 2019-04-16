@@ -1,28 +1,5 @@
 <?php
 
-    //check if we have change the details of the user
-
-    $userObject = new user;
-
-    if(isset($_POST['saveDetails'])) {
-        //sanitize input
-        $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_MAGIC_QUOTES);
-        $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_MAGIC_QUOTES);
-        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_EMAIL);
-        
-        $userObject->username = $username;
-        $test = $userObject->check_username();
-        if(!$test) {
-
-        $userObject->firstName = $firstName;
-        $userObject->lastName = $lastName;
-
-        $userObject->update_customer();
-        } else {
-            $err_message = "There is already a user with that email adress.";
-        }
-    }
-
     //get user
     
     if($_SESSION['userID'] != "None") {
@@ -34,10 +11,10 @@
     
 ?>
 
-<section class="customer_profile">
+<section class="customerProfile">
         <div>
             <div>
-                <?php echo $err_message; ?>
+                <?php echo $errMessage; ?>
             </div>
         </div>
         <div>

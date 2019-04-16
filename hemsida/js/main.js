@@ -1,56 +1,56 @@
 function open_user_window() {
-    if (document.getElementById("user_login").classList.contains("hidden")) {
-        document.getElementById("user_login").classList.remove("hidden");
-        document.getElementById("user_icon").classList.add("fa-user-window-show");
+    if (document.getElementById("userLogin").classList.contains("hidden")) {
+        document.getElementById("userLogin").classList.remove("hidden");
+        document.getElementById("userIcon").classList.add("fa-user-window-show");
         document.getElementById("behind").classList.remove("hidden");
-        if (!document.getElementById("shopping_cart_window").classList.contains("hidden")) {
-            document.getElementById("shopping_cart_window").classList.add("hidden");
-            document.getElementById("shopping_cart_icon").classList.remove("fa-shopping-cart-window-show");
+        if (!document.getElementById("shoppingCartWindow").classList.contains("hidden")) {
+            document.getElementById("shoppingCartWindow").classList.add("hidden");
+            document.getElementById("shoppingCartIcon").classList.remove("fa-shopping-cart-window-show");
         }
     } else {
-        document.getElementById("user_login").classList.add("hidden");
-        document.getElementById("user_icon").classList.remove("fa-user-window-show");
+        document.getElementById("userLogin").classList.add("hidden");
+        document.getElementById("userIcon").classList.remove("fa-user-window-show");
         document.getElementById("behind").classList.add("hidden");
     }
 }
 
 function open_cart_window() {
-    if (document.getElementById("shopping_cart_window").classList.contains("hidden")) {
-        document.getElementById("shopping_cart_window").classList.remove("hidden");
-        document.getElementById("shopping_cart_icon").classList.add("fa-shopping-cart-window-show");
+    if (document.getElementById("shoppingCartWindow").classList.contains("hidden")) {
+        document.getElementById("shoppingCartWindow").classList.remove("hidden");
+        document.getElementById("shoppingCartIcon").classList.add("fa-shopping-cart-window-show");
         document.getElementById("behind").classList.remove("hidden");
-        if (!document.getElementById("user_login").classList.contains("hidden")) {
-            document.getElementById("user_login").classList.add("hidden");
-            document.getElementById("user_icon").classList.remove("fa-user-window-show");
+        if (!document.getElementById("userLogin").classList.contains("hidden")) {
+            document.getElementById("userLogin").classList.add("hidden");
+            document.getElementById("userIcon").classList.remove("fa-user-window-show");
         }
     } else {
-        document.getElementById("shopping_cart_window").classList.add("hidden");
-        document.getElementById("shopping_cart_icon").classList.remove("fa-shopping-cart-window-show");
+        document.getElementById("shoppingCartWindow").classList.add("hidden");
+        document.getElementById("shoppingCartIcon").classList.remove("fa-shopping-cart-window-show");
         document.getElementById("behind").classList.add("hidden");
     }
 }
 
 function close_overlay_windows() {
 
-    if (!document.getElementById("shopping_cart_window").classList.contains("hidden")) {
-        document.getElementById("shopping_cart_window").classList.add("hidden");
-        document.getElementById("shopping_cart_icon").classList.remove("fa-shopping-cart-window-show");
+    if (!document.getElementById("shoppingCartWindow").classList.contains("hidden")) {
+        document.getElementById("shoppingCartWindow").classList.add("hidden");
+        document.getElementById("shoppingCartIcon").classList.remove("fa-shopping-cart-window-show");
         document.getElementById("behind").classList.add("hidden");
     }
-    if (!document.getElementById("user_login").classList.contains("hidden")) {
-        document.getElementById("user_login").classList.add("hidden");
-        document.getElementById("user_icon").classList.remove("fa-user-window-show");
+    if (!document.getElementById("userLogin").classList.contains("hidden")) {
+        document.getElementById("userLogin").classList.add("hidden");
+        document.getElementById("userIcon").classList.remove("fa-user-window-show");
         document.getElementById("behind").classList.add("hidden");
     }
 
 }
 
-function addTicket(numberOfTickets, eventDateID, price, index) {
+function add_ticket(numberOfTickets, eventDateID, price, index) {
     var newNumberOfTickets = parseInt(numberOfTickets) + 1;
 
     if (newNumberOfTickets < 1) {
 
-        deleteTicket(eventDateID);
+        delete_ticket(eventDateID);
 
 
     } else if (newNumberOfTickets > 10) {
@@ -58,7 +58,7 @@ function addTicket(numberOfTickets, eventDateID, price, index) {
     } else {
 
         var addButtonID = "add" + eventDateID;
-        var addFunctionText = "addTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");addTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
+        var addFunctionText = "add_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");add_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
         document.getElementById(addButtonID).setAttribute("onclick", addFunctionText);
 
         var hiddenNoOfTickets = "hidden_noOfTickets" + eventDateID;
@@ -68,7 +68,7 @@ function addTicket(numberOfTickets, eventDateID, price, index) {
         document.getElementById(noOfTickets).innerHTML = newNumberOfTickets;
 
         var removeButtonID = "remove" + eventDateID;
-        var removeFunctionText = "removeTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");removeTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
+        var removeFunctionText = "remove_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");remove_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
         document.getElementById(removeButtonID).setAttribute("onclick", removeFunctionText);
 
         var priceID = "price" + eventDateID;
@@ -77,17 +77,18 @@ function addTicket(numberOfTickets, eventDateID, price, index) {
 
         var cookieIDNoOfTickets = "noOfTickets" + index;
 
-        setCookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
+        set_cookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
 
         return false;
     }
 }
-function addTicketCheckout(numberOfTickets, eventDateID, price, index) {
+
+function add_ticket_checkout(numberOfTickets, eventDateID, price, index) {
     var newNumberOfTickets = parseInt(numberOfTickets) + 1;
 
     if (newNumberOfTickets < 1) {
 
-        deleteTicket(eventDateID);
+        delete_ticket(eventDateID);
 
 
     } else if (newNumberOfTickets > 10) {
@@ -95,7 +96,7 @@ function addTicketCheckout(numberOfTickets, eventDateID, price, index) {
     } else {
 
         var addButtonID = "addCheckout" + eventDateID;
-        var addFunctionText = "addTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");addTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
+        var addFunctionText = "add_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");add_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
         document.getElementById(addButtonID).setAttribute("onclick", addFunctionText);
 
         var hiddenNoOfTickets = "hidden_noOfTicketsCheckout" + eventDateID;
@@ -105,7 +106,7 @@ function addTicketCheckout(numberOfTickets, eventDateID, price, index) {
         document.getElementById(noOfTickets).innerHTML = newNumberOfTickets;
 
         var removeButtonID = "removeCheckout" + eventDateID;
-        var removeFunctionText = "removeTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");removeTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
+        var removeFunctionText = "remove_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");remove_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
         document.getElementById(removeButtonID).setAttribute("onclick", removeFunctionText);
 
         var priceID = "priceCheckout" + index;
@@ -114,17 +115,17 @@ function addTicketCheckout(numberOfTickets, eventDateID, price, index) {
 
         var cookieIDNoOfTickets = "noOfTickets" + index;
 
-        setCookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
+        set_cookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
 
         return false;
     }
 }
 
-function removeTicket(numberOfTickets, eventDateID, price, index) {
+function remove_ticket(numberOfTickets, eventDateID, price, index) {
     var newNumberOfTickets = parseInt(numberOfTickets) - 1;
 
     var addButtonID = "add" + eventDateID;
-    var addFunctionText = "addTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");addTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + ")";
+    var addFunctionText = "add_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");add_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + ")";
     document.getElementById(addButtonID).setAttribute("onclick", addFunctionText);
 
     var hiddenNoOfTickets = "hidden_noOfTickets" + eventDateID;
@@ -134,7 +135,7 @@ function removeTicket(numberOfTickets, eventDateID, price, index) {
     document.getElementById(noOfTickets).innerHTML = newNumberOfTickets;
 
     var removeButtonID = "remove" + eventDateID;
-    var removeFunctionText = "removeTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");removeTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + ")";
+    var removeFunctionText = "remove_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");remove_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + ")";
     document.getElementById(removeButtonID).setAttribute("onclick", removeFunctionText);
 
     var priceID = "price" + eventDateID;
@@ -143,16 +144,16 @@ function removeTicket(numberOfTickets, eventDateID, price, index) {
 
     var cookieIDNoOfTickets = "noOfTickets" + index;
 
-    setCookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
+    set_cookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
 
     return false;
 }
 
-function removeTicketCheckout(numberOfTickets, eventDateID, price, index) {
+function remove_ticket_checkout(numberOfTickets, eventDateID, price, index) {
     var newNumberOfTickets = parseInt(numberOfTickets) - 1;
 
     var addButtonID = "addCheckout" + eventDateID;
-    var addFunctionText = "addTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");addTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
+    var addFunctionText = "add_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");add_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
     document.getElementById(addButtonID).setAttribute("onclick", addFunctionText);
 
     var hiddenNoOfTickets = "hidden_noOfTicketsCheckout" + eventDateID;
@@ -162,7 +163,7 @@ function removeTicketCheckout(numberOfTickets, eventDateID, price, index) {
     document.getElementById(noOfTickets).innerHTML = newNumberOfTickets;
 
     var removeButtonID = "removeCheckout" + eventDateID;
-    var removeFunctionText = "removeTicketCheckout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");removeTicket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
+    var removeFunctionText = "remove_ticket_checkout(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ");remove_ticket(" + newNumberOfTickets + "," + eventDateID + "," + price + "," + index + ")";
     document.getElementById(removeButtonID).setAttribute("onclick", removeFunctionText);
 
     var priceID = "priceCheckout" + index;
@@ -171,12 +172,12 @@ function removeTicketCheckout(numberOfTickets, eventDateID, price, index) {
 
     var cookieIDNoOfTickets = "noOfTickets" + index;
 
-    setCookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
+    set_cookie(cookieIDNoOfTickets, newNumberOfTickets, 7);
 
     return false;
 }
 
-function addNewTicket(eventDateID, page, date) {
+function add_new_ticket(eventDateID, page, date) {
     var i = 0;
     var allCookies = document.cookie;
     var ca = allCookies.split(';');
@@ -186,21 +187,20 @@ function addNewTicket(eventDateID, page, date) {
         for (i = 1; i <= ((ca.length - 1) / 2); i++) {
 
             var cookieIDEventDateID = "eventDateID" + i;
-            var cookieEventDateID = getCookie(cookieIDEventDateID);
+            var cookieEventDateID = get_cookie(cookieIDEventDateID);
             if (cookieEventDateID == eventDateID) {
-                console.log("here");
                 var forCookieIDNoOfTickets = "noOfTickets" + i;
                 var forCookieNoOfTickets = parseInt(document.getElementById("noOfTickets").value);
-                var newNoOfTickets = parseInt(getCookie(forCookieIDNoOfTickets)) + forCookieNoOfTickets;
+                var newNoOfTickets = parseInt(get_cookie(forCookieIDNoOfTickets)) + forCookieNoOfTickets;
                 if (newNoOfTickets > 10) {
                     alert("Du kan endast beställa 10 biljetter per film.");
                     noExists = false;
                 } else {
-                    setCookie(forCookieIDNoOfTickets, newNoOfTickets, 7);
+                    set_cookie(forCookieIDNoOfTickets, newNoOfTickets, 7);
                     noExists = false;
 
                     //add correction of shopping cart
-                    changeShoppingCartRow(i, cookieEventDateID, newNoOfTickets);
+                    change_shopping_cart_row(i, cookieEventDateID, newNoOfTickets);
                 }
             }
         }
@@ -212,11 +212,11 @@ function addNewTicket(eventDateID, page, date) {
             var forCookieIDNoOfTickets = "noOfTickets" + index;
             var forCookieNoOfTickets = document.getElementById("noOfTickets").value;
 
-            setCookie(forCookieIDEventDateID, forCookieEventDateID, 7);
-            setCookie(forCookieIDNoOfTickets, forCookieNoOfTickets, 7);
-            setCookie("basketTotalProductTypes", index, 7);
+            set_cookie(forCookieIDEventDateID, forCookieEventDateID, 7);
+            set_cookie(forCookieIDNoOfTickets, forCookieNoOfTickets, 7);
+            set_cookie("basketTotalProductTypes", index, 7);
 
-            createRowInShoppingBasket(index, forCookieNoOfTickets, forCookieIDEventDateID, page, date);
+            create_row_in_shopping_basket(index, forCookieNoOfTickets, forCookieIDEventDateID, page, date);
         }
 
     } else {
@@ -225,17 +225,17 @@ function addNewTicket(eventDateID, page, date) {
         var forCookieIDNoOfTickets = "noOfTickets1";
         var forCookieNoOfTickets = document.getElementById("noOfTickets").value;
 
-        setCookie(forCookieIDEventDateID, forCookieEventDateID, 7);
-        setCookie(forCookieIDNoOfTickets, forCookieNoOfTickets, 7);
+        set_cookie(forCookieIDEventDateID, forCookieEventDateID, 7);
+        set_cookie(forCookieIDNoOfTickets, forCookieNoOfTickets, 7);
 
-        createRowInShoppingBasket(1, forCookieNoOfTickets, forCookieEventDateID, page, date);
-        setCookie("basketTotalProductTypes", 1, 7);
+        create_row_in_shopping_basket(1, forCookieNoOfTickets, forCookieEventDateID, page, date);
+        set_cookie("basketTotalProductTypes", 1, 7);
     }
 
     return true;
 }
 
-function toCheckout() {
+function to_checkout() {
 
     //collect event ID and number of tickets with an array function and set cookies then submit the form
 
@@ -244,7 +244,7 @@ function toCheckout() {
     for (i = 0; i < (allTickets.length - 1); i++) {
         var eventDateIDname = "eventDateID" + (i + 1);
         var eventDateID = allTickets[i].value;
-        setCookie(eventDateIDname, eventDateID, 7);
+        set_cookie(eventDateIDname, eventDateID, 7);
     }
 
     var noOfTickets = document.getElementsByClassName("noOfTickets");
@@ -253,68 +253,67 @@ function toCheckout() {
     for (i = 0; i < (noOfTickets.length - 1); i++) {
         var noOfTicketsIDname = "noOfTickets" + (i + 1);
         var noOfTicketsID = noOfTickets[i].innerHTML;
-        setCookie(noOfTicketsIDname, noOfTicketsID, 7);
+        set_cookie(noOfTicketsIDname, noOfTicketsID, 7);
     }
 
-    setCookie("basketTotalProductTypes", (i + 1), 7);
+    set_cookie("basketTotalProductTypes", i, 7);
 
     return true;
 }
 
-function toConfirm() {
+function to_confirm() {
 
     //collect event ID and number of tickets with an array function and set cookies then submit the form
 
-    var allTickets = document.getElementsByClassName("movieIdForCheckout");
+    var allTickets = document.getElementsByClassName("movieIdForCheckoutInCheckout");
     var i = 0;
-    console.log(allTickets.length);
-    for (i = 0; i < (allTickets.length - 1); i++) {
+    for (i = 1; i <= (allTickets.length - 1); i++) {
         var eventDateIDname = "eventDateID" + (i + 1);
         var eventDateID = allTickets[i].value;
-        setCookie(eventDateIDname, eventDateID, 7);
+        set_cookie(eventDateIDname, eventDateID, 7);
     }
 
-    var noOfTickets = document.getElementsByClassName("noOfTickets");
+    var noOfTickets = document.getElementsByClassName("noOfTicketsCheckout");
 
     var i = 0;
-    for (i = 0; i < (noOfTickets.length - 1); i++) {
+    for (i = 1; i <= (noOfTickets.length - 1); i++) {
         var noOfTicketsIDname = "noOfTickets" + (i + 1);
         var noOfTicketsID = noOfTickets[i].innerHTML;
-        setCookie(noOfTicketsIDname, noOfTicketsID, 7);
+        set_cookie(noOfTicketsIDname, noOfTicketsID, 7);
     }
 
-    setCookie("basketTotalProductTypes", (i + 1), 7);
+    set_cookie("basketTotalProductTypes", i, 7);
 
     return true;
 }
 
-function deleteTicket(index) {
+function delete_ticket(index) {
 
     var cookieIDEventDateID = "eventDateID" + index;
     var cookieIDNoOfTickets = "noOfTickets" + index;
-    var itemsInBasket = getCookie("basketTotalProductTypes");
+    var itemsInBasket = get_cookie("basketTotalProductTypes");
     var newNoItems = itemsInBasket - 1;
 
     if (newNoItems > 0) {
-        setCookie("basketTotalProductTypes", newNoItems, 7);
+        set_cookie("basketTotalProductTypes", newNoItems, 7);
     } else {
-        unsetCookie("basketTotalProductTypes");
+        unset_cookie("basketTotalProductTypes");
     }
-    unsetCookie(cookieIDEventDateID);
-    unsetCookie(cookieIDNoOfTickets);
+    unset_cookie(cookieIDEventDateID);
+    unset_cookie(cookieIDNoOfTickets);
 
     return true;
 
 }
 
-function alertCookies() {
+function alert_cookies() {
     var r = confirm("Denna sida använder cookies och session för sidans funktionalitet.");
     if (r == false) {
         window.location.assign("https://www.google.com");
     }
 }
 
-function alertGDPR() {
+function alert_GDPR() {
     var r = confirm("När du skapar ett konto hos oss så sparas den data du gett oss i en databas. Du har full rätt att stänga av ditt konto i enlighet med GDPR när du önskar. Var dock medveten att alla köp kräver ett konto och att du inte kommer kunna komma åt dina köp utan konto.");
     if (r == false) {
         return false;
@@ -323,28 +322,28 @@ function alertGDPR() {
     }
 }
 
-function setCookie(name, value, days) {
-    var d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
+function set_cookie(name, value, days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + date.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
-function unsetCookie(name) {
+function unset_cookie(name) {
     document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
 }
 
-function getCookie(name) {
+function get_cookie(name) {
     var cookieName = name + "=";
     var allCookies = document.cookie;
-    var ca = allCookies.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
+    var cookieArray = allCookies.split(';');
+    for (var i = 0; i < cookieArray.length; i++) {
+        var separateCookie = cookieArray[i];
+        while (separateCookie.charAt(0) == ' ') {
+            separateCookie = separateCookie.substring(1);
         }
-        if (c.indexOf(cookieName) == 0) {
-            return c.substring(cookieName.length, c.length);
+        if (separateCookie.indexOf(cookieName) == 0) {
+            return separateCookie.substring(cookieName.length, c.length);
         }
     }
     return "none";
@@ -352,7 +351,7 @@ function getCookie(name) {
     //if the cookie exists this function returns the value of the cookie with that the given name. No cookies on this site are serialized, encoded or otherwise as both php and js need to be able to read and set them
 }
 
-function createRowInShoppingBasket(index, noOfTickets, eventDateID, page, date) {
+function create_row_in_shopping_basket(index, noOfTickets, eventDateID, page, date) {
     var createTR = document.createElement("tr");
 
     var createTD1 = document.createElement("td");
@@ -365,7 +364,7 @@ function createRowInShoppingBasket(index, noOfTickets, eventDateID, page, date) 
 
     var removeButtonTD2 = document.createElement("button");
     removeButtonTD2.setAttribute("id", "remove" + index);
-    var onclickStringREMOVE = "return removeTicket(" + noOfTickets + ", " + eventDateID + "," + eventPrice + ", " + index + ")";
+    var onclickStringREMOVE = "return remove_ticket(" + noOfTickets + ", " + eventDateID + "," + eventPrice + ", " + index + ")";
     removeButtonTD2.setAttribute("onclick", onclickStringREMOVE);
     removeButtonTD2.innerHTML = "<";
 
@@ -389,7 +388,7 @@ function createRowInShoppingBasket(index, noOfTickets, eventDateID, page, date) 
 
     var addButtonTD2 = document.createElement("button");
     addButtonTD2.setAttribute("id", "add1");
-    var onclickStringADD = "return addTicket(" + noOfTickets + ", " + eventDateID + "," + eventPrice + ", " + index + ")";
+    var onclickStringADD = "return add_ticket(" + noOfTickets + ", " + eventDateID + "," + eventPrice + ", " + index + ")";
     addButtonTD2.setAttribute("onclick", onclickStringADD);
     addButtonTD2.innerHTML = ">";
 
@@ -437,7 +436,7 @@ function createRowInShoppingBasket(index, noOfTickets, eventDateID, page, date) 
 
     var deleteButton = document.createElement("button");
     deleteButton.setAttribute("id", "deleteButton" + index);
-    var onclickStringDEL = "return deleteTicket(" + index + ")";
+    var onclickStringDEL = "return delete_ticket(" + index + ")";
     deleteButton.setAttribute("onclick", onclickStringDEL);
     deleteButton.innerHTML = "X";
 
@@ -452,14 +451,14 @@ function createRowInShoppingBasket(index, noOfTickets, eventDateID, page, date) 
     document.getElementById("shoppingBasketTable").appendChild(createTR);
 }
 
-function changeShoppingCartRow(index, eventDateID, noOfTickets) {
+function change_shopping_cart_row(index, eventDateID, price, noOfTickets) {
 
     var eventPrice = document.getElementById("eventPrice").value;
     var price = parseInt(noOfTickets) * parseInt(eventPrice);
 
-    var addText = "return addTicket(" + noOfTickets + ", " + eventDateID + ", " + eventPrice + ", " + index + ")";
+    var addText = "add_ticket_checkout(" + noOfTickets + "," + eventDateID + "," + price + "," + index + ");add_ticket(" + noOfTickets + "," + eventDateID + "," + price + "," + index + ")";
     document.getElementById("add" + index).setAttribute("onclick", addText);
-    var removeText = "return removeTicket(" + noOfTickets + ", " + eventDateID + ", " + eventPrice + ", " + index + ")";
+    var removeText = "remove_ticket_checkout(" + noOfTickets + "," + eventDateID + "," + price + "," + index + ");remove_ticket(" + noOfTickets + "," + eventDateID + "," + price + "," + index + ")";
     document.getElementById("remove" + index).setAttribute("onclick", removeText);
     document.getElementById("hidden_noOfTickets" + index).value = noOfTickets;
     document.getElementById("noOfTickets" + index).innerHTML = noOfTickets;
